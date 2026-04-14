@@ -2,73 +2,125 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Form Penjualan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Penjualan Prayana Mart</title>
 
 <style>
+/* Style Antarmuka Input (Layar) */
 body {
-    font-family: 'Courier New', monospace;
-    background: #eaeaea;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
     padding: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 .container {
-    max-width: 320px;
-    margin: auto;
+    width: 100%;
+    max-width: 400px;
     background: white;
-    padding: 15px;
-    border: 1px dashed #000;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 h2 {
     text-align: center;
-    font-size: 16px;
+    color: #1a73e8;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.sub-header {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 12px;
 }
 
 label {
+    display: block;
     font-size: 12px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 4px;
 }
 
 input, select, textarea {
     width: 100%;
-    border: none;
-    border-bottom: 1px dashed #000;
-    font-size: 12px;
-    padding: 5px;
-    background: transparent;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border 0.3s;
 }
 
-textarea {
-    border: 1px dashed #000;
+input:focus {
+    border-color: #1a73e8;
+    outline: none;
 }
 
-.section {
-    margin-top: 10px;
-    border-top: 1px dashed #000;
-    padding-top: 5px;
+input[readonly] {
+    background: #f9f9f9;
 }
 
-.result {
-    text-align: center;
-    margin-top: 10px;
+.section-title {
+    font-size: 13px;
     font-weight: bold;
+    border-bottom: 2px solid #eee;
+    margin: 15px 0 10px 0;
+    padding-bottom: 5px;
+    color: #333;
 }
 
-.status-kurang { color: red; }
-.status-lebih { color: orange; }
-.status-pas { color: green; }
+.result-area {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+#status {
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.status-kurang { color: #d93025; }
+.status-lebih { color: #f29900; }
+.status-pas { color: #1e8e3e; }
 
 button {
     width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 12px;
+    padding: 12px;
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: bold;
     border: none;
-    background: black;
+    border-radius: 6px;
+    background: #1a73e8;
     color: white;
+    cursor: pointer;
 }
 
-.hidden {
-    display: none;
+button:hover { background: #1557b0; }
+
+.hidden { display: none; }
+
+/* Style Khusus Cetak (Struk) */
+@media print {
+    @page {
+        size: 70mm 60mm;
+        margin: 0;
+    }
+    body { background: white; padding: 0; margin: 0; }
+    .container { display: none; } /* Sembunyikan form saat print */
 }
 </style>
 </head>
@@ -76,80 +128,86 @@ button {
 <body>
 
 <div class="container">
-    <h2>FORM PENJUALAN</h2>
+    <h2>PRAYANA MART</h2>
+    <div class="sub-header">Part of Prayana Group</div>
 
-    <label>Nama Kasir</label>
-    <select id="nama" onchange="setNIK()">
-        <option value="">-- Pilih --</option>
-        <option value="003040621">Ni Wayan Desiari</option>
-        <option value="004040126">Elis Fidrotul Aliyah</option>
-        <option value="001110221">Owner</option>
-    </select>
+    <div class="form-group">
+        <label>Nama Kasir</label>
+        <select id="nama" onchange="setNIK()">
+            <option value="">-- Pilih Kasir --</option>
+            <option value="003040621">Ni Wayan Desiari</option>
+            <option value="004040126">Elis Fidrotul Aliyah</option>
+            <option value="001110221">Owner</option>
+        </select>
+    </div>
 
-    <label>NIK</label>
-    <input type="text" id="nik" readonly>
+    <div class="form-group">
+        <label>NIK</label>
+        <input type="text" id="nik" readonly>
+    </div>
 
-    <label>Tanggal</label>
-    <input type="text" id="tanggal" readonly>
+    <div class="section-title">DATA TRANSAKSI</div>
 
-    <label>Jam</label>
-    <input type="text" id="jam" readonly>
-
-    <div class="section">
+    <div class="form-group">
         <label>Kas Masuk Shift 1</label>
-        <input type="text" id="shift1" oninput="formatRupiahInput(this); hitungTotal()">
+        <input type="text" id="shift1" placeholder="0" oninput="formatRupiahInput(this); hitungTotal()">
+    </div>
 
+    <div class="form-group">
         <label>Kas Masuk Shift 2</label>
-        <input type="text" id="shift2" oninput="formatRupiahInput(this); hitungTotal()">
-
-        <label>Pengambilan</label>
-        <input type="text" id="pengambilan" oninput="formatRupiahInput(this); hitungTotal()">
-
-        <label>QRIS</label>
-        <input type="text" id="qris" oninput="formatRupiahInput(this); hitungTotal()">
+        <input type="text" id="shift2" placeholder="0" oninput="formatRupiahInput(this); hitungTotal()">
     </div>
 
-    <div class="section">
-        <label>Total Kas Hari Ini</label>
-        <input type="text" id="total" readonly>
-
-        <label>Uang Setoran (Tunai)</label>
-        <input type="text" id="setor" oninput="formatRupiahInput(this); cekSelisih()">
-
-        <div class="result" id="status"></div>
+    <div class="form-group">
+        <label>Pengambilan / Biaya</label>
+        <input type="text" id="pengambilan" placeholder="0" oninput="formatRupiahInput(this); hitungTotal()">
     </div>
 
-    <label>Catatan</label>
-    <textarea id="catatan"></textarea>
+    <div class="form-group">
+        <label>Total QRIS</label>
+        <input type="text" id="qris" placeholder="0" oninput="formatRupiahInput(this); hitungTotal()">
+    </div>
 
-    <button id="printBtn" class="hidden" onclick="cetak()">Cetak Struk</button>
+    <div class="section-title">VERIFIKASI KAS</div>
+
+    <div class="form-group">
+        <label>Total Kas Seharusnya</label>
+        <input type="text" id="total" readonly style="font-weight: bold; color: #1a73e8;">
+    </div>
+
+    <div class="form-group">
+        <label>Uang Tunai Di Tangan (Setoran)</label>
+        <input type="text" id="setor" placeholder="0" oninput="formatRupiahInput(this); cekSelisih()">
+    </div>
+
+    <div class="result-area">
+        <div id="status"></div>
+    </div>
+
+    <div class="form-group" style="margin-top: 10px;">
+        <label>Catatan Tambahan</label>
+        <textarea id="catatan" rows="2" placeholder="Contoh: Nota bensin, dll"></textarea>
+    </div>
+
+    <button id="printBtn" class="hidden" onclick="cetak()">Cetak Slip Closing</button>
 </div>
 
 <script>
-// Format Rupiah Standar
 const formatIDR = (angka) => new Intl.NumberFormat("id-ID").format(angka);
 
-// tanggal & jam
-let now = new Date();
-document.getElementById('tanggal').value = now.toLocaleDateString("id-ID");
-document.getElementById('jam').value = now.toLocaleTimeString("id-ID");
-
-// NIK
 function setNIK() {
     document.getElementById('nik').value = document.getElementById('nama').value;
 }
 
-// format uang
 function formatRupiahInput(el) {
     let angka = el.value.replace(/[^0-9]/g, "");
-    el.value = formatIDR(angka);
+    el.value = angka ? formatIDR(angka) : "";
 }
 
 function ambilAngka(val) {
     return Number(val.replace(/[^0-9]/g, "")) || 0;
 }
 
-// hitung total
 function hitungTotal() {
     let total = ambilAngka(document.getElementById('shift1').value)
               + ambilAngka(document.getElementById('shift2').value)
@@ -157,10 +215,9 @@ function hitungTotal() {
               - ambilAngka(document.getElementById('qris').value);
 
     document.getElementById("total").value = formatIDR(total);
-    cekSelisih(); // Update status setiap ada perubahan
+    cekSelisih();
 }
 
-// cek selisih
 function cekSelisih() {
     let status = document.getElementById("status");
     let printBtn = document.getElementById("printBtn");
@@ -169,33 +226,35 @@ function cekSelisih() {
 
     let selisih = setorVal - totalVal;
 
-    if (setorVal === 0) {
+    if (setorVal === 0 && totalVal === 0) {
         status.innerHTML = "";
         printBtn.classList.add("hidden");
         return;
     }
 
     if (selisih === 0) {
-        status.innerHTML = `<span class="status-pas">UANG PAS</span>`;
+        status.innerHTML = `<span class="status-pas">✓ UANG PAS</span>`;
     } else if (selisih > 0) {
-        status.innerHTML = `<span class="status-lebih">LEBIH: Rp ${formatIDR(selisih)}</span>`;
+        status.innerHTML = `<span class="status-lebih">▲ LEBIH: Rp ${formatIDR(selisih)}</span>`;
     } else {
-        status.innerHTML = `<span class="status-kurang">KURANG: Rp ${formatIDR(Math.abs(selisih))}</span>`;
+        status.innerHTML = `<span class="status-kurang">▼ KURANG: Rp ${formatIDR(Math.abs(selisih))}</span>`;
     }
 
     printBtn.classList.remove("hidden");
 }
 
-function generateNo() {
-    return "TRX" + Date.now();
-}
-
 function cetak() {
-    if (!confirm("Data akan dicetak & disimpan. Lanjutkan?")) return;
+    if (!document.getElementById('nama').value) {
+        alert("Pilih nama kasir terlebih dahulu!");
+        return;
+    }
 
+    let now = new Date();
+    let tglCetak = now.toLocaleDateString("id-ID");
+    let jamCetak = now.toLocaleTimeString("id-ID", {hour: '2-digit', minute:'2-digit'});
+    
     let selSelect = document.getElementById("nama");
-    let namaTeks = selSelect.options[selSelect.selectedIndex].text; // Ambil Nama, bukan NIK
-    let no = generateNo();
+    let namaTeks = selSelect.options[selSelect.selectedIndex].text;
     
     let totalVal = ambilAngka(document.getElementById('total').value);
     let setorVal = ambilAngka(document.getElementById('setor').value);
@@ -205,57 +264,54 @@ function cetak() {
     if (selisihVal > 0) statusTeks = "LEBIH: Rp " + formatIDR(selisihVal);
     if (selisihVal < 0) statusTeks = "KURANG: Rp " + formatIDR(Math.abs(selisihVal));
 
-    let data = {
-        no,
-        nama: namaTeks,
-        nik: document.getElementById('nik').value,
-        tanggal: document.getElementById('tanggal').value,
-        jam: document.getElementById('jam').value,
-        shift1: document.getElementById('shift1').value,
-        shift2: document.getElementById('shift2').value,
-        pengambilan: document.getElementById('pengambilan').value,
-        qris: document.getElementById('qris').value,
-        total: document.getElementById('total').value,
-        setor: document.getElementById('setor').value,
-        catatan: document.getElementById('catatan').value,
-        status: statusTeks
-    };
+    let content = `
+    <div style="width: 62mm; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.2; color: #000;">
+        <div style="text-align: center; border-bottom: 1px dashed #000; padding-bottom: 5px; margin-bottom: 5px;">
+            <b style="font-size: 14px;">PRAYANA MART</b><br>
+            <small>Part of Prayana Group</small><br>
+            <div style="font-size: 9px; margin-top: 4px;">
+                SLIP CLOSING HARIAN<br>
+                ${tglCetak} - ${jamCetak}
+            </div>
+        </div>
 
-    // Template Struk
-    let strukHtml = `
-    <div style="font-family:monospace;font-size:12px;width:70mm;padding:5px;">
-        <center><b>FORM PENJUALAN</b></center>
-        No    : ${data.no}<br>
-        Waktu : ${data.tanggal} ${data.jam}<br>
-        -------------------------<br>
-        Nama  : ${data.nama}<br>
-        NIK   : ${data.nik}<br>
-        -------------------------<br>
-        S1    : Rp ${data.shift1}<br>
-        S2    : Rp ${data.shift2}<br>
-        Ambil : Rp ${data.pengambilan}<br>
-        QRIS  : Rp ${data.qris}<br>
-        -------------------------<br>
-        TOTAL : Rp ${data.total}<br>
-        SETOR : Rp ${data.setor}<br>
-        HASIL : ${data.status}<br>
-        -------------------------<br>
-        Catatan: ${data.catatan || "-"}<br>
-        -------------------------<br><br>
-        <table width="100%">
-            <tr>
-                <td align="center">Kasir<br><br><br>(______)</td>
-                <td align="center">Manager<br><br><br>(______)</td>
-            </tr>
+        <table width="100%" style="font-size: 11px;">
+            <tr><td>Kasir</td><td>: ${namaTeks}</td></tr>
+            <tr><td>NIK</td><td>: ${document.getElementById('nik').value}</td></tr>
         </table>
-    </div>`;
+        
+        <div style="border-bottom: 1px dashed #000; margin: 5px 0;"></div>
 
-    let isi = strukHtml + "<br><hr style='border:1px dashed #000'><br>" + strukHtml;
+        <table width="100%" style="font-size: 11px;">
+            <tr><td>Shift 1</td><td align="right">Rp ${document.getElementById('shift1').value || 0}</td></tr>
+            <tr><td>Shift 2</td><td align="right">Rp ${document.getElementById('shift2').value || 0}</td></tr>
+            <tr><td>Biaya/Ambil</td><td align="right">Rp (${document.getElementById('pengambilan').value || 0})</td></tr>
+            <tr><td>QRIS</td><td align="right">Rp (${document.getElementById('qris').value || 0})</td></tr>
+            <tr style="font-weight: bold;"><td>TOTAL KAS</td><td align="right">Rp ${document.getElementById('total').value}</td></tr>
+        </table>
+
+        <div style="border-bottom: 1px dashed #000; margin: 5px 0;"></div>
+
+        <table width="100%" style="font-size: 11px;">
+            <tr><td>TUNAI SETOR</td><td align="right">Rp ${document.getElementById('setor').value}</td></tr>
+            <tr style="font-weight: bold;"><td>SELISIH</td><td align="right">${statusTeks}</td></tr>
+        </table>
+
+        <div style="margin-top: 5px; font-size: 10px;">
+            Ket: ${document.getElementById('catatan').value || "-"}
+        </div>
+
+        <div style="margin-top: 15px; display: flex; justify-content: space-between; text-align: center;">
+            <div style="width: 45%;">Kasir<br><br><br>(________)</div>
+            <div style="width: 45%;">Manager<br><br><br>(________)</div>
+        </div>
+    </div>
+    `;
 
     let w = window.open('', '', 'width=400,height=600');
-    w.document.write('<html><head><title>Print Struk</title></head><body>' + isi + '</body></html>');
+    w.document.write('<html><head><title>Print Slip</title></head><body style="margin:0; padding: 4mm;">' + content + '</body></html>');
     w.document.close();
-    w.print();
+    setTimeout(() => { w.print(); }, 500);
 }
 </script>
 
