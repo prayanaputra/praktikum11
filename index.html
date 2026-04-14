@@ -1,152 +1,289 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="I Wayan Aditya Prayana Putra">
-    <title>Build a Website</title>
+<meta charset="UTF-8">
+<title>Form Penjualan</title>
 
-    <!-- Boostrap CSS -->
-    <link href="styles/css/bootstrap.css" rel="stylesheet">
+<style>
+body {
+    font-family: 'Courier New', monospace;
+    background: #eaeaea;
+    padding: 20px;
+}
 
-    <style>
-        /* Make The Image fully Responsive */
-        .carousel-inner img {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+.container {
+    max-width: 320px;
+    margin: auto;
+    background: white;
+    padding: 15px;
+    border: 1px dashed #000;
+}
+
+h2 {
+    text-align: center;
+    font-size: 16px;
+}
+
+label {
+    font-size: 12px;
+}
+
+input, select, textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px dashed #000;
+    font-size: 12px;
+    padding: 5px;
+    background: transparent;
+}
+
+textarea {
+    border: 1px dashed #000;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+}
+
+.section {
+    margin-top: 10px;
+    border-top: 1px dashed #000;
+    padding-top: 5px;
+}
+
+.result {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.status-kurang {
+    color: red;
+    font-weight: bold;
+}
+
+.status-lebih {
+    color: orange;
+    font-weight: bold;
+}
+
+.status-pas {
+    color: green;
+    font-weight: bold;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 12px;
+    border: none;
+    background: black;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+@media print {
+    body { background: white; padding: 0; }
+    button { display: none; }
+}
+</style>
 
 </head>
 
 <body>
-    <nav class="navbar-expand-sm bg-dark navbar-dark sticky-top">
-        <div class="container">
-            <!--Links-->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" href="index.html">BERANDA</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="politik.html">POLITIK</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="olahraga.html">OLAHRAGA</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="kesehatan.html">KESEHATAN</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="musik.html">Musik</a>
-                </li>
-            </ul>
-            <!--Search Bar-->
-            <form class="form-inline" action="#">
-                <input class="form-control" type="text" placeholder="Masukkan Pencarian">
-                <button class="btn btn-primary" type="submit">Cari</button>
-            </form>
-        </div>
-    </nav>
 
-    <!-- Membuat Header -->
-    <header>
-        <div id="demo" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ul class="carousel-indicators">
-                <li data-target="#demo" data-slide-to="0" class="active"></li>
-                <li data-target="#demo" data-slide-to="1"></li>
-                <li data-target="#demo" data-slide-to="2"></li>
-            </ul>
+<div class="container">
+    <h2>FORM PENJUALAN</h2>
 
-            <!-- The slideshow -->
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="images/nature.jpg" alt="Abstract" width="1100" height="500">
-                    <div class="carousel-caption">
-                        <h3>1st Slide</h3>
-                        <p>This is a description for the first slide.</p> 
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="images/nature2.jpg" alt="Nature" width="1100" height="500">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>2nd Slide</h3>
-                        <p>This is a description for the third slide.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="images/nature3.jpg" alt="Plane" width="1100" height="500">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>Third Slide</h3>
-                        <p>This is a description for the third slide.</p>
-                    </div>
-                </div>
-            </div>
+    <label>Nama Kasir</label>
+    <select id="nama" onchange="setNIK()">
+        <option value="">-- Pilih --</option>
+        <option value="003040621">Ni Wayan Desiari</option>
+        <option value="004040126">Elis Fidrotul Aliyah</option>
+        <option value="001110221">Owner</option>
+    </select>
 
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#demo" data-lide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#demo" data-lide="next">
-                <span class="carousel-control-next-icon"></span>
-            </a>
-        </div>
-    </header>
+    <label>NIK</label>
+    <input type="text" id="nik" readonly>
 
-    <!-- Content -->
-    <!-- Page Content -->
-    <div class="container">
-        <h1 class="display-4" style="padding-top: 0.3em; padding-bottom: 0.3em">Berita Utama Tiap Kategori</h1>
-        <!-- Cards -->
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card" style="margin-bottom: 1em">
-                    <img class="card-img-top" src="images/female-speaker.svg" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">Berita 1</h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam,quis nostrud
-                            exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate
-                            velit essecillum dolore eu fugiat nulla pariatur. Excepteur sint
-                            occaecat cupidatat non proident, sunt in culpa qui officia
-                            deserunt mollit anim id est laborum.</p>
-                        <a href="#" class="btn btn-primary">Selengkapnya >></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="card" style="margin-bottom: 1em">
-                    <img class="card-img-top" src="images/male-speaker.svg" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">Berita 2</h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam,quis nostrud
-                            exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                            occaecat cupidatat non proident, sunt in culpa qui officia
-                            deserunt mollit anim id est laborum.</p>
-                        <a href="#" class="btn btn-primary">Selengkapnya >></a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <label>Tanggal</label>
+    <input type="text" id="tanggal" readonly>
+
+    <div class="section">
+        <label>Kas Masuk Shift 1</label>
+        <input type="text" id="shift1" oninput="formatRupiahInput(this); hitungTotal()">
+
+        <label>Kas Masuk Shift 2</label>
+        <input type="text" id="shift2" oninput="formatRupiahInput(this); hitungTotal()">
+
+        <label>Pengambilan</label>
+        <input type="text" id="pengambilan" oninput="formatRupiahInput(this); hitungTotal()">
+
+        <label>QRIS</label>
+        <input type="text" id="qris" oninput="formatRupiahInput(this); hitungTotal()">
     </div>
-    <!-- /.container -->
-    <!--Membuat Footer--><!--Footer-->
-    <footer class="py-5 bg-dark" style="margin-top: 2em">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; 2022 - I Wayan Aditya Prayana Putra</p>
-        </div>
-    </footer>
 
-    <!--Bootstrap Core Java Script-->
-    <script src="styles/js/jquery-3.5.1.min.js"></script>
-    <script src="styles/js/bootstrap.bundle.min.js"></script>
+    <div class="section">
+        <label>Total Kas Hari Ini</label>
+        <input type="text" id="total" readonly>
+
+        <label>Uang Setoran (Tunai)</label>
+        <input type="text" id="setor" oninput="formatRupiahInput(this); cekSelisih()">
+
+        <div class="result" id="status"></div>
+    </div>
+
+    <label>Catatan (max 100 kata)</label>
+    <textarea id="catatan" rows="3"></textarea>
+
+    <button id="printBtn" class="hidden" onclick="cetak()">Cetak Struk</button>
+    <button onclick="lihatRiwayat()">Lihat Riwayat</button>
+</div>
+
+<script>
+
+// tanggal
+tanggal.value = new Date().toLocaleDateString("id-ID");
+
+// NIK
+function setNIK() {
+    nik.value = nama.value;
+}
+
+// format rupiah
+function formatRupiahInput(el) {
+    let angka = el.value.replace(/[^0-9]/g, "");
+    el.value = new Intl.NumberFormat("id-ID").format(angka);
+}
+
+function ambilAngka(val) {
+    return Number(val.replace(/[^0-9]/g, "")) || 0;
+}
+
+// hitung total
+function hitungTotal() {
+    let total = ambilAngka(shift1.value)
+              + ambilAngka(shift2.value)
+              - ambilAngka(pengambilan.value)
+              - ambilAngka(qris.value);
+
+    totalInput = document.getElementById("total");
+    totalInput.value = new Intl.NumberFormat("id-ID").format(total);
+}
+
+// cek selisih
+function cekSelisih() {
+    let total = ambilAngka(document.getElementById("total").value);
+    let setor = ambilAngka(document.getElementById("setor").value);
+
+    let selisih = setor - total;
+
+    if (setor === 0) {
+        status.innerHTML = "";
+        printBtn.classList.add("hidden");
+        return;
+    }
+
+    if (selisih === 0) {
+        status.innerHTML = `<span class="status-pas">UANG PAS</span>`;
+    } else if (selisih > 0) {
+        status.innerHTML = `<span class="status-lebih">LEBIH Rp ${selisih.toLocaleString("id-ID")}</span>`;
+    } else {
+        let kurang = Math.abs(selisih);
+        status.innerHTML = `<span class="status-kurang">
+        Saldo setoran anda kurang Rp ${kurang.toLocaleString("id-ID")}<br>
+        Data disimpan, silahkan konfirmasi kepada Manager!
+        </span>`;
+    }
+
+    printBtn.classList.remove("hidden");
+}
+
+// cetak
+function cetak() {
+
+    if (!confirm("Data akan dicetak & tidak bisa diubah. Lanjutkan?")) return;
+
+    let data = {
+        nama: nama.value,
+        nik: nik.value,
+        tanggal: tanggal.value,
+        total: total.value,
+        setor: setor.value,
+        status: status.innerHTML,
+        catatan: catatan.value
+    };
+
+    let riwayat = JSON.parse(localStorage.getItem("kasir_data")) || [];
+    riwayat.push(data);
+    localStorage.setItem("kasir_data", JSON.stringify(riwayat));
+
+    document.querySelectorAll("input, select, textarea").forEach(e => e.disabled = true);
+
+    let isi = `
+    <div style="font-family:monospace;font-size:12px;width:75mm;">
+    <center><b>FORM PENJUALAN</b><br>-------------------------</center>
+    Nama : ${data.nama}<br>
+    NIK  : ${data.nik}<br>
+    Tgl  : ${data.tanggal}<br>
+    -------------------------<br>
+    Total : Rp ${data.total}<br>
+    Setor : Rp ${data.setor}<br>
+    -------------------------<br>
+    ${data.status}<br>
+    -------------------------<br>
+    Catatan: ${data.catatan || "-"}
+    </div>
+
+    <br><br>
+
+    <div style="font-family:monospace;font-size:12px;width:75mm;">
+    <center><b>FORM PENJUALAN</b><br>-------------------------</center>
+    Nama : ${data.nama}<br>
+    NIK  : ${data.nik}<br>
+    Tgl  : ${data.tanggal}<br>
+    -------------------------<br>
+    Total : Rp ${data.total}<br>
+    Setor : Rp ${data.setor}<br>
+    -------------------------<br>
+    ${data.status}<br>
+    -------------------------<br>
+    Catatan: ${data.catatan || "-"}
+    </div>
+    `;
+
+    let w = window.open('', '', 'width=300,height=400');
+    w.document.write(isi);
+    w.print();
+}
+
+// riwayat
+function lihatRiwayat() {
+    let data = JSON.parse(localStorage.getItem("kasir_data")) || [];
+
+    if (data.length === 0) return alert("Belum ada data");
+
+    let isi = "<h3>Riwayat</h3>";
+
+    data.forEach((d,i)=>{
+        isi += `<hr>
+        ${i+1}. ${d.nama}<br>
+        ${d.tanggal}<br>
+        Total: Rp ${d.total}<br>
+        Setor: Rp ${d.setor}<br>
+        ${d.status}<br>
+        Catatan: ${d.catatan || "-"}
+        `;
+    });
+
+    let w = window.open('', '', 'width=400,height=600');
+    w.document.write(isi);
+}
+</script>
+
 </body>
 </html>
