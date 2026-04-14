@@ -126,21 +126,23 @@ button {
 </div>
 
 <script>
+// Format Rupiah Standar
+const formatIDR = (angka) => new Intl.NumberFormat("id-ID").format(angka);
 
 // tanggal & jam
 let now = new Date();
-tanggal.value = now.toLocaleDateString("id-ID");
-jam.value = now.toLocaleTimeString("id-ID");
+document.getElementById('tanggal').value = now.toLocaleDateString("id-ID");
+document.getElementById('jam').value = now.toLocaleTimeString("id-ID");
 
 // NIK
 function setNIK() {
-    nik.value = nama.value;
+    document.getElementById('nik').value = document.getElementById('nama').value;
 }
 
 // format uang
 function formatRupiahInput(el) {
     let angka = el.value.replace(/[^0-9]/g, "");
-    el.value = new Intl.NumberFormat("id-ID").format(angka);
+    el.value = formatIDR(angka);
 }
 
 function ambilAngka(val) {
@@ -149,19 +151,21 @@ function ambilAngka(val) {
 
 // hitung total
 function hitungTotal() {
-    let total = ambilAngka(shift1.value)
-              + ambilAngka(shift2.value)
-              - ambilAngka(pengambilan.value)
-              - ambilAngka(qris.value);
+    let total = ambilAngka(document.getElementById('shift1').value)
+              + ambilAngka(document.getElementById('shift2').value)
+              - ambilAngka(document.getElementById('pengambilan').value)
+              - ambilAngka(document.getElementById('qris').value);
 
-    document.getElementById("total").value =
-        new Intl.NumberFormat("id-ID").format(total);
+    document.getElementById("total").value = formatIDR(total);
+    cekSelisih(); // Update status setiap ada perubahan
 }
 
-// cek selisih (HANYA DI LAYAR)
+// cek selisih
 function cekSelisih() {
-    let totalVal = ambilAngka(total.value);
-    let setorVal = ambilAngka(setor.value);
+    let status = document.getElementById("status");
+    let printBtn = document.getElementById("printBtn");
+    let totalVal = ambilAngka(document.getElementById('total').value);
+    let setorVal = ambilAngka(document.getElementById('setor').value);
 
     let selisih = setorVal - totalVal;
 
@@ -174,97 +178,83 @@ function cekSelisih() {
     if (selisih === 0) {
         status.innerHTML = `<span class="status-pas">UANG PAS</span>`;
     } else if (selisih > 0) {
-        status.innerHTML = `<span class="status-lebih">LEBIH</span>`;
+        status.innerHTML = `<span class="status-lebih">LEBIH: Rp ${formatIDR(selisih)}</span>`;
     } else {
-        status.innerHTML = `<span class="status-kurang">KURANG</span>`;
+        status.innerHTML = `<span class="status-kurang">KURANG: Rp ${formatIDR(Math.abs(selisih))}</span>`;
     }
 
     printBtn.classList.remove("hidden");
 }
 
-// nomor transaksi
 function generateNo() {
     return "TRX" + Date.now();
 }
 
-// cetak
 function cetak() {
-
     if (!confirm("Data akan dicetak & disimpan. Lanjutkan?")) return;
 
+    let selSelect = document.getElementById("nama");
+    let namaTeks = selSelect.options[selSelect.selectedIndex].text; // Ambil Nama, bukan NIK
     let no = generateNo();
+    
+    let totalVal = ambilAngka(document.getElementById('total').value);
+    let setorVal = ambilAngka(document.getElementById('setor').value);
+    let selisihVal = setorVal - totalVal;
+    
+    let statusTeks = "PAS";
+    if (selisihVal > 0) statusTeks = "LEBIH: Rp " + formatIDR(selisihVal);
+    if (selisihVal < 0) statusTeks = "KURANG: Rp " + formatIDR(Math.abs(selisihVal));
 
     let data = {
         no,
-        nama: nama.value,
-        nik: nik.value,
-        tanggal: tanggal.value,
-        jam: jam.value,
-        shift1: shift1.value,
-        shift2: shift2.value,
-        pengambilan: pengambilan.value,
-        qris: qris.value,
-        total: total.value,
-        setor: setor.value,
-        catatan: catatan.value
+        nama: namaTeks,
+        nik: document.getElementById('nik').value,
+        tanggal: document.getElementById('tanggal').value,
+        jam: document.getElementById('jam').value,
+        shift1: document.getElementById('shift1').value,
+        shift2: document.getElementById('shift2').value,
+        pengambilan: document.getElementById('pengambilan').value,
+        qris: document.getElementById('qris').value,
+        total: document.getElementById('total').value,
+        setor: document.getElementById('setor').value,
+        catatan: document.getElementById('catatan').value,
+        status: statusTeks
     };
 
-    let riwayat = JSON.parse(localStorage.getItem("kasir_data")) || [];
-    riwayat.push(data);
-    localStorage.setItem("kasir_data", JSON.stringify(riwayat));
+    // Template Struk
+    let strukHtml = `
+    <div style="font-family:monospace;font-size:12px;width:70mm;padding:5px;">
+        <center><b>FORM PENJUALAN</b></center>
+        No    : ${data.no}<br>
+        Waktu : ${data.tanggal} ${data.jam}<br>
+        -------------------------<br>
+        Nama  : ${data.nama}<br>
+        NIK   : ${data.nik}<br>
+        -------------------------<br>
+        S1    : Rp ${data.shift1}<br>
+        S2    : Rp ${data.shift2}<br>
+        Ambil : Rp ${data.pengambilan}<br>
+        QRIS  : Rp ${data.qris}<br>
+        -------------------------<br>
+        TOTAL : Rp ${data.total}<br>
+        SETOR : Rp ${data.setor}<br>
+        HASIL : ${data.status}<br>
+        -------------------------<br>
+        Catatan: ${data.catatan || "-"}<br>
+        -------------------------<br><br>
+        <table width="100%">
+            <tr>
+                <td align="center">Kasir<br><br><br>(______)</td>
+                <td align="center">Manager<br><br><br>(______)</td>
+            </tr>
+        </table>
+    </div>`;
 
-    document.querySelectorAll("input, select, textarea").forEach(e => e.disabled = true);
+    let isi = strukHtml + "<br><hr style='border:1px dashed #000'><br>" + strukHtml;
 
-    let isi = `
-    <div style="font-family:monospace;font-size:12px;width:75mm;">
-    <center><b>FORM PENJUALAN</b></center>
-    No : ${data.no}<br>
-    ${data.tanggal} ${data.jam}<br>
-    -------------------------<br>
-    Nama : ${data.nama}<br>
-    NIK  : ${data.nik}<br>
-    -------------------------<br>
-    S1 : Rp ${data.shift1}<br>
-    S2 : Rp ${data.shift2}<br>
-    Ambil : Rp ${data.pengambilan}<br>
-    QRIS : Rp ${data.qris}<br>
-    -------------------------<br>
-    TOTAL : Rp ${data.total}<br>
-    SETOR : Rp ${data.setor}<br>
-    -------------------------<br>
-    Catatan: ${data.catatan || "-"}<br>
-    -------------------------<br><br>
-    Kasir    Manager<br><br><br>
-    (____)   (____)
-    </div>
-
-    <br><br>
-
-    <div style="font-family:monospace;font-size:12px;width:75mm;">
-    <center><b>FORM PENJUALAN</b></center>
-    No : ${data.no}<br>
-    ${data.tanggal} ${data.jam}<br>
-    -------------------------<br>
-    Nama : ${data.nama}<br>
-    NIK  : ${data.nik}<br>
-    -------------------------<br>
-    S1 : Rp ${data.shift1}<br>
-    S2 : Rp ${data.shift2}<br>
-    Ambil : Rp ${data.pengambilan}<br>
-    QRIS : Rp ${data.qris}<br>
-    -------------------------<br>
-    TOTAL : Rp ${data.total}<br>
-    SETOR : Rp ${data.setor}<br>
-    -------------------------<br>
-    Catatan: ${data.catatan || "-"}<br>
-    -------------------------<br><br>
-    Kasir    Manager<br><br><br>
-    (____)   (____)
-    </div>
-    `;
-
-    let w = window.open('', '', 'width=300,height=400');
-    w.document.write(isi);
+    let w = window.open('', '', 'width=400,height=600');
+    w.document.write('<html><head><title>Print Struk</title></head><body>' + isi + '</body></html>');
+    w.document.close();
     w.print();
 }
 </script>
