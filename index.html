@@ -41,10 +41,6 @@ textarea {
     border: 1px dashed #000;
 }
 
-input:focus, select:focus, textarea:focus {
-    outline: none;
-}
-
 .section {
     margin-top: 10px;
     border-top: 1px dashed #000;
@@ -57,20 +53,9 @@ input:focus, select:focus, textarea:focus {
     font-weight: bold;
 }
 
-.status-kurang {
-    color: red;
-    font-weight: bold;
-}
-
-.status-lebih {
-    color: orange;
-    font-weight: bold;
-}
-
-.status-pas {
-    color: green;
-    font-weight: bold;
-}
+.status-kurang { color: red; }
+.status-lebih { color: orange; }
+.status-pas { color: green; }
 
 button {
     width: 100%;
@@ -85,13 +70,7 @@ button {
 .hidden {
     display: none;
 }
-
-@media print {
-    body { background: white; padding: 0; }
-    button { display: none; }
-}
 </style>
-
 </head>
 
 <body>
@@ -112,6 +91,9 @@ button {
 
     <label>Tanggal</label>
     <input type="text" id="tanggal" readonly>
+
+    <label>Jam</label>
+    <input type="text" id="jam" readonly>
 
     <div class="section">
         <label>Kas Masuk Shift 1</label>
@@ -137,24 +119,25 @@ button {
         <div class="result" id="status"></div>
     </div>
 
-    <label>Catatan (max 100 kata)</label>
-    <textarea id="catatan" rows="3"></textarea>
+    <label>Catatan</label>
+    <textarea id="catatan"></textarea>
 
     <button id="printBtn" class="hidden" onclick="cetak()">Cetak Struk</button>
-    <button onclick="lihatRiwayat()">Lihat Riwayat</button>
 </div>
 
 <script>
 
-// tanggal
-tanggal.value = new Date().toLocaleDateString("id-ID");
+// tanggal & jam
+let now = new Date();
+tanggal.value = now.toLocaleDateString("id-ID");
+jam.value = now.toLocaleTimeString("id-ID");
 
 // NIK
 function setNIK() {
     nik.value = nama.value;
 }
 
-// format rupiah
+// format uang
 function formatRupiahInput(el) {
     let angka = el.value.replace(/[^0-9]/g, "");
     el.value = new Intl.NumberFormat("id-ID").format(angka);
@@ -171,18 +154,18 @@ function hitungTotal() {
               - ambilAngka(pengambilan.value)
               - ambilAngka(qris.value);
 
-    totalInput = document.getElementById("total");
-    totalInput.value = new Intl.NumberFormat("id-ID").format(total);
+    document.getElementById("total").value =
+        new Intl.NumberFormat("id-ID").format(total);
 }
 
-// cek selisih
+// cek selisih (HANYA DI LAYAR)
 function cekSelisih() {
-    let total = ambilAngka(document.getElementById("total").value);
-    let setor = ambilAngka(document.getElementById("setor").value);
+    let totalVal = ambilAngka(total.value);
+    let setorVal = ambilAngka(setor.value);
 
-    let selisih = setor - total;
+    let selisih = setorVal - totalVal;
 
-    if (setor === 0) {
+    if (setorVal === 0) {
         status.innerHTML = "";
         printBtn.classList.add("hidden");
         return;
@@ -191,30 +174,38 @@ function cekSelisih() {
     if (selisih === 0) {
         status.innerHTML = `<span class="status-pas">UANG PAS</span>`;
     } else if (selisih > 0) {
-        status.innerHTML = `<span class="status-lebih">LEBIH Rp ${selisih.toLocaleString("id-ID")}</span>`;
+        status.innerHTML = `<span class="status-lebih">LEBIH</span>`;
     } else {
-        let kurang = Math.abs(selisih);
-        status.innerHTML = `<span class="status-kurang">
-        Saldo setoran anda kurang Rp ${kurang.toLocaleString("id-ID")}<br>
-        Data disimpan, silahkan konfirmasi kepada Manager!
-        </span>`;
+        status.innerHTML = `<span class="status-kurang">KURANG</span>`;
     }
 
     printBtn.classList.remove("hidden");
 }
 
+// nomor transaksi
+function generateNo() {
+    return "TRX" + Date.now();
+}
+
 // cetak
 function cetak() {
 
-    if (!confirm("Data akan dicetak & tidak bisa diubah. Lanjutkan?")) return;
+    if (!confirm("Data akan dicetak & disimpan. Lanjutkan?")) return;
+
+    let no = generateNo();
 
     let data = {
+        no,
         nama: nama.value,
         nik: nik.value,
         tanggal: tanggal.value,
+        jam: jam.value,
+        shift1: shift1.value,
+        shift2: shift2.value,
+        pengambilan: pengambilan.value,
+        qris: qris.value,
         total: total.value,
         setor: setor.value,
-        status: status.innerHTML,
         catatan: catatan.value
     };
 
@@ -226,62 +217,55 @@ function cetak() {
 
     let isi = `
     <div style="font-family:monospace;font-size:12px;width:75mm;">
-    <center><b>FORM PENJUALAN</b><br>-------------------------</center>
+    <center><b>FORM PENJUALAN</b></center>
+    No : ${data.no}<br>
+    ${data.tanggal} ${data.jam}<br>
+    -------------------------<br>
     Nama : ${data.nama}<br>
     NIK  : ${data.nik}<br>
-    Tgl  : ${data.tanggal}<br>
     -------------------------<br>
-    Total : Rp ${data.total}<br>
-    Setor : Rp ${data.setor}<br>
+    S1 : Rp ${data.shift1}<br>
+    S2 : Rp ${data.shift2}<br>
+    Ambil : Rp ${data.pengambilan}<br>
+    QRIS : Rp ${data.qris}<br>
     -------------------------<br>
-    ${data.status}<br>
+    TOTAL : Rp ${data.total}<br>
+    SETOR : Rp ${data.setor}<br>
     -------------------------<br>
-    Catatan: ${data.catatan || "-"}
+    Catatan: ${data.catatan || "-"}<br>
+    -------------------------<br><br>
+    Kasir    Manager<br><br><br>
+    (____)   (____)
     </div>
 
     <br><br>
 
     <div style="font-family:monospace;font-size:12px;width:75mm;">
-    <center><b>FORM PENJUALAN</b><br>-------------------------</center>
+    <center><b>FORM PENJUALAN</b></center>
+    No : ${data.no}<br>
+    ${data.tanggal} ${data.jam}<br>
+    -------------------------<br>
     Nama : ${data.nama}<br>
     NIK  : ${data.nik}<br>
-    Tgl  : ${data.tanggal}<br>
     -------------------------<br>
-    Total : Rp ${data.total}<br>
-    Setor : Rp ${data.setor}<br>
+    S1 : Rp ${data.shift1}<br>
+    S2 : Rp ${data.shift2}<br>
+    Ambil : Rp ${data.pengambilan}<br>
+    QRIS : Rp ${data.qris}<br>
     -------------------------<br>
-    ${data.status}<br>
+    TOTAL : Rp ${data.total}<br>
+    SETOR : Rp ${data.setor}<br>
     -------------------------<br>
-    Catatan: ${data.catatan || "-"}
+    Catatan: ${data.catatan || "-"}<br>
+    -------------------------<br><br>
+    Kasir    Manager<br><br><br>
+    (____)   (____)
     </div>
     `;
 
     let w = window.open('', '', 'width=300,height=400');
     w.document.write(isi);
     w.print();
-}
-
-// riwayat
-function lihatRiwayat() {
-    let data = JSON.parse(localStorage.getItem("kasir_data")) || [];
-
-    if (data.length === 0) return alert("Belum ada data");
-
-    let isi = "<h3>Riwayat</h3>";
-
-    data.forEach((d,i)=>{
-        isi += `<hr>
-        ${i+1}. ${d.nama}<br>
-        ${d.tanggal}<br>
-        Total: Rp ${d.total}<br>
-        Setor: Rp ${d.setor}<br>
-        ${d.status}<br>
-        Catatan: ${d.catatan || "-"}
-        `;
-    });
-
-    let w = window.open('', '', 'width=400,height=600');
-    w.document.write(isi);
 }
 </script>
 
