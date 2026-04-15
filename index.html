@@ -6,105 +6,115 @@
 <title>Sistem Closing - Prayana Mart</title>
 
 <style>
-/* Style Umum */
-body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; }
-.container { width: 100%; max-width: 500px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+/* Style Antarmuka Layar */
+body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; min-height: 100vh; }
+.container { width: 100%; max-width: 500px; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
 h2 { text-align: center; color: #1a73e8; margin-bottom: 5px; text-transform: uppercase; }
 .sub-header { text-align: center; font-size: 11px; color: #666; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
 
-/* Login Panel */
-#login_panel { text-align: center; padding: 10px 0; }
-.login-box { background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
-.btn-login { background: #1a73e8; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+.login-box { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid #eee; }
+.btn-login { background: #1a73e8; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+.search-box { margin-top: 20px; padding-top: 15px; border-top: 2px dashed #eee; }
+.btn-search { background: #34a853; color: white; border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
-/* Form Style */
 .form-group { margin-bottom: 12px; text-align: left; }
 label { display: block; font-size: 10px; font-weight: 700; color: #444; margin-bottom: 4px; text-transform: uppercase; }
-input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
-input[readonly] { background: #f1f3f4; color: #1a73e8; font-weight: bold; }
+input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
+input[readonly] { background: #f8f9fa; color: #1a73e8; font-weight: bold; border-color: #eee; }
+
 .section-title { font-size: 11px; font-weight: bold; border-left: 4px solid #1a73e8; margin: 15px 0 8px 0; padding-left: 8px; color: #1a73e8; background: #f0f7ff; padding: 6px 8px; }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-/* Blok Keuntungan Khusus */
-.laba-box { background: #e6f4ea; border: 2px solid #1e8e3e; padding: 15px; border-radius: 8px; margin: 15px 0; }
+/* Blok Keuntungan */
+.laba-box { background: #e6f4ea; border: 2px solid #1e8e3e; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center; }
 .laba-box label { color: #1e8e3e; font-size: 12px; }
-.laba-box input { border-color: #1e8e3e; font-size: 18px; color: #1e8e3e; font-weight: bold; }
+.laba-box input { border: none; font-size: 22px; color: #1e8e3e; text-align: center; background: transparent; width: 100%; font-weight: bold; outline: none; }
 
-/* Result Area */
-.result-area { color: white; padding: 15px; border-radius: 8px; text-align: center; margin-top: 15px; }
-#status { font-weight: bold; font-size: 16px; }
+/* Status Selisih di Layar */
+.result-area { color: white; padding: 15px; border-radius: 10px; text-align: center; margin-top: 15px; }
+#status { font-weight: bold; font-size: 18px; }
 #terbilang_status { font-style: italic; font-size: 11px; display: block; margin-top: 5px; }
-.hidden { display: none; }
 
-button#printBtn { width: 100%; padding: 15px; margin-top: 20px; font-size: 14px; font-weight: bold; border: none; border-radius: 6px; background: #333; color: white; cursor: pointer; }
+.hidden { display: none; }
+#printBtn { width: 100%; padding: 15px; margin-top: 20px; font-size: 14px; font-weight: bold; border: none; border-radius: 10px; background: #202124; color: white; cursor: pointer; }
+
+/* List Riwayat Singkat */
+#recent_list { margin-top: 15px; font-size: 11px; color: #555; text-align: left; }
+#recent_list ul { padding-left: 20px; margin-top: 5px; }
+#recent_list li { margin-bottom: 4px; color: #1a73e8; cursor: pointer; text-decoration: underline; }
 </style>
 </head>
 
-<body>
+<body onload="tampilkanRiwayatSingkat()">
 
 <div id="login_panel" class="container">
     <h2>PRAYANA MART</h2>
-    <div class="sub-header">Login Kasir</div>
+    <div class="sub-header">Access Control</div>
     <div class="login-box">
         <div class="form-group">
-            <label>Pilih Nama</label>
+            <label>Pilih Kasir</label>
             <select id="login_nama">
-                <option value="">-- Pilih Nama --</option>
+                <option value="">-- Pilih --</option>
                 <option value="003040621">Ni Wayan Desiari</option>
                 <option value="004040126">Elis Fidrotul Aliyah</option>
                 <option value="001110221">Owner</option>
             </select>
         </div>
         <div class="form-group">
-            <label>Masukkan NIK</label>
-            <input type="password" id="login_nik" placeholder="Masukkan NIK Anda">
+            <label>PIN (NIK)</label>
+            <input type="password" id="login_nik" placeholder="Masukkan NIK">
         </div>
         <button class="btn-login" onclick="cekLogin()">MASUK SISTEM</button>
+    </div>
+
+    <div class="search-box">
+        <label>Cari Riwayat Slip (Token)</label>
+        <input type="text" id="token_search" placeholder="Masukkan Kode Token">
+        <button class="btn-search" onclick="cariRiwayat()">LIHAT DATA LAMA</button>
+        <div id="recent_list"></div>
     </div>
 </div>
 
 <div id="main_form" class="container hidden">
-    <h2>PRAYANA MART</h2>
-    <div class="sub-header">Slip Closing Harian</div>
+    <div style="display:flex; justify-content: space-between; align-items: center;">
+        <button onclick="location.reload()" style="padding:5px 10px; font-size:10px; background:#fce8e6; color:#d93025; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">LOGOUT</button>
+        <div id="waktu_layar" style="font-weight:bold; font-size:11px;"></div>
+    </div>
     
-    <div id="waktu_layar" style="text-align:center; font-weight:bold; font-size:12px; margin-bottom:15px;"></div>
-
+    <div class="section-title">PETUGAS</div>
     <div class="grid-2">
         <div class="form-group"><label>Kasir</label><input type="text" id="final_nama" readonly></div>
         <div class="form-group"><label>NIK</label><input type="text" id="final_nik" readonly></div>
     </div>
 
-    <div class="section-title">KAS MASUK</div>
+    <div class="section-title">KAS MASUK (OMSET)</div>
     <div class="grid-2">
         <div class="form-group"><label>Shift 1</label><input type="text" id="shift1" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
         <div class="form-group"><label>Shift 2</label><input type="text" id="shift2" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
     </div>
 
-    <div class="section-title">KAS KELUAR (MEMOTONG SALDO TUNAI)</div>
+    <div class="section-title">KAS KELUAR (MEMOTONG TUNAI)</div>
     <div class="grid-2">
-        <div class="form-group"><label>Pengambilan</label><input type="text" id="pengambilan" oninput="formatRupiahInput(this); hitungSemua()"></div>
-        <div class="form-group"><label>Pembatalan</label><input type="text" id="pembatalan" oninput="formatRupiahInput(this); hitungSemua()"></div>
+        <div class="form-group"><label>Pengambilan</label><input type="text" id="pengambilan" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
+        <div class="form-group"><label>Pembatalan</label><input type="text" id="pembatalan" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
     </div>
-    <div class="form-group">
-        <label>BON Karyawan / Lainnya</label>
-        <input type="text" id="bon" oninput="formatRupiahInput(this); hitungSemua()">
-    </div>
+    <div class="form-group"><label>BON Karyawan / Hutang</label><input type="text" id="bon" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
 
-    <div class="section-title">LAPORAN NON-TUNAI (HANYA INFO)</div>
+    <div class="section-title">INFO SAJA (TIDAK MEMOTONG)</div>
     <div class="grid-2">
-        <div class="form-group"><label>QRIS</label><input type="text" id="qris" oninput="formatRupiahInput(this)"></div>
-        <div class="form-group"><label>Transfer</label><input type="text" id="transfer" oninput="formatRupiahInput(this)"></div>
+        <div class="form-group"><label>QRIS</label><input type="text" id="qris" placeholder="0" oninput="formatRupiahInput(this)"></div>
+        <div class="form-group"><label>Transfer Bank</label><input type="text" id="transfer" placeholder="0" oninput="formatRupiahInput(this)"></div>
     </div>
 
     <div class="laba-box">
         <label>KEUNTUNGAN HARI INI</label>
-        <input type="text" id="laba" placeholder="Rp 0" oninput="formatRupiahInput(this)">
+        <input type="text" id="laba" oninput="formatRupiahInput(this)" placeholder="Rp 0">
     </div>
 
-    <div class="section-title">VERIFIKASI FISIK</div>
+    <div class="section-title">VERIFIKASI TUNAI</div>
     <div class="grid-2">
-        <div class="form-group"><label>Tunai Sistem</label><input type="text" id="jumlah_sistem" readonly></div>
-        <div class="form-group"><label>Tunai Nyata</label><input type="text" id="jumlah_fisik" oninput="formatRupiahInput(this); hitungSemua()"></div>
+        <div class="form-group"><label>Saldo Sistem</label><input type="text" id="jumlah_sistem" readonly></div>
+        <div class="form-group"><label>Fisik (Setoran)</label><input type="text" id="jumlah_fisik" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
     </div>
 
     <div id="status_box" class="result-area hidden">
@@ -112,17 +122,17 @@ button#printBtn { width: 100%; padding: 15px; margin-top: 20px; font-size: 14px;
         <small id="terbilang_status"></small>
     </div>
 
-    <button id="printBtn" class="hidden" onclick="cetak()">CETAK SLIP PRAYANA MART</button>
+    <button id="printBtn" class="hidden" onclick="cetak()">CETAK SLIP CLOSING</button>
 </div>
 
 <script>
 const formatIDR = (angka) => new Intl.NumberFormat("id-ID").format(angka);
 
+// 1. Logic Login & Riwayat
 function cekLogin() {
     let sel = document.getElementById("login_nama");
     let inputNik = document.getElementById("login_nik").value;
-    if (sel.value === "" || inputNik === "") { alert("Isi Nama & NIK!"); return; }
-    if (inputNik === sel.value) {
+    if (inputNik === sel.value && inputNik !== "") {
         document.getElementById("login_panel").classList.add("hidden");
         document.getElementById("main_form").classList.remove("hidden");
         document.getElementById("final_nama").value = sel.options[sel.selectedIndex].text;
@@ -130,11 +140,28 @@ function cekLogin() {
     } else { alert("NIK Salah!"); }
 }
 
+function tampilkanRiwayatSingkat() {
+    let db = JSON.parse(localStorage.getItem("riwayat_prayanamart") || "[]");
+    let container = document.getElementById("recent_list");
+    if (db.length > 0) {
+        let html = "<b>5 Slip Terakhir:</b><ul>";
+        db.slice(-5).reverse().forEach(item => {
+            html += `<li onclick="isiToken('${item.token}')">${item.token} - ${item.nama}</li>`;
+        });
+        html += "</ul>";
+        container.innerHTML = html;
+    }
+}
+
+function isiToken(t) { document.getElementById("token_search").value = t; }
+
+// 2. Waktu Real-time
 setInterval(() => {
     let n = new Date();
-    document.getElementById('waktu_layar').innerText = n.toLocaleDateString("id-ID") + " - " + n.toLocaleTimeString("id-ID");
+    document.getElementById('waktu_layar').innerText = n.toLocaleDateString("id-ID") + " " + n.toLocaleTimeString("id-ID");
 }, 1000);
 
+// 3. Hitung-hitungan
 function formatRupiahInput(el) {
     let angka = el.value.replace(/[^0-9]/g, "");
     el.value = angka ? formatIDR(angka) : "";
@@ -148,19 +175,14 @@ function terbilang(n) {
     if (n < 12) return satuan[n];
     if (n < 20) return terbilang(n - 10) + " Belas";
     if (n < 100) return terbilang(Math.floor(n / 10)) + " Puluh " + terbilang(n % 10);
-    if (n < 200) return "Seratus " + terbilang(n - 100);
     if (n < 1000) return terbilang(Math.floor(n / 100)) + " Ratus " + terbilang(n % 100);
-    if (n < 2000) return "Seribu " + terbilang(n - 1000);
     if (n < 1000000) return terbilang(Math.floor(n / 1000)) + " Ribu " + terbilang(n % 1000);
-    if (n < 1000000000) return terbilang(Math.floor(n / 1000000)) + " Juta " + terbilang(n % 1000000);
-    return "";
+    return terbilang(Math.floor(n / 1000000)) + " Juta " + terbilang(n % 1000000);
 }
 
 function hitungSemua() {
-    // BON sekarang ikut memotong saldo tunai sistem
     let sistem = (v('shift1') + v('shift2')) - v('pengambilan') - v('pembatalan') - v('bon');
     document.getElementById("jumlah_sistem").value = formatIDR(sistem);
-
     let fisik = v('jumlah_fisik');
     let selisih = fisik - sistem;
     let statusBox = document.getElementById("status_box");
@@ -168,72 +190,97 @@ function hitungSemua() {
     if (fisik > 0 || sistem !== 0) {
         statusBox.classList.remove("hidden");
         document.getElementById("printBtn").classList.remove("hidden");
-        if (selisih === 0) {
-            statusBox.style.background = "#1e8e3e";
-            document.getElementById("status").innerText = "✓ TUNAI PAS";
-            document.getElementById("terbilang_status").innerText = "Nol Rupiah";
-        } else {
-            statusBox.style.background = selisih > 0 ? "#f29900" : "#d93025";
-            let label = selisih > 0 ? "▲ LEBIH: Rp " : "▼ KURANG: Rp ";
-            document.getElementById("status").innerText = label + formatIDR(Math.abs(selisih));
-            document.getElementById("terbilang_status").innerText = terbilang(Math.abs(selisih)) + " Rupiah";
-        }
+        statusBox.style.background = selisih === 0 ? "#1e8e3e" : (selisih > 0 ? "#f29900" : "#d93025");
+        document.getElementById("status").innerText = selisih === 0 ? "PAS" : (selisih > 0 ? "LEBIH: Rp " : "KURANG: Rp ") + formatIDR(Math.abs(selisih));
+        document.getElementById("terbilang_status").innerText = terbilang(Math.abs(selisih)) + " Rupiah";
     }
 }
 
+// 4. Penyimpanan & Cetak
 function cetak() {
+    let token = "PRY-" + Math.floor(Math.random() * 1000000);
     let n = new Date();
     let waktu = n.toLocaleDateString("id-ID") + " " + n.toLocaleTimeString("id-ID");
-    let selisih = v('jumlah_fisik') - v('jumlah_sistem');
-    let tksTerbilang = terbilang(Math.abs(selisih)) + " Rupiah";
+    
+    let dataSlip = {
+        token, waktu,
+        nama: document.getElementById("final_nama").value,
+        nik: document.getElementById("final_nik").value,
+        shift_total: formatIDR(v('shift1') + v('shift2')),
+        ambil: document.getElementById("pengambilan").value || "0",
+        batal: document.getElementById("pembatalan").value || "0",
+        bon: document.getElementById("bon").value || "0",
+        qris: document.getElementById("qris").value || "0",
+        tf: document.getElementById("transfer").value || "0",
+        laba: document.getElementById("laba").value || "0",
+        sistem: document.getElementById("jumlah_sistem").value,
+        fisik: document.getElementById("jumlah_fisik").value,
+        selisih: v('jumlah_fisik') - v('jumlah_sistem')
+    };
 
+    let db = JSON.parse(localStorage.getItem("riwayat_prayanamart") || "[]");
+    db.push(dataSlip);
+    localStorage.setItem("riwayat_prayanamart", JSON.stringify(db));
+
+    renderSlip(dataSlip);
+}
+
+function renderSlip(data) {
+    let slsLabel = data.selisih === 0 ? "PAS" : (data.selisih > 0 ? "LEBIH" : "KURANG");
+    let slsAngka = data.selisih === 0 ? "" : "Rp " + formatIDR(Math.abs(data.selisih));
+    
     let struk = `
-    <div style="width: 65mm; font-family: 'Courier New', monospace; font-size: 11px; padding-left: 6mm; position: relative; color: #000; line-height: 1.2;">
-        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 4mm; border-right: 1px double #000;"></div>
+    <div style="width: 65mm; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-left: 6mm; color: #000; line-height: 1.4;">
         <center>
-            <b style="font-size: 14px;">PRAYANA MART</b><br>
+            <b style="font-size: 16px;">PRAYANA MART</b><br>
             Part of Prayana Group<br>
-            --------------------------<br>
-            SLIP CLOSING HARIAN<br>
-            ${waktu}<br>
-            --------------------------
+            ---------------------------<br>
+            <b>SLIP CLOSING HARIAN</b><br>
+            ${data.waktu}<br>
+            TOKEN: ${data.token}<br>
+            ---------------------------
         </center>
-        Kasir : ${document.getElementById("final_nama").value}<br>
-        NIK   : ${document.getElementById("final_nik").value}<br>
-        --------------------------<br>
-        KAS MASUK (S1+S2):<br>
-        Rp ${formatIDR(v('shift1')+v('shift2'))}<br>
-        <br>
-        KAS KELUAR (-):<br>
-        - AMBIL : Rp ${document.getElementById('pengambilan').value || 0}<br>
-        - BATAL : Rp ${document.getElementById('pembatalan').value || 0}<br>
-        - BON   : Rp ${document.getElementById('bon').value || 0}<br>
-        --------------------------<br>
-        <b>TUNAI SISTEM : Rp ${document.getElementById('jumlah_sistem').value}</b><br>
-        <b>TUNAI FISIK  : Rp ${document.getElementById('jumlah_fisik').value}</b><br>
-        <b>SELISIH      : ${selisih === 0 ? 'PAS' : (selisih > 0 ? 'LEBIH' : 'KURANG')}</b><br>
-        ${selisih !== 0 ? 'Rp ' + formatIDR(Math.abs(selisih)) : ''}<br>
-        --------------------------<br>
-        TERBILANG SELISIH:<br>
-        <i>${tksTerbilang}</i><br>
-        --------------------------<br>
-        INFO NON-TUNAI:<br>
-        - QRIS  : Rp ${document.getElementById('qris').value || 0}<br>
-        - TF    : Rp ${document.getElementById('transfer').value || 0}<br>
-        --------------------------<br>
+        <b>KASIR :</b> ${data.nama}<br>
+        <b>NIK   :</b> ${data.nik}<br>
+        ---------------------------<br>
+        <table width="100%" style="font-size:11px;">
+            <tr><td>KAS MASUK</td><td align="right">Rp ${data.shift_total}</td></tr>
+            <tr><td>AMBIL TUNAI</td><td align="right">-${data.ambil}</td></tr>
+            <tr><td>BATAL/VOID</td><td align="right">-${data.batal}</td></tr>
+            <tr><td>BON KARYAWAN</td><td align="right">-${data.bon}</td></tr>
+        </table>
+        ---------------------------<br>
+        <table width="100%" style="font-size:12px; font-weight:bold;">
+            <tr><td>SALDO SISTEM</td><td align="right">${data.sistem}</td></tr>
+            <tr><td>SALDO FISIK</td><td align="right">${data.fisik}</td></tr>
+            <tr><td>SELISIH</td><td align="right">${slsLabel}</td></tr>
+            ${data.selisih !== 0 ? `<tr><td></td><td align="right">${slsAngka}</td></tr>` : ''}
+        </table>
+        ---------------------------<br>
+        <b>TERBILANG SELISIH:</b><br>
+        <i>${terbilang(Math.abs(data.selisih))} Rupiah</i><br>
+        ---------------------------<br>
+        <b>INFO:</b> QRIS Rp ${data.qris} | TF Rp ${data.tf}<br>
         <b>KEUNTUNGAN HARI INI:</b><br>
-        <b>Rp ${document.getElementById('laba').value || 0}</b><br>
-        --------------------------<br><br>
+        <b>Rp ${data.laba}</b><br>
+        ---------------------------<br><br>
         <center>
-            Kasir        Manager<br><br><br>
-            (________)    (________)
+            Kasir &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Manager<br><br><br>
+            (________) &nbsp;&nbsp;&nbsp;&nbsp; (________)
         </center>
     </div>`;
 
     let w = window.open('', '', 'width=450,height=600');
-    w.document.write('<html><body style="margin:0;">' + struk + '<br><br><hr style="border:1px dashed #000; width:65mm; margin-left:6mm;"><br>' + struk + '</body></html>');
+    w.document.write('<html><body style="margin:0;">' + struk + '</body></html>');
     w.document.close();
     setTimeout(() => { w.print(); }, 500);
+}
+
+function cariRiwayat() {
+    let t = document.getElementById("token_search").value;
+    let db = JSON.parse(localStorage.getItem("riwayat_prayanamart") || "[]");
+    let found = db.find(item => item.token === t);
+    if (found) { renderSlip(found); } else { alert("Token tidak ditemukan!"); }
 }
 </script>
 
