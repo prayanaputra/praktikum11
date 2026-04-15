@@ -3,313 +3,235 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form Penjualan Prayana Mart</title>
+<title>Sistem Closing - Prayana Mart</title>
 
 <style>
-/* Style Antarmuka Input (Layar) */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f2f5;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-}
+/* Style Umum */
+body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; }
+.container { width: 100%; max-width: 500px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+h2 { text-align: center; color: #1a73e8; margin-bottom: 5px; text-transform: uppercase; }
+.sub-header { text-align: center; font-size: 11px; color: #666; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
 
-.container {
-    width: 100%;
-    max-width: 400px;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
+/* Login Panel */
+#login_panel { text-align: center; padding: 10px 0; }
+.login-box { background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
+.btn-login { background: #1a73e8; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; }
 
-h2 {
-    text-align: center;
-    color: #1a73e8;
-    margin-bottom: 5px;
-    font-size: 20px;
-}
+/* Form Style */
+.form-group { margin-bottom: 12px; text-align: left; }
+label { display: block; font-size: 10px; font-weight: 700; color: #444; margin-bottom: 4px; text-transform: uppercase; }
+input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+input[readonly] { background: #f1f3f4; color: #1a73e8; font-weight: bold; }
+.section-title { font-size: 11px; font-weight: bold; border-left: 4px solid #1a73e8; margin: 15px 0 8px 0; padding-left: 8px; color: #1a73e8; background: #f0f7ff; padding: 6px 8px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-.sub-header {
-    text-align: center;
-    font-size: 12px;
-    color: #666;
-    margin-bottom: 20px;
-}
+/* Blok Keuntungan Khusus */
+.laba-box { background: #e6f4ea; border: 2px solid #1e8e3e; padding: 15px; border-radius: 8px; margin: 15px 0; }
+.laba-box label { color: #1e8e3e; font-size: 12px; }
+.laba-box input { border-color: #1e8e3e; font-size: 18px; color: #1e8e3e; font-weight: bold; }
 
-.form-group {
-    margin-bottom: 12px;
-}
-
-label {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: #444;
-    margin-bottom: 4px;
-}
-
-input, select, textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 14px;
-    box-sizing: border-box;
-    transition: border 0.3s;
-}
-
-input:focus {
-    border-color: #1a73e8;
-    outline: none;
-}
-
-input[readonly] {
-    background: #f9f9f9;
-}
-
-.section-title {
-    font-size: 13px;
-    font-weight: bold;
-    border-bottom: 2px solid #eee;
-    margin: 15px 0 10px 0;
-    padding-bottom: 5px;
-    color: #333;
-}
-
-.result-area {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-    margin-top: 15px;
-}
-
-#status {
-    font-weight: bold;
-    font-size: 16px;
-    margin-top: 5px;
-}
-
-.status-kurang { color: #d93025; }
-.status-lebih { color: #f29900; }
-.status-pas { color: #1e8e3e; }
-
-button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    font-size: 14px;
-    font-weight: bold;
-    border: none;
-    border-radius: 6px;
-    background: #1a73e8;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover { background: #1557b0; }
-
+/* Result Area */
+.result-area { color: white; padding: 15px; border-radius: 8px; text-align: center; margin-top: 15px; }
+#status { font-weight: bold; font-size: 16px; }
+#terbilang_status { font-style: italic; font-size: 11px; display: block; margin-top: 5px; }
 .hidden { display: none; }
 
-/* Style Khusus Cetak (Struk) */
-@media print {
-    @page {
-        size: 70mm 60mm;
-        margin: 0;
-    }
-    body { background: white; padding: 0; margin: 0; }
-    .container { display: none; } /* Sembunyikan form saat print */
-}
+button#printBtn { width: 100%; padding: 15px; margin-top: 20px; font-size: 14px; font-weight: bold; border: none; border-radius: 6px; background: #333; color: white; cursor: pointer; }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div id="login_panel" class="container">
     <h2>PRAYANA MART</h2>
-    <div class="sub-header">Part of Prayana Group</div>
+    <div class="sub-header">Login Kasir</div>
+    <div class="login-box">
+        <div class="form-group">
+            <label>Pilih Nama</label>
+            <select id="login_nama">
+                <option value="">-- Pilih Nama --</option>
+                <option value="003040621">Ni Wayan Desiari</option>
+                <option value="004040126">Elis Fidrotul Aliyah</option>
+                <option value="001110221">Owner</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Masukkan NIK</label>
+            <input type="password" id="login_nik" placeholder="Masukkan NIK Anda">
+        </div>
+        <button class="btn-login" onclick="cekLogin()">MASUK SISTEM</button>
+    </div>
+</div>
 
-    <div class="form-group">
-        <label>Nama Kasir</label>
-        <select id="nama" onchange="setNIK()">
-            <option value="">-- Pilih Kasir --</option>
-            <option value="003040621">Ni Wayan Desiari</option>
-            <option value="004040126">Elis Fidrotul Aliyah</option>
-            <option value="001110221">Owner</option>
-        </select>
+<div id="main_form" class="container hidden">
+    <h2>PRAYANA MART</h2>
+    <div class="sub-header">Slip Closing Harian</div>
+    
+    <div id="waktu_layar" style="text-align:center; font-weight:bold; font-size:12px; margin-bottom:15px;"></div>
+
+    <div class="grid-2">
+        <div class="form-group"><label>Kasir</label><input type="text" id="final_nama" readonly></div>
+        <div class="form-group"><label>NIK</label><input type="text" id="final_nik" readonly></div>
     </div>
 
-    <div class="form-group">
-        <label>NIK</label>
-        <input type="text" id="nik" readonly>
+    <div class="section-title">KAS MASUK</div>
+    <div class="grid-2">
+        <div class="form-group"><label>Shift 1</label><input type="text" id="shift1" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
+        <div class="form-group"><label>Shift 2</label><input type="text" id="shift2" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
     </div>
 
-    <div class="section-title">DATA TRANSAKSI</div>
-
+    <div class="section-title">KAS KELUAR (MEMOTONG SALDO TUNAI)</div>
+    <div class="grid-2">
+        <div class="form-group"><label>Pengambilan</label><input type="text" id="pengambilan" oninput="formatRupiahInput(this); hitungSemua()"></div>
+        <div class="form-group"><label>Pembatalan</label><input type="text" id="pembatalan" oninput="formatRupiahInput(this); hitungSemua()"></div>
+    </div>
     <div class="form-group">
-        <label>Kas Masuk Shift 1</label>
-        <input type="text" id="shift1" placeholder="0" oninput="formatRupiahInput(this); hitungTotal()">
+        <label>BON Karyawan / Lainnya</label>
+        <input type="text" id="bon" oninput="formatRupiahInput(this); hitungSemua()">
     </div>
 
-    <div class="form-group">
-        <label>Kas Masuk Shift 2</label>
-        <input type="text" id="shift2" placeholder="0" oninput="formatRupiahInput(this); hitungTotal()">
+    <div class="section-title">LAPORAN NON-TUNAI (HANYA INFO)</div>
+    <div class="grid-2">
+        <div class="form-group"><label>QRIS</label><input type="text" id="qris" oninput="formatRupiahInput(this)"></div>
+        <div class="form-group"><label>Transfer</label><input type="text" id="transfer" oninput="formatRupiahInput(this)"></div>
     </div>
 
-    <div class="form-group">
-        <label>Pengambilan / Biaya</label>
-        <input type="text" id="pengambilan" placeholder="0" oninput="formatRupiahInput(this); hitungTotal()">
+    <div class="laba-box">
+        <label>KEUNTUNGAN HARI INI</label>
+        <input type="text" id="laba" placeholder="Rp 0" oninput="formatRupiahInput(this)">
     </div>
 
-    <div class="form-group">
-        <label>Total QRIS</label>
-        <input type="text" id="qris" placeholder="0" oninput="formatRupiahInput(this); hitungTotal()">
+    <div class="section-title">VERIFIKASI FISIK</div>
+    <div class="grid-2">
+        <div class="form-group"><label>Tunai Sistem</label><input type="text" id="jumlah_sistem" readonly></div>
+        <div class="form-group"><label>Tunai Nyata</label><input type="text" id="jumlah_fisik" oninput="formatRupiahInput(this); hitungSemua()"></div>
     </div>
 
-    <div class="section-title">VERIFIKASI KAS</div>
-
-    <div class="form-group">
-        <label>Total Kas Seharusnya</label>
-        <input type="text" id="total" readonly style="font-weight: bold; color: #1a73e8;">
-    </div>
-
-    <div class="form-group">
-        <label>Uang Tunai Di Tangan (Setoran)</label>
-        <input type="text" id="setor" placeholder="0" oninput="formatRupiahInput(this); cekSelisih()">
-    </div>
-
-    <div class="result-area">
+    <div id="status_box" class="result-area hidden">
         <div id="status"></div>
+        <small id="terbilang_status"></small>
     </div>
 
-    <div class="form-group" style="margin-top: 10px;">
-        <label>Catatan Tambahan</label>
-        <textarea id="catatan" rows="2" placeholder="Contoh: Nota bensin, dll"></textarea>
-    </div>
-
-    <button id="printBtn" class="hidden" onclick="cetak()">Cetak Slip Closing</button>
+    <button id="printBtn" class="hidden" onclick="cetak()">CETAK SLIP PRAYANA MART</button>
 </div>
 
 <script>
 const formatIDR = (angka) => new Intl.NumberFormat("id-ID").format(angka);
 
-function setNIK() {
-    document.getElementById('nik').value = document.getElementById('nama').value;
+function cekLogin() {
+    let sel = document.getElementById("login_nama");
+    let inputNik = document.getElementById("login_nik").value;
+    if (sel.value === "" || inputNik === "") { alert("Isi Nama & NIK!"); return; }
+    if (inputNik === sel.value) {
+        document.getElementById("login_panel").classList.add("hidden");
+        document.getElementById("main_form").classList.remove("hidden");
+        document.getElementById("final_nama").value = sel.options[sel.selectedIndex].text;
+        document.getElementById("final_nik").value = sel.value;
+    } else { alert("NIK Salah!"); }
 }
+
+setInterval(() => {
+    let n = new Date();
+    document.getElementById('waktu_layar').innerText = n.toLocaleDateString("id-ID") + " - " + n.toLocaleTimeString("id-ID");
+}, 1000);
 
 function formatRupiahInput(el) {
     let angka = el.value.replace(/[^0-9]/g, "");
     el.value = angka ? formatIDR(angka) : "";
 }
 
-function ambilAngka(val) {
-    return Number(val.replace(/[^0-9]/g, "")) || 0;
+function v(id) { return Number(document.getElementById(id).value.replace(/[^0-9]/g, "")) || 0; }
+
+function terbilang(n) {
+    if (n === 0) return "Nol";
+    const satuan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
+    if (n < 12) return satuan[n];
+    if (n < 20) return terbilang(n - 10) + " Belas";
+    if (n < 100) return terbilang(Math.floor(n / 10)) + " Puluh " + terbilang(n % 10);
+    if (n < 200) return "Seratus " + terbilang(n - 100);
+    if (n < 1000) return terbilang(Math.floor(n / 100)) + " Ratus " + terbilang(n % 100);
+    if (n < 2000) return "Seribu " + terbilang(n - 1000);
+    if (n < 1000000) return terbilang(Math.floor(n / 1000)) + " Ribu " + terbilang(n % 1000);
+    if (n < 1000000000) return terbilang(Math.floor(n / 1000000)) + " Juta " + terbilang(n % 1000000);
+    return "";
 }
 
-function hitungTotal() {
-    let total = ambilAngka(document.getElementById('shift1').value)
-              + ambilAngka(document.getElementById('shift2').value)
-              - ambilAngka(document.getElementById('pengambilan').value)
-              - ambilAngka(document.getElementById('qris').value);
+function hitungSemua() {
+    // BON sekarang ikut memotong saldo tunai sistem
+    let sistem = (v('shift1') + v('shift2')) - v('pengambilan') - v('pembatalan') - v('bon');
+    document.getElementById("jumlah_sistem").value = formatIDR(sistem);
 
-    document.getElementById("total").value = formatIDR(total);
-    cekSelisih();
-}
-
-function cekSelisih() {
-    let status = document.getElementById("status");
-    let printBtn = document.getElementById("printBtn");
-    let totalVal = ambilAngka(document.getElementById('total').value);
-    let setorVal = ambilAngka(document.getElementById('setor').value);
-
-    let selisih = setorVal - totalVal;
-
-    if (setorVal === 0 && totalVal === 0) {
-        status.innerHTML = "";
-        printBtn.classList.add("hidden");
-        return;
+    let fisik = v('jumlah_fisik');
+    let selisih = fisik - sistem;
+    let statusBox = document.getElementById("status_box");
+    
+    if (fisik > 0 || sistem !== 0) {
+        statusBox.classList.remove("hidden");
+        document.getElementById("printBtn").classList.remove("hidden");
+        if (selisih === 0) {
+            statusBox.style.background = "#1e8e3e";
+            document.getElementById("status").innerText = "✓ TUNAI PAS";
+            document.getElementById("terbilang_status").innerText = "Nol Rupiah";
+        } else {
+            statusBox.style.background = selisih > 0 ? "#f29900" : "#d93025";
+            let label = selisih > 0 ? "▲ LEBIH: Rp " : "▼ KURANG: Rp ";
+            document.getElementById("status").innerText = label + formatIDR(Math.abs(selisih));
+            document.getElementById("terbilang_status").innerText = terbilang(Math.abs(selisih)) + " Rupiah";
+        }
     }
-
-    if (selisih === 0) {
-        status.innerHTML = `<span class="status-pas">✓ UANG PAS</span>`;
-    } else if (selisih > 0) {
-        status.innerHTML = `<span class="status-lebih">▲ LEBIH: Rp ${formatIDR(selisih)}</span>`;
-    } else {
-        status.innerHTML = `<span class="status-kurang">▼ KURANG: Rp ${formatIDR(Math.abs(selisih))}</span>`;
-    }
-
-    printBtn.classList.remove("hidden");
 }
 
 function cetak() {
-    if (!document.getElementById('nama').value) {
-        alert("Pilih nama kasir terlebih dahulu!");
-        return;
-    }
+    let n = new Date();
+    let waktu = n.toLocaleDateString("id-ID") + " " + n.toLocaleTimeString("id-ID");
+    let selisih = v('jumlah_fisik') - v('jumlah_sistem');
+    let tksTerbilang = terbilang(Math.abs(selisih)) + " Rupiah";
 
-    let now = new Date();
-    let tglCetak = now.toLocaleDateString("id-ID");
-    let jamCetak = now.toLocaleTimeString("id-ID", {hour: '2-digit', minute:'2-digit'});
-    
-    let selSelect = document.getElementById("nama");
-    let namaTeks = selSelect.options[selSelect.selectedIndex].text;
-    
-    let totalVal = ambilAngka(document.getElementById('total').value);
-    let setorVal = ambilAngka(document.getElementById('setor').value);
-    let selisihVal = setorVal - totalVal;
-    
-    let statusTeks = "PAS";
-    if (selisihVal > 0) statusTeks = "LEBIH: Rp " + formatIDR(selisihVal);
-    if (selisihVal < 0) statusTeks = "KURANG: Rp " + formatIDR(Math.abs(selisihVal));
-
-    let content = `
-    <div style="width: 62mm; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.2; color: #000;">
-        <div style="text-align: center; border-bottom: 1px dashed #000; padding-bottom: 5px; margin-bottom: 5px;">
+    let struk = `
+    <div style="width: 65mm; font-family: 'Courier New', monospace; font-size: 11px; padding-left: 6mm; position: relative; color: #000; line-height: 1.2;">
+        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 4mm; border-right: 1px double #000;"></div>
+        <center>
             <b style="font-size: 14px;">PRAYANA MART</b><br>
-            <small>Part of Prayana Group</small><br>
-            <div style="font-size: 9px; margin-top: 4px;">
-                SLIP CLOSING HARIAN<br>
-                ${tglCetak} - ${jamCetak}
-            </div>
-        </div>
+            Part of Prayana Group<br>
+            --------------------------<br>
+            SLIP CLOSING HARIAN<br>
+            ${waktu}<br>
+            --------------------------
+        </center>
+        Kasir : ${document.getElementById("final_nama").value}<br>
+        NIK   : ${document.getElementById("final_nik").value}<br>
+        --------------------------<br>
+        KAS MASUK (S1+S2):<br>
+        Rp ${formatIDR(v('shift1')+v('shift2'))}<br>
+        <br>
+        KAS KELUAR (-):<br>
+        - AMBIL : Rp ${document.getElementById('pengambilan').value || 0}<br>
+        - BATAL : Rp ${document.getElementById('pembatalan').value || 0}<br>
+        - BON   : Rp ${document.getElementById('bon').value || 0}<br>
+        --------------------------<br>
+        <b>TUNAI SISTEM : Rp ${document.getElementById('jumlah_sistem').value}</b><br>
+        <b>TUNAI FISIK  : Rp ${document.getElementById('jumlah_fisik').value}</b><br>
+        <b>SELISIH      : ${selisih === 0 ? 'PAS' : (selisih > 0 ? 'LEBIH' : 'KURANG')}</b><br>
+        ${selisih !== 0 ? 'Rp ' + formatIDR(Math.abs(selisih)) : ''}<br>
+        --------------------------<br>
+        TERBILANG SELISIH:<br>
+        <i>${tksTerbilang}</i><br>
+        --------------------------<br>
+        INFO NON-TUNAI:<br>
+        - QRIS  : Rp ${document.getElementById('qris').value || 0}<br>
+        - TF    : Rp ${document.getElementById('transfer').value || 0}<br>
+        --------------------------<br>
+        <b>KEUNTUNGAN HARI INI:</b><br>
+        <b>Rp ${document.getElementById('laba').value || 0}</b><br>
+        --------------------------<br><br>
+        <center>
+            Kasir        Manager<br><br><br>
+            (________)    (________)
+        </center>
+    </div>`;
 
-        <table width="100%" style="font-size: 11px;">
-            <tr><td>Kasir</td><td>: ${namaTeks}</td></tr>
-            <tr><td>NIK</td><td>: ${document.getElementById('nik').value}</td></tr>
-        </table>
-        
-        <div style="border-bottom: 1px dashed #000; margin: 5px 0;"></div>
-
-        <table width="100%" style="font-size: 11px;">
-            <tr><td>Shift 1</td><td align="right">Rp ${document.getElementById('shift1').value || 0}</td></tr>
-            <tr><td>Shift 2</td><td align="right">Rp ${document.getElementById('shift2').value || 0}</td></tr>
-            <tr><td>Biaya/Ambil</td><td align="right">Rp (${document.getElementById('pengambilan').value || 0})</td></tr>
-            <tr><td>QRIS</td><td align="right">Rp (${document.getElementById('qris').value || 0})</td></tr>
-            <tr style="font-weight: bold;"><td>TOTAL KAS</td><td align="right">Rp ${document.getElementById('total').value}</td></tr>
-        </table>
-
-        <div style="border-bottom: 1px dashed #000; margin: 5px 0;"></div>
-
-        <table width="100%" style="font-size: 11px;">
-            <tr><td>TUNAI SETOR</td><td align="right">Rp ${document.getElementById('setor').value}</td></tr>
-            <tr style="font-weight: bold;"><td>SELISIH</td><td align="right">${statusTeks}</td></tr>
-        </table>
-
-        <div style="margin-top: 5px; font-size: 10px;">
-            Ket: ${document.getElementById('catatan').value || "-"}
-        </div>
-
-        <div style="margin-top: 15px; display: flex; justify-content: space-between; text-align: center;">
-            <div style="width: 45%;">Kasir<br><br><br>(________)</div>
-            <div style="width: 45%;">Manager<br><br><br>(________)</div>
-        </div>
-    </div>
-    `;
-
-    let w = window.open('', '', 'width=400,height=600');
-    w.document.write('<html><head><title>Print Slip</title></head><body style="margin:0; padding: 4mm;">' + content + '</body></html>');
+    let w = window.open('', '', 'width=450,height=600');
+    w.document.write('<html><body style="margin:0;">' + struk + '<br><br><hr style="border:1px dashed #000; width:65mm; margin-left:6mm;"><br>' + struk + '</body></html>');
     w.document.close();
     setTimeout(() => { w.print(); }, 500);
 }
