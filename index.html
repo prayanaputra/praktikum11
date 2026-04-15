@@ -6,46 +6,40 @@
 <title>Sistem Closing - Prayana Mart</title>
 
 <style>
-/* Style Antarmuka Layar */
+/* Style Umum */
 body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; min-height: 100vh; }
 .container { width: 100%; max-width: 500px; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
 h2 { text-align: center; color: #1a73e8; margin-bottom: 5px; text-transform: uppercase; }
 .sub-header { text-align: center; font-size: 11px; color: #666; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
 
+/* Login & Search */
 .login-box { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid #eee; }
 .btn-login { background: #1a73e8; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-.search-box { margin-top: 20px; padding-top: 15px; border-top: 2px dashed #eee; }
+.search-box { margin-top: 20px; padding-top: 20px; border-top: 2px dashed #eee; }
 .btn-search { background: #34a853; color: white; border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
+/* Form Style */
 .form-group { margin-bottom: 12px; text-align: left; }
 label { display: block; font-size: 10px; font-weight: 700; color: #444; margin-bottom: 4px; text-transform: uppercase; }
 input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
 input[readonly] { background: #f8f9fa; color: #1a73e8; font-weight: bold; border-color: #eee; }
-
 .section-title { font-size: 11px; font-weight: bold; border-left: 4px solid #1a73e8; margin: 15px 0 8px 0; padding-left: 8px; color: #1a73e8; background: #f0f7ff; padding: 6px 8px; }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
 /* Blok Keuntungan */
 .laba-box { background: #e6f4ea; border: 2px solid #1e8e3e; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center; }
 .laba-box label { color: #1e8e3e; font-size: 12px; }
-.laba-box input { border: none; font-size: 22px; color: #1e8e3e; text-align: center; background: transparent; width: 100%; font-weight: bold; outline: none; }
+.laba-box input { border-color: #1e8e3e; font-size: 20px; color: #1e8e3e; text-align: center; background: transparent; }
 
-/* Status Selisih di Layar */
+/* Result */
 .result-area { color: white; padding: 15px; border-radius: 10px; text-align: center; margin-top: 15px; }
 #status { font-weight: bold; font-size: 18px; }
-#terbilang_status { font-style: italic; font-size: 11px; display: block; margin-top: 5px; }
-
 .hidden { display: none; }
-#printBtn { width: 100%; padding: 15px; margin-top: 20px; font-size: 14px; font-weight: bold; border: none; border-radius: 10px; background: #202124; color: white; cursor: pointer; }
-
-/* List Riwayat Singkat */
-#recent_list { margin-top: 15px; font-size: 11px; color: #555; text-align: left; }
-#recent_list ul { padding-left: 20px; margin-top: 5px; }
-#recent_list li { margin-bottom: 4px; color: #1a73e8; cursor: pointer; text-decoration: underline; }
+button#printBtn { width: 100%; padding: 15px; margin-top: 20px; font-size: 14px; font-weight: bold; border: none; border-radius: 10px; background: #202124; color: white; cursor: pointer; }
 </style>
 </head>
 
-<body onload="tampilkanRiwayatSingkat()">
+<body>
 
 <div id="login_panel" class="container">
     <h2>PRAYANA MART</h2>
@@ -69,15 +63,14 @@ input[readonly] { background: #f8f9fa; color: #1a73e8; font-weight: bold; border
 
     <div class="search-box">
         <label>Cari Riwayat Slip (Token)</label>
-        <input type="text" id="token_search" placeholder="Masukkan Kode Token">
+        <input type="text" id="token_search" placeholder="Contoh: PRY-123456">
         <button class="btn-search" onclick="cariRiwayat()">LIHAT DATA LAMA</button>
-        <div id="recent_list"></div>
     </div>
 </div>
 
 <div id="main_form" class="container hidden">
     <div style="display:flex; justify-content: space-between; align-items: center;">
-        <button onclick="location.reload()" style="padding:5px 10px; font-size:10px; background:#fce8e6; color:#d93025; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">LOGOUT</button>
+        <button onclick="location.reload()" style="padding:5px 10px; font-size:10px; background:#eee; border:none; border-radius:5px; cursor:pointer;">Logout</button>
         <div id="waktu_layar" style="font-weight:bold; font-size:11px;"></div>
     </div>
     
@@ -87,23 +80,19 @@ input[readonly] { background: #f8f9fa; color: #1a73e8; font-weight: bold; border
         <div class="form-group"><label>NIK</label><input type="text" id="final_nik" readonly></div>
     </div>
 
-    <div class="section-title">KAS MASUK (OMSET)</div>
+    <div class="section-title">INPUT KAS</div>
     <div class="grid-2">
-        <div class="form-group"><label>Shift 1</label><input type="text" id="shift1" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
-        <div class="form-group"><label>Shift 2</label><input type="text" id="shift2" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
+        <div class="form-group"><label>S1</label><input type="text" id="shift1" oninput="formatRupiahInput(this); hitungSemua()"></div>
+        <div class="form-group"><label>S2</label><input type="text" id="shift2" oninput="formatRupiahInput(this); hitungSemua()"></div>
+        <div class="form-group"><label>Pengambilan</label><input type="text" id="pengambilan" oninput="formatRupiahInput(this); hitungSemua()"></div>
+        <div class="form-group"><label>Pembatalan</label><input type="text" id="pembatalan" oninput="formatRupiahInput(this); hitungSemua()"></div>
     </div>
+    <div class="form-group"><label>BON Karyawan</label><input type="text" id="bon" oninput="formatRupiahInput(this); hitungSemua()"></div>
 
-    <div class="section-title">KAS KELUAR (MEMOTONG TUNAI)</div>
+    <div class="section-title">INFO NON-TUNAI</div>
     <div class="grid-2">
-        <div class="form-group"><label>Pengambilan</label><input type="text" id="pengambilan" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
-        <div class="form-group"><label>Pembatalan</label><input type="text" id="pembatalan" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
-    </div>
-    <div class="form-group"><label>BON Karyawan / Hutang</label><input type="text" id="bon" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
-
-    <div class="section-title">INFO SAJA (TIDAK MEMOTONG)</div>
-    <div class="grid-2">
-        <div class="form-group"><label>QRIS</label><input type="text" id="qris" placeholder="0" oninput="formatRupiahInput(this)"></div>
-        <div class="form-group"><label>Transfer Bank</label><input type="text" id="transfer" placeholder="0" oninput="formatRupiahInput(this)"></div>
+        <div class="form-group"><label>QRIS</label><input type="text" id="qris" oninput="formatRupiahInput(this)"></div>
+        <div class="form-group"><label>Transfer</label><input type="text" id="transfer" oninput="formatRupiahInput(this)"></div>
     </div>
 
     <div class="laba-box">
@@ -113,8 +102,8 @@ input[readonly] { background: #f8f9fa; color: #1a73e8; font-weight: bold; border
 
     <div class="section-title">VERIFIKASI TUNAI</div>
     <div class="grid-2">
-        <div class="form-group"><label>Saldo Sistem</label><input type="text" id="jumlah_sistem" readonly></div>
-        <div class="form-group"><label>Fisik (Setoran)</label><input type="text" id="jumlah_fisik" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
+        <div class="form-group"><label>Sistem</label><input type="text" id="jumlah_sistem" readonly></div>
+        <div class="form-group"><label>Fisik</label><input type="text" id="jumlah_fisik" oninput="formatRupiahInput(this); hitungSemua()"></div>
     </div>
 
     <div id="status_box" class="result-area hidden">
@@ -122,13 +111,12 @@ input[readonly] { background: #f8f9fa; color: #1a73e8; font-weight: bold; border
         <small id="terbilang_status"></small>
     </div>
 
-    <button id="printBtn" class="hidden" onclick="cetak()">CETAK SLIP CLOSING</button>
+    <button id="printBtn" class="hidden" onclick="cetak()">CETAK SLIP SEKARANG</button>
 </div>
 
 <script>
 const formatIDR = (angka) => new Intl.NumberFormat("id-ID").format(angka);
 
-// 1. Logic Login & Riwayat
 function cekLogin() {
     let sel = document.getElementById("login_nama");
     let inputNik = document.getElementById("login_nik").value;
@@ -140,28 +128,11 @@ function cekLogin() {
     } else { alert("NIK Salah!"); }
 }
 
-function tampilkanRiwayatSingkat() {
-    let db = JSON.parse(localStorage.getItem("riwayat_prayanamart") || "[]");
-    let container = document.getElementById("recent_list");
-    if (db.length > 0) {
-        let html = "<b>5 Slip Terakhir:</b><ul>";
-        db.slice(-5).reverse().forEach(item => {
-            html += `<li onclick="isiToken('${item.token}')">${item.token} - ${item.nama}</li>`;
-        });
-        html += "</ul>";
-        container.innerHTML = html;
-    }
-}
-
-function isiToken(t) { document.getElementById("token_search").value = t; }
-
-// 2. Waktu Real-time
 setInterval(() => {
     let n = new Date();
     document.getElementById('waktu_layar').innerText = n.toLocaleDateString("id-ID") + " " + n.toLocaleTimeString("id-ID");
 }, 1000);
 
-// 3. Hitung-hitungan
 function formatRupiahInput(el) {
     let angka = el.value.replace(/[^0-9]/g, "");
     el.value = angka ? formatIDR(angka) : "";
@@ -196,9 +167,9 @@ function hitungSemua() {
     }
 }
 
-// 4. Penyimpanan & Cetak
+// LOGIKA PENYIMPANAN
 function cetak() {
-    let token = "PRY-" + Math.floor(Math.random() * 1000000);
+    let token = "PRY-" + Date.now();
     let n = new Date();
     let waktu = n.toLocaleDateString("id-ID") + " " + n.toLocaleTimeString("id-ID");
     
@@ -206,18 +177,20 @@ function cetak() {
         token, waktu,
         nama: document.getElementById("final_nama").value,
         nik: document.getElementById("final_nik").value,
-        shift_total: formatIDR(v('shift1') + v('shift2')),
-        ambil: document.getElementById("pengambilan").value || "0",
-        batal: document.getElementById("pembatalan").value || "0",
-        bon: document.getElementById("bon").value || "0",
-        qris: document.getElementById("qris").value || "0",
-        tf: document.getElementById("transfer").value || "0",
-        laba: document.getElementById("laba").value || "0",
+        s1: document.getElementById("shift1").value,
+        s2: document.getElementById("shift2").value,
+        ambil: document.getElementById("pengambilan").value,
+        batal: document.getElementById("pembatalan").value,
+        bon: document.getElementById("bon").value,
+        qris: document.getElementById("qris").value,
+        tf: document.getElementById("transfer").value,
+        laba: document.getElementById("laba").value,
         sistem: document.getElementById("jumlah_sistem").value,
         fisik: document.getElementById("jumlah_fisik").value,
         selisih: v('jumlah_fisik') - v('jumlah_sistem')
     };
 
+    // Simpan ke LocalStorage
     let db = JSON.parse(localStorage.getItem("riwayat_prayanamart") || "[]");
     db.push(dataSlip);
     localStorage.setItem("riwayat_prayanamart", JSON.stringify(db));
@@ -232,7 +205,7 @@ function renderSlip(data) {
     let struk = `
     <div style="width: 65mm; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-left: 6mm; color: #000; line-height: 1.4;">
         <center>
-            <b style="font-size: 16px;">PRAYANA MART</b><br>
+            <b style="font-size: 15px;">PRAYANA MART</b><br>
             Part of Prayana Group<br>
             ---------------------------<br>
             <b>SLIP CLOSING HARIAN</b><br>
@@ -244,15 +217,15 @@ function renderSlip(data) {
         <b>NIK   :</b> ${data.nik}<br>
         ---------------------------<br>
         <table width="100%" style="font-size:11px;">
-            <tr><td>KAS MASUK</td><td align="right">Rp ${data.shift_total}</td></tr>
-            <tr><td>AMBIL TUNAI</td><td align="right">-${data.ambil}</td></tr>
-            <tr><td>BATAL/VOID</td><td align="right">-${data.batal}</td></tr>
-            <tr><td>BON KARYAWAN</td><td align="right">-${data.bon}</td></tr>
+            <tr><td>OMSET S1+S2</td><td align="right">Rp ${formatIDR(v('shift1')+v('shift2'))}</td></tr>
+            <tr><td>PENGAMBILAN</td><td align="right">-${data.ambil || 0}</td></tr>
+            <tr><td>PEMBATALAN</td><td align="right">-${data.batal || 0}</td></tr>
+            <tr><td>BON KARYAWAN</td><td align="right">-${data.bon || 0}</td></tr>
         </table>
         ---------------------------<br>
         <table width="100%" style="font-size:12px; font-weight:bold;">
-            <tr><td>SALDO SISTEM</td><td align="right">${data.sistem}</td></tr>
-            <tr><td>SALDO FISIK</td><td align="right">${data.fisik}</td></tr>
+            <tr><td>TUNAI SISTEM</td><td align="right">${data.sistem}</td></tr>
+            <tr><td>TUNAI FISIK</td><td align="right">${data.fisik}</td></tr>
             <tr><td>SELISIH</td><td align="right">${slsLabel}</td></tr>
             ${data.selisih !== 0 ? `<tr><td></td><td align="right">${slsAngka}</td></tr>` : ''}
         </table>
@@ -260,9 +233,8 @@ function renderSlip(data) {
         <b>TERBILANG SELISIH:</b><br>
         <i>${terbilang(Math.abs(data.selisih))} Rupiah</i><br>
         ---------------------------<br>
-        <b>INFO:</b> QRIS Rp ${data.qris} | TF Rp ${data.tf}<br>
-        <b>KEUNTUNGAN HARI INI:</b><br>
-        <b>Rp ${data.laba}</b><br>
+        <b>NON-TUNAI:</b> QRIS ${data.qris || 0} | TF ${data.tf || 0}<br>
+        <b>KEUNTUNGAN: Rp ${data.laba || 0}</b><br>
         ---------------------------<br><br>
         <center>
             Kasir &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Manager<br><br><br>
@@ -280,7 +252,11 @@ function cariRiwayat() {
     let t = document.getElementById("token_search").value;
     let db = JSON.parse(localStorage.getItem("riwayat_prayanamart") || "[]");
     let found = db.find(item => item.token === t);
-    if (found) { renderSlip(found); } else { alert("Token tidak ditemukan!"); }
+    if (found) {
+        if(confirm("Data ditemukan atas nama " + found.nama + ". Cetak ulang?")) {
+            renderSlip(found);
+        }
+    } else { alert("Token tidak ditemukan!"); }
 }
 </script>
 
