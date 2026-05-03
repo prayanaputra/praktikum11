@@ -1,282 +1,904 @@
 <!DOCTYPE html>
+
 <html lang="id">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistem Closing - Prayana Mart</title>
+
+<title>ANBK Informatika</title>
 
 <style>
-/* Style Tetap Sama Seperti Sebelumnya */
-body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; min-height: 100vh; }
-.container { width: 100%; max-width: 500px; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-h2 { text-align: center; color: #1a73e8; margin-bottom: 5px; text-transform: uppercase; }
-.sub-header { text-align: center; font-size: 11px; color: #666; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
-.login-box { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid #eee; }
-.btn-login { background: #1a73e8; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-.search-box { margin-top: 20px; padding-top: 15px; border-top: 2px dashed #eee; }
-.btn-search { background: #34a853; color: white; border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-.form-group { margin-bottom: 12px; text-align: left; }
-label { display: block; font-size: 10px; font-weight: 700; color: #444; margin-bottom: 4px; text-transform: uppercase; }
-input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
-input[readonly] { background: #f8f9fa; color: #1a73e8; font-weight: bold; border-color: #eee; }
-.section-title { font-size: 11px; font-weight: bold; border-left: 4px solid #1a73e8; margin: 15px 0 8px 0; padding-left: 8px; color: #1a73e8; background: #f0f7ff; padding: 6px 8px; }
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.laba-box { background: #e6f4ea; border: 2px solid #1e8e3e; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center; }
-.laba-box label { color: #1e8e3e; font-size: 12px; }
-.laba-box input { border: none; font-size: 22px; color: #1e8e3e; text-align: center; background: transparent; width: 100%; font-weight: bold; outline: none; }
-.result-area { color: white; padding: 15px; border-radius: 10px; text-align: center; margin-top: 15px; }
-#status { font-weight: bold; font-size: 18px; }
-#terbilang_status { font-style: italic; font-size: 11px; display: block; margin-top: 5px; }
-.hidden { display: none; }
-#printBtn { width: 100%; padding: 15px; margin-top: 20px; font-size: 14px; font-weight: bold; border: none; border-radius: 10px; background: #202124; color: white; cursor: pointer; }
-#recent_list { margin-top: 15px; font-size: 11px; color: #555; text-align: left; }
-#recent_list ul { padding-left: 20px; margin-top: 5px; }
-#recent_list li { margin-bottom: 4px; color: #1a73e8; cursor: pointer; text-decoration: underline; }
+
+body{font-family:'Segoe UI';margin:0;background:#f0f4f8}
+
+.start{display:flex;justify-content:center;align-items:center;height:100vh}
+
+.card{background:#fff;padding:25px;border-radius:15px;box-shadow:0 10px 25px rgba(0,0,0,.1);width:90%;max-width:380px}
+
+input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #ccc}
+
+.container{display:flex}
+
+.sidebar{width:90px;background:#fff;padding:10px;height:100vh;overflow:auto}
+
+.sidebar button{width:38px;height:38px;margin:5px;border:none;border-radius:50%;background:#e0e7ff}
+
+.sidebar button.active{background:#6366f1;color:#fff}
+
+.answered{background:#22c55e !important;color:white}
+
+.doubt{background:orange !important;color:white}
+
+.main{flex:1;padding:20px}
+
+.option{display:block;padding:12px;margin:10px 0;border:2px solid #ddd;border-radius:10px;cursor:pointer}
+
+.option:hover{background:#eef2ff}
+
+.locked{opacity:.6;pointer-events:none}
+
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px}
+
+button{flex:1;padding:10px;border:none;border-radius:10px;background:#6366f1;color:#fff}
+
+.ragu{background:orange}
+
+.timer{position:fixed;top:10px;right:10px;background:#111;color:#fff;padding:10px;border-radius:10px}
+
 </style>
+
 </head>
 
-<body onload="tampilkanRiwayatSingkat()">
+<body>
 
-<div id="login_panel" class="container">
-    <h2>PRAYANA MART</h2>
-    <div class="sub-header">Access Control</div>
-    <div class="login-box">
-        <div class="form-group">
-            <label>Pilih Kasir</label>
-            <select id="login_nama">
-                <option value="">-- Pilih --</option>
-                <option value="003040621">Ni Wayan Desiari</option>
-                <option value="004040126">Elis Fidrotul Aliyah</option>
-                <option value="001110221">Owner</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>PIN (NIK)</label>
-            <input type="password" id="login_nik" placeholder="Masukkan NIK">
-        </div>
-        <button class="btn-login" onclick="cekLogin()">MASUK SISTEM</button>
-    </div>
+<div class="start" id="start">
 
-    <div class="search-box">
-        <label>Cari Riwayat Slip (Token)</label>
-        <input type="text" id="token_search" placeholder="Masukkan Kode Token">
-        <button class="btn-search" onclick="cariRiwayat()">LIHAT DATA LAMA</button>
-        <div id="recent_list"></div>
-    </div>
+<div class="card">
+
+<h3 id="greet"></h3>
+
+<input id="nama" placeholder="Nama">
+
+<input id="absen" placeholder="No Absen">
+
+<input id="kelas" placeholder="Kelas">
+
+<button onclick="mulai()">Mulai</button>
+
 </div>
 
-<div id="main_form" class="container hidden">
-    <div style="display:flex; justify-content: space-between; align-items: center;">
-        <button onclick="location.reload()" style="padding:5px 10px; font-size:10px; background:#fce8e6; color:#d93025; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">LOGOUT</button>
-        <div id="waktu_layar" style="font-weight:bold; font-size:11px;"></div>
-    </div>
-    
-    <div class="section-title">PETUGAS</div>
-    <div class="grid-2">
-        <div class="form-group"><label>Kasir</label><input type="text" id="final_nama" readonly></div>
-        <div class="form-group"><label>NIK</label><input type="text" id="final_nik" readonly></div>
-    </div>
-
-    <div class="section-title">MODAL & OMSET</div>
-    <div class="form-group">
-        <label>Uang Modal Awal (Tetap di Laci)</label>
-        <input type="text" id="kas_awal" placeholder="Rp 0" oninput="formatRupiahInput(this)">
-    </div>
-    <div class="grid-2">
-        <div class="form-group"><label>Omset S1</label><input type="text" id="shift1" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
-        <div class="form-group"><label>Omset S2</label><input type="text" id="shift2" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
-    </div>
-
-    <div class="section-title">PENGELUARAN TUNAI</div>
-    <div class="grid-2">
-        <div class="form-group"><label>Pengambilan</label><input type="text" id="pengambilan" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
-        <div class="form-group"><label>Pembatalan</label><input type="text" id="pembatalan" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
-    </div>
-    <div class="form-group"><label>BON Karyawan / Hutang</label><input type="text" id="bon" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
-
-    <div class="section-title">NON-TUNAI (HANYA INFO)</div>
-    <div class="grid-2">
-        <div class="form-group"><label>QRIS</label><input type="text" id="qris" placeholder="0" oninput="formatRupiahInput(this)"></div>
-        <div class="form-group"><label>Transfer Bank</label><input type="text" id="transfer" placeholder="0" oninput="formatRupiahInput(this)"></div>
-    </div>
-
-    <div class="laba-box">
-        <label>KEUNTUNGAN HARI INI</label>
-        <input type="text" id="laba" oninput="formatRupiahInput(this)" placeholder="Rp 0">
-    </div>
-
-    <div class="section-title">VERIFIKASI SETORAN TUNAI</div>
-    <div class="grid-2">
-        <div class="form-group"><label>Target Setor (Bersih)</label><input type="text" id="jumlah_sistem" readonly></div>
-        <div class="form-group"><label>Setoran Nyata</label><input type="text" id="jumlah_fisik" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()"></div>
-    </div>
-
-    <div id="status_box" class="result-area hidden">
-        <div id="status"></div>
-        <small id="terbilang_status"></small>
-    </div>
-
-    <button id="printBtn" class="hidden" onclick="cetak()">CETAK SLIP CLOSING</button>
 </div>
+
+<div class="container" id="quiz" style="display:none">
+
+<div class="sidebar" id="nav"></div>
+
+<div class="main">
+
+<h2>SUMATIF AKHIR SEMESTER LATIHAN</h2>
+
+<div id="box" class="card"></div>
+
+<div class="btns">
+
+<button onclick="prev()">Prev</button>
+
+<button onclick="next()">Next</button>
+
+<button class="ragu" onclick="ragu()">Ragu</button>
+
+<button onclick="submit()">Submit</button>
+
+</div>
+
+<div id="hasil" class="card" style="display:none"></div>
+
+</div>
+
+</div>
+
+<div class="timer" id="timer"></div>
 
 <script>
-const formatIDR = (angka) => new Intl.NumberFormat("id-ID").format(angka);
 
-function cekLogin() {
-    let sel = document.getElementById("login_nama");
-    let inputNik = document.getElementById("login_nik").value;
-    if (inputNik === sel.value && inputNik !== "") {
-        document.getElementById("login_panel").classList.add("hidden");
-        document.getElementById("main_form").classList.remove("hidden");
-        document.getElementById("final_nama").value = sel.options[sel.selectedIndex].text;
-        document.getElementById("final_nik").value = sel.value;
-    } else { alert("NIK Salah!"); }
+// ================= GOOGLE FORM CONFIG =================
+
+const FORM_ID = "1FAIpQLScxRpVWUsg9DGZwvYXkIqeJ";
+
+const ENTRY_NAMA = "entry.111111111";
+
+const ENTRY_ABSEN = "entry.222222222";
+
+const ENTRY_KELAS = "entry.333333333";
+
+const ENTRY_NILAI = "entry.444444444";
+
+// ================= GREETING =================
+
+let h=new Date().getHours();
+
+document.getElementById("greet").innerText=
+
+h<12?"Selamat Pagi":h<15?"Selamat Siang":h<18?"Selamat Sore":"Selamat Malam";
+  const [
+{
+"no":1,
+"kisi":1,
+"kategori":"Lookup",
+"tp":"Menentukan fungsi lookup",
+"level":"C2",
+"soal":"Fungsi untuk mencari data secara vertikal adalah...",
+"options":["HLOOKUP","VLOOKUP","SUM","COUNT"],
+"answer":1,
+"pembahasan":"VLOOKUP digunakan untuk pencarian data secara vertikal."
+},
+{
+"no":2,
+"kisi":2,
+"kategori":"VLOOKUP",
+"tp":"Menentukan hasil VLOOKUP",
+"level":"C2",
+"soal":"Rumus VLOOKUP mengambil data dari kolom ke berapa sesuai argumen?",
+"options":["Kolom pertama","Kolom kedua","Kolom terakhir","Semua kolom"],
+"answer":1,
+"pembahasan":"Argumen ketiga menentukan kolom yang diambil."
+},
+{
+"no":3,
+"kisi":3,
+"kategori":"HLOOKUP",
+"tp":"Menentukan hasil HLOOKUP",
+"level":"C2",
+"soal":"HLOOKUP digunakan untuk pencarian secara...",
+"options":["Horizontal","Vertikal","Diagonal","Acak"],
+"answer":0,
+"pembahasan":"HLOOKUP bekerja secara horizontal."
+},
+{
+"no":4,
+"kisi":4,
+"kategori":"INDEX",
+"tp":"Menentukan nilai INDEX",
+"level":"C3",
+"soal":"Fungsi INDEX digunakan untuk...",
+"options":["Mengambil nilai dari posisi tertentu","Menjumlahkan data","Menghapus data","Mengurutkan data"],
+"answer":0,
+"pembahasan":"INDEX mengambil nilai berdasarkan posisi baris dan kolom."
+},
+{
+"no":5,
+"kisi":5,
+"kategori":"MATCH",
+"tp":"Menentukan posisi data",
+"level":"C2",
+"soal":"Fungsi MATCH digunakan untuk...",
+"options":["Menentukan posisi data","Menjumlahkan data","Membuat grafik","Menghapus data"],
+"answer":0,
+"pembahasan":"MATCH menghasilkan posisi suatu nilai."
+},
+{
+"no":6,
+"kisi":6,
+"kategori":"INDEX+MATCH",
+"tp":"Menggunakan kombinasi fungsi",
+"level":"C4",
+"soal":"Keunggulan INDEX+MATCH dibanding VLOOKUP adalah...",
+"options":["Lebih lambat","Bisa mencari ke kiri","Tidak akurat","Sulit digunakan"],
+"answer":1,
+"pembahasan":"INDEX+MATCH fleksibel termasuk mencari ke kiri."
+},
+{
+"no":7,
+"kisi":7,
+"kategori":"Grafik",
+"tp":"Memilih grafik",
+"level":"C2",
+"soal":"Grafik terbaik untuk perbandingan adalah...",
+"options":["Batang","Garis","Lingkaran","Area"],
+"answer":0,
+"pembahasan":"Diagram batang cocok untuk perbandingan."
+},
+{
+"no":8,
+"kisi":8,
+"kategori":"Grafik",
+"tp":"Menafsirkan grafik",
+"level":"C2",
+"soal":"Diagram batang menunjukkan...",
+"options":["Perbandingan data","Perubahan waktu","Persentase","Gambar"],
+"answer":0,
+"pembahasan":"Diagram batang digunakan untuk perbandingan."
+},
+{
+"no":9,
+"kisi":9,
+"kategori":"Persentase",
+"tp":"Menghitung persentase",
+"level":"C3",
+"soal":"25 dari 100 adalah...",
+"options":["10%","20%","25%","50%"],
+"answer":2,
+"pembahasan":"25/100 = 25%."
+},
+{
+"no":10,
+"kisi":10,
+"kategori":"Grafik",
+"tp":"Identifikasi kesalahan",
+"level":"C4",
+"soal":"Kesalahan grafik terjadi jika...",
+"options":["Warna bagus","Skala salah","Judul jelas","Data lengkap"],
+"answer":1,
+"pembahasan":"Skala tidak tepat menyebabkan grafik menyesatkan."
+},
+
+{
+"no":11,
+"kisi":11,
+"kategori":"SUMIFS",
+"tp":"Menghitung data bersyarat",
+"level":"C3",
+"soal":"SUMIFS digunakan untuk...",
+"options":["Menjumlah tanpa syarat","Menjumlah dengan syarat","Menghitung jumlah data","Mengurutkan"],
+"answer":1,
+"pembahasan":"SUMIFS menjumlahkan dengan beberapa syarat."
+},
+{
+"no":12,
+"kisi":12,
+"kategori":"COUNTIFS",
+"tp":"Menghitung jumlah data",
+"level":"C3",
+"soal":"COUNTIFS digunakan untuk...",
+"options":["Menjumlah","Menghitung data sesuai kriteria","Menghapus data","Membuat grafik"],
+"answer":1,
+"pembahasan":"COUNTIFS menghitung data berdasarkan kriteria."
+},
+{
+"no":13,
+"kisi":13,
+"kategori":"Ringkasan data",
+"tp":"Tujuan ringkasan",
+"level":"C2",
+"soal":"Tujuan meringkas data adalah...",
+"options":["Memperumit","Mempermudah analisis","Menghapus data","Mengacak data"],
+"answer":1,
+"pembahasan":"Ringkasan membantu analisis."
+},
+{
+"no":14,
+"kisi":14,
+"kategori":"Pivot",
+"tp":"Menafsirkan pivot",
+"level":"C3",
+"soal":"Pivot table digunakan untuk...",
+"options":["Menghapus data","Meringkas data","Menggambar","Mengetik"],
+"answer":1,
+"pembahasan":"Pivot table merangkum data."
+},
+{
+"no":15,
+"kisi":15,
+"kategori":"Pivot",
+"tp":"Menentukan hasil pivot",
+"level":"C4",
+"soal":"Pivot table 2D berarti...",
+"options":["1 dimensi","2 dimensi","3 dimensi","Tanpa dimensi"],
+"answer":1,
+"pembahasan":"2D memiliki baris dan kolom."
+},
+{
+"no":16,
+"kisi":16,
+"kategori":"Pengolahan data",
+"tp":"Urutan proses",
+"level":"C2",
+"soal":"Langkah pertama pengolahan data adalah...",
+"options":["Analisis","Input data","Output","Grafik"],
+"answer":1,
+"pembahasan":"Data harus dimasukkan terlebih dahulu."
+},
+{
+"no":17,
+"kisi":17,
+"kategori":"Studi kasus",
+"tp":"Solusi data",
+"level":"C4",
+"soal":"Solusi berbasis data berarti...",
+"options":["Tanpa data","Berdasarkan data","Mengarang","Acak"],
+"answer":1,
+"pembahasan":"Keputusan dibuat berdasarkan data."
+},
+
+{
+"no":18,
+"kisi":18,
+"kategori":"Scratch",
+"tp":"Fungsi blok kontrol",
+"level":"C2",
+"soal":"Blok kontrol digunakan untuk...",
+"options":["Mengatur alur program","Menggambar","Menghapus","Menyimpan"],
+"answer":0,
+"pembahasan":"Kontrol mengatur alur program."
+},
+{
+"no":19,
+"kisi":19,
+"kategori":"Algoritma",
+"tp":"Urutan benar",
+"level":"C3",
+"soal":"Algoritma adalah...",
+"options":["Langkah acak","Langkah terstruktur","Gambar","Data"],
+"answer":1,
+"pembahasan":"Algoritma adalah langkah terstruktur."
+},
+{
+"no":20,
+"kisi":20,
+"kategori":"Program",
+"tp":"Hasil program",
+"level":"C3",
+"soal":"Program menghasilkan...",
+"options":["Input","Output","Variabel","Loop"],
+"answer":1,
+"pembahasan":"Program menghasilkan output."
+},
+
+{
+"no":21,
+"kisi":21,
+"kategori":"Sprite",
+"tp":"Menggerakkan sprite",
+"level":"C2",
+"soal":"Sprite adalah...",
+"options":["Objek di Scratch","Data","Grafik","File"],
+"answer":0,
+"pembahasan":"Sprite adalah objek."
+},
+{
+"no":22,
+"kisi":22,
+"kategori":"Variabel",
+"tp":"Nilai variabel",
+"level":"C3",
+"soal":"Variabel digunakan untuk...",
+"options":["Menyimpan data","Menghapus","Menggambar","Mengurutkan"],
+"answer":0,
+"pembahasan":"Variabel menyimpan data."
+},
+{
+"no":23,
+"kisi":23,
+"kategori":"Custom Block",
+"tp":"Tujuan custom block",
+"level":"C2",
+"soal":"Custom block digunakan untuk...",
+"options":["Mempermudah program","Memperumit","Menghapus","Menyalin"],
+"answer":0,
+"pembahasan":"Custom block menyederhanakan program."
+},
+{
+"no":24,
+"kisi":24,
+"kategori":"Prosedur",
+"tp":"Pengertian prosedur",
+"level":"C2",
+"soal":"Prosedur adalah...",
+"options":["Langkah terstruktur","Data","Gambar","Teks"],
+"answer":0,
+"pembahasan":"Prosedur adalah langkah."
+},
+{
+"no":25,
+"kisi":25,
+"kategori":"Variabel",
+"tp":"Fungsi variabel",
+"level":"C2",
+"soal":"Fungsi variabel adalah...",
+"options":["Menyimpan nilai","Menghapus","Menampilkan grafik","Menggambar"],
+"answer":0,
+"pembahasan":"Variabel menyimpan nilai."
+},
+
+{
+"no":26,
+"kisi":26,
+"kategori":"Percabangan",
+"tp":"Menentukan kondisi",
+"level":"C3",
+"soal":"Percabangan digunakan untuk...",
+"options":["Mengulang","Memilih kondisi","Menghapus","Menyimpan"],
+"answer":1,
+"pembahasan":"Percabangan menentukan kondisi."
+},
+{
+"no":27,
+"kisi":27,
+"kategori":"Percabangan",
+"tp":"Hasil percabangan",
+"level":"C3",
+"soal":"IF digunakan untuk...",
+"options":["Percabangan","Perulangan","Grafik","Input"],
+"answer":0,
+"pembahasan":"IF adalah percabangan."
+},
+{
+"no":28,
+"kisi":28,
+"kategori":"Loop",
+"tp":"Jumlah pengulangan",
+"level":"C3",
+"soal":"Loop digunakan untuk...",
+"options":["Mengulang","Menghapus","Menggambar","Menghitung"],
+"answer":0,
+"pembahasan":"Loop untuk pengulangan."
+},
+{
+"no":29,
+"kisi":29,
+"kategori":"Program",
+"tp":"Analisis output",
+"level":"C4",
+"soal":"Output program dipengaruhi oleh...",
+"options":["Input","Warna","Ukuran","Font"],
+"answer":0,
+"pembahasan":"Output tergantung input."
+},
+{
+"no":30,
+"kisi":30,
+"kategori":"Ozobot",
+"tp":"Fungsi Ozobot",
+"level":"C2",
+"soal":"Ozobot adalah...",
+"options":["Robot edukasi","Game","Grafik","Data"],
+"answer":0,
+"pembahasan":"Ozobot robot edukasi."
+},
+
+{
+"no":31,
+"kisi":31,
+"kategori":"Media Sosial",
+"tp":"Identifikasi teknologi",
+"level":"C1",
+"soal":"Contoh media sosial adalah...",
+"options":["Instagram","Excel","Word","Paint"],
+"answer":0,
+"pembahasan":"Instagram termasuk media sosial."
+},
+{
+"no":32,
+"kisi":32,
+"kategori":"Media Sosial",
+"tp":"Tujuan penggunaan",
+"level":"C2",
+"soal":"Media sosial digunakan untuk...",
+"options":["Komunikasi","Menghapus","Menggambar","Menghitung"],
+"answer":0,
+"pembahasan":"Media sosial untuk komunikasi."
+},
+{
+"no":33,
+"kisi":33,
+"kategori":"Dampak",
+"tp":"Dampak positif",
+"level":"C2",
+"soal":"Dampak positif teknologi adalah...",
+"options":["Mempermudah komunikasi","Hoaks","Cyberbullying","Penipuan"],
+"answer":0,
+"pembahasan":"Teknologi mempermudah komunikasi."
+},
+{
+"no":34,
+"kisi":34,
+"kategori":"Dampak",
+"tp":"Dampak negatif",
+"level":"C2",
+"soal":"Dampak negatif teknologi adalah...",
+"options":["Hoaks","Belajar","Komunikasi","Efisiensi"],
+"answer":0,
+"pembahasan":"Hoaks adalah dampak negatif."
+},
+
+{
+"no":35,
+"kisi":35,
+"kategori":"Berpikir kritis",
+"tp":"Berpikir kritis",
+"level":"C3",
+"soal":"Berpikir kritis berarti...",
+"options":["Menganalisis","Mengabaikan","Menyalin","Menghapus"],
+"answer":0,
+"pembahasan":"Berpikir kritis adalah menganalisis."
+},
+{
+"no":36,
+"kisi":36,
+"kategori":"Validasi",
+"tp":"Sumber terpercaya",
+"level":"C3",
+"soal":"Sumber terpercaya adalah...",
+"options":["Resmi","Hoaks","Tidak jelas","Anonim"],
+"answer":0,
+"pembahasan":"Sumber resmi terpercaya."
+},
+{
+"no":37,
+"kisi":37,
+"kategori":"Verifikasi",
+"tp":"Langkah verifikasi",
+"level":"C3",
+"soal":"Verifikasi berarti...",
+"options":["Mengecek ulang","Menghapus","Menyalin","Menggambar"],
+"answer":0,
+"pembahasan":"Verifikasi adalah cek ulang."
+},
+{
+"no":38,
+"kisi":38,
+"kategori":"Hoaks",
+"tp":"Identifikasi hoaks",
+"level":"C4",
+"soal":"Hoaks adalah...",
+"options":["Berita palsu","Data benar","Fakta","Ilmu"],
+"answer":0,
+"pembahasan":"Hoaks adalah berita palsu."
+},
+{
+"no":39,
+"kisi":39,
+"kategori":"Logika",
+"tp":"Menggunakan logika",
+"level":"C2",
+"soal":"Logika digunakan untuk...",
+"options":["Menilai benar salah","Menggambar","Menghapus","Menyalin"],
+"answer":0,
+"pembahasan":"Logika untuk menilai."
+},
+
+{
+"no":40,
+"kisi":40,
+"kategori":"Cyberbullying",
+"tp":"Identifikasi perilaku",
+"level":"C2",
+"soal":"Cyberbullying adalah...",
+"options":["Perundungan online","Belajar","Game","Chat"],
+"answer":0,
+"pembahasan":"Cyberbullying perundungan online."
+},
+{
+"no":41,
+"kisi":41,
+"kategori":"Cyberbullying",
+"tp":"Dampak",
+"level":"C2",
+"soal":"Dampak cyberbullying adalah...",
+"options":["Stres","Bahagia","Sehat","Kaya"],
+"answer":0,
+"pembahasan":"Cyberbullying menyebabkan stres."
+},
+{
+"no":42,
+"kisi":42,
+"kategori":"Cyberbullying",
+"tp":"Tindakan",
+"level":"C4",
+"soal":"Tindakan tepat adalah...",
+"options":["Melapor","Membalas","Menyebar","Mengabaikan terus"],
+"answer":0,
+"pembahasan":"Melapor tindakan tepat."
+},
+{
+"no":43,
+"kisi":43,
+"kategori":"Cyberbullying",
+"tp":"Pencegahan",
+"level":"C3",
+"soal":"Cara mencegah cyberbullying adalah...",
+"options":["Bijak bermedia","Membalas","Menyebar","Diam"],
+"answer":0,
+"pembahasan":"Bijak bermedia mencegah."
+},
+{
+"no":44,
+"kisi":44,
+"kategori":"Keamanan",
+"tp":"Data pribadi",
+"level":"C2",
+"soal":"Data pribadi harus...",
+"options":["Dijaga","Disebar","Dibagikan","Diposting"],
+"answer":0,
+"pembahasan":"Data harus dijaga."
+},
+
+{
+"no":45,
+"kisi":45,
+"kategori":"Media interaktif",
+"tp":"Fungsi",
+"level":"C2",
+"soal":"Media interaktif digunakan untuk...",
+"options":["Menyampaikan informasi","Menghapus","Menggambar","Mengacak"],
+"answer":0,
+"pembahasan":"Media interaktif menyampaikan informasi."
+},
+{
+"no":46,
+"kisi":46,
+"kategori":"Media interaktif",
+"tp":"Membaca data",
+"level":"C4",
+"soal":"Data pada media interaktif harus...",
+"options":["Dipahami","Diabaikan","Dihapus","Disalin"],
+"answer":0,
+"pembahasan":"Harus dipahami."
+},
+{
+"no":47,
+"kisi":47,
+"kategori":"Teknologi",
+"tp":"Cara kerja",
+"level":"C2",
+"soal":"Alat teknologi bekerja berdasarkan...",
+"options":["Sistem","Acak","Manual","Tidak jelas"],
+"answer":0,
+"pembahasan":"Bekerja dengan sistem."
+},
+{
+"no":48,
+"kisi":48,
+"kategori":"Teknologi",
+"tp":"Tujuan",
+"level":"C2",
+"soal":"Tujuan alat teknologi adalah...",
+"options":["Mempermudah","Memperumit","Menghapus","Mengganggu"],
+"answer":0,
+"pembahasan":"Teknologi mempermudah."
+},
+{
+"no":49,
+"kisi":49,
+"kategori":"Modifikasi",
+"tp":"Tujuan modifikasi",
+"level":"C4",
+"soal":"Modifikasi alat bertujuan untuk...",
+"options":["Memperbaiki","Merusak","Menghapus","Mengabaikan"],
+"answer":0,
+"pembahasan":"Modifikasi untuk perbaikan."
+},
+{
+"no":50,
+"kisi":50,
+"kategori":"Evaluasi",
+"tp":"Perbaikan",
+"level":"C4",
+"soal":"Evaluasi digunakan untuk...",
+"options":["Perbaikan","Menghapus","Menyalin","Menggambar"],
+"answer":0,
+"pembahasan":"Evaluasi untuk perbaikan."
+}
+];
+
+
+// RANDOM
+
+questions=questions.sort(()=>Math.random()-0.5);
+
+let current=0,answers=[],lockStatus={},doubt=[];
+
+// START
+
+function mulai(){
+
+document.getElementById("start").style.display="none";
+
+document.getElementById("quiz").style.display="flex";
+
+init();
+
 }
 
-function tampilkanRiwayatSingkat() {
-    let db = JSON.parse(localStorage.getItem("riwayat_prayanamart") || "[]");
-    let container = document.getElementById("recent_list");
-    if (db.length > 0) {
-        let html = "<b>5 Slip Terakhir:</b><ul>";
-        db.slice(-5).reverse().forEach(item => {
-            html += `<li onclick="isiToken('${item.token}')" style="cursor:pointer; color:#1a73e8;">${item.token} - ${item.nama}</li>`;
-        });
-        html += "</ul>";
-        container.innerHTML = html;
-    }
+// INIT
+
+function init(){
+
+let nav=document.getElementById("nav");
+
+questions.forEach((_,i)=>{
+
+let b=document.createElement("button");
+
+b.innerText=i+1;
+
+b.onclick=()=>{current=i;render()};
+
+nav.appendChild(b);
+
+});
+
+render();
+
+timer();
+
 }
 
-function isiToken(t) { document.getElementById("token_search").value = t; }
+// RENDER
 
-setInterval(() => {
-    let n = new Date();
-    document.getElementById('waktu_layar').innerText = n.toLocaleDateString("id-ID") + " " + n.toLocaleTimeString("id-ID");
-}, 1000);
+function render(){
 
-function formatRupiahInput(el) {
-    let angka = el.value.replace(/[^0-9]/g, "");
-    el.value = angka ? formatIDR(angka) : "";
+let q=questions[current];
+
+let html=`<p><b>${current+1}. ${q.q}</b></p>`;
+
+q.options.forEach((o,i)=>{
+
+html+=`
+
+<label class="option">
+
+<input type="radio" ${answers[current]==i?"checked":""}
+
+onchange="pilih(${i})"> ${o}
+
+</label>`;
+
+});
+
+document.querySelectorAll("#nav button").forEach((b,i)=>{
+
+b.classList.remove("active","answered","doubt");
+
+if(i===current) b.classList.add("active");
+
+if(answers[i]!=undefined) b.classList.add("answered");
+
+if(doubt[i]) b.classList.add("doubt");
+
+});
+
+let box=document.getElementById("box");
+
+box.innerHTML=html;
+
 }
 
-function v(id) { return Number(document.getElementById(id).value.replace(/[^0-9]/g, "")) || 0; }
+// PILIH
 
-function terbilang(n) {
-    if (n === 0) return "Nol";
-    const satuan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
-    if (n < 12) return satuan[n];
-    if (n < 20) return terbilang(n - 10) + " Belas";
-    if (n < 100) return terbilang(Math.floor(n / 10)) + " Puluh " + terbilang(n % 10);
-    if (n < 1000) return terbilang(Math.floor(n / 100)) + " Ratus " + terbilang(n % 100);
-    if (n < 1000000) return terbilang(Math.floor(n / 1000)) + " Ribu " + terbilang(n % 1000);
-    return terbilang(Math.floor(n / 1000000)) + " Juta " + terbilang(n % 1000000);
+function pilih(i){
+
+answers[current]=i;
+
+lockStatus[current]=true;
+
+render();
+
+setTimeout(()=>{lockStatus[current]=false;render()},10000);
+
 }
 
-function hitungSemua() {
-    // Logika Bersih: Uang modal tidak mempengaruhi setoran jualan
-    let sistem = (v('shift1') + v('shift2')) - v('pengambilan') - v('pembatalan') - v('bon');
-    
-    document.getElementById("jumlah_sistem").value = formatIDR(sistem);
-    let fisik = v('jumlah_fisik');
-    let selisih = fisik - sistem;
-    let statusBox = document.getElementById("status_box");
-    
-    if (fisik > 0 || sistem !== 0) {
-        statusBox.classList.remove("hidden");
-        document.getElementById("printBtn").classList.remove("hidden");
-        statusBox.style.background = selisih === 0 ? "#1e8e3e" : (selisih > 0 ? "#f29900" : "#d93025");
-        document.getElementById("status").innerText = selisih === 0 ? "PAS" : (selisih > 0 ? "LEBIH: Rp " : "KURANG: Rp ") + formatIDR(Math.abs(selisih));
-        document.getElementById("terbilang_status").innerText = terbilang(Math.abs(selisih)) + " Rupiah";
-    }
+// NAV
+
+function next(){if(current<questions.length-1){current++;render()}}
+
+function prev(){if(current>0){current--;render()}}
+
+// RAGU
+
+function ragu(){doubt[current]=true;alert("Ditandai ragu")}
+
+// TIMER
+
+let dur=75*60,start=Date.now();
+
+function timer(){
+
+setInterval(()=>{
+
+let s=Math.floor((Date.now()-start)/1000);
+
+let r=dur-s;
+
+let m=Math.floor(r/60),sec=r%60;
+
+document.getElementById("timer").innerText=`⏱ ${m}:${sec<10?"0":""}${sec}`;
+
+if(r<=0) submit();
+
+},1000);
+
 }
 
-function cetak() {
-    let token = "PRY-" + Math.floor(Math.random() * 1000000);
-    let n = new Date();
-    let waktu = n.toLocaleDateString("id-ID") + " " + n.toLocaleTimeString("id-ID");
-    
-    let dataSlip = {
-        token, waktu,
-        nama: document.getElementById("final_nama").value,
-        nik: document.getElementById("final_nik").value,
-        kas_awal: document.getElementById("kas_awal").value || "0",
-        omset: formatIDR(v('shift1') + v('shift2')),
-        ambil: document.getElementById("pengambilan").value || "0",
-        batal: document.getElementById("pembatalan").value || "0",
-        bon: document.getElementById("bon").value || "0",
-        qris: document.getElementById("qris").value || "0",
-        tf: document.getElementById("transfer").value || "0",
-        laba: document.getElementById("laba").value || "0",
-        sistem: document.getElementById("jumlah_sistem").value,
-        fisik: document.getElementById("jumlah_fisik").value,
-        selisih: v('jumlah_fisik') - v('jumlah_sistem')
-    };
+// SUBMIT
 
-    let db = JSON.parse(localStorage.getItem("riwayat_prayanamart") || "[]");
-    db.push(dataSlip);
-    localStorage.setItem("riwayat_prayanamart", JSON.stringify(db));
+function submit(){
 
-    renderSlip(dataSlip);
+let score=0;
+
+questions.forEach((q,i)=>{
+
+if(answers[i]===q.answer) score++;
+
+});
+
+let nilai=(score/questions.length)*100;
+
+window.nilaiAkhir = nilai;
+
+document.getElementById("hasil").style.display="block";
+
+document.getElementById("hasil").innerHTML=`
+
+<h3>Nilai kamu siap 👇</h3>
+
+<button onclick="lihatNilai()">Lihat Nilai</button>
+
+`;
+
 }
 
-function renderSlip(data) {
-    let slsLabel = data.selisih === 0 ? "PAS" : (data.selisih > 0 ? "LEBIH" : "KURANG");
-    let slsAngka = data.selisih === 0 ? "" : "Rp " + formatIDR(Math.abs(data.selisih));
-    
-    let struk = `
-    <div style="width: 65mm; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-left: 6mm; color: #000; line-height: 1.4;">
-        <center>
-            <b style="font-size: 16px;">PRAYANA MART</b><br>
-            Part of Prayana Group<br>
-            ---------------------------<br>
-            <b>SLIP CLOSING HARIAN</b><br>
-            ${data.waktu}<br>
-            TOKEN: ${data.token}<br>
-            ---------------------------
-        </center>
-        <b>KASIR :</b> ${data.nama}<br>
-        <b>NIK   :</b> ${data.nik}<br>
-        ---------------------------<br>
-        <table width="100%" style="font-size:11px;">
-            <tr><td>MODAL LACI</td><td align="right">Rp ${data.kas_awal}</td></tr>
-            <tr><td>TOTAL OMSET</td><td align="right">Rp ${data.omset}</td></tr>
-            <tr><td>PENGAMBILAN</td><td align="right">-${data.ambil}</td></tr>
-            <tr><td>BATAL/VOID</td><td align="right">-${data.batal}</td></tr>
-            <tr><td>BON KARYAWAN</td><td align="right">-${data.bon}</td></tr>
-        </table>
-        ---------------------------<br>
-        <table width="100%" style="font-size:12px; font-weight:bold;">
-            <tr><td>TARGET SETOR</td><td align="right">${data.sistem}</td></tr>
-            <tr><td>SETORAN NYATA</td><td align="right">${data.fisik}</td></tr>
-            <tr><td>SELISIH</td><td align="right">${slsLabel}</td></tr>
-            ${data.selisih !== 0 ? `<tr><td></td><td align="right">${slsAngka}</td></tr>` : ''}
-        </table>
-        ---------------------------<br>
-        <b>TERBILANG SELISIH:</b><br>
-        <i>${terbilang(Math.abs(data.selisih))} Rupiah</i><br>
-        ---------------------------<br>
-        <b>INFO:</b> QRIS Rp ${data.qris} | TF Rp ${data.tf}<br>
-        <b>KEUNTUNGAN HARI INI:</b><br>
-        <b>Rp ${data.laba}</b><br>
-        ---------------------------<br><br>
-        <center>
-            Kasir &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Manager<br><br><br>
-            (________) &nbsp;&nbsp;&nbsp;&nbsp; (________)
-        </center>
-    </div>`;
+// LIHAT NILAI + AUTO KIRIM
 
-    let w = window.open('', '', 'width=450,height=600');
-    w.document.write('<html><body style="margin:0;">' + struk + '</body></html>');
-    w.document.close();
-    setTimeout(() => { w.print(); }, 500);
+function lihatNilai(){
+
+let html=`<h2>Nilai: ${window.nilaiAkhir.toFixed(0)}</h2><h3>Pembahasan</h3>`;
+
+questions.forEach((q,i)=>{
+
+let benar=answers[i]===q.answer;
+
+html+=`
+
+<p>${benar?"✅":"❌"} ${q.exp}</p>
+
+`;
+
+});
+
+document.getElementById("hasil").innerHTML=html;
+
+// AUTO KIRIM
+
+uploadHasil();
+
 }
 
-function cariRiwayat() {
-    let t = document.getElementById("token_search").value;
-    let db = JSON.parse(localStorage.getItem("riwayat_prayanamart") || "[]");
-    let found = db.find(item => item.token === t);
-    if (found) { renderSlip(found); } else { alert("Token tidak ditemukan!"); }
+// ================= AUTO KIRIM =================
+
+function uploadHasil(){
+
+let nama=document.getElementById("nama").value;
+
+let absen=document.getElementById("absen").value;
+
+let kelas=document.getElementById("kelas").value;
+
+let nilai=window.nilaiAkhir.toFixed(0);
+
+let url=`https://docs.google.com/forms/d/e/${FORM_ID}/formResponse?`+
+
+`${ENTRY_NAMA}=${encodeURIComponent(nama)}`+
+
+`&${ENTRY_ABSEN}=${encodeURIComponent(absen)}`+
+
+`&${ENTRY_KELAS}=${encodeURIComponent(kelas)}`+
+
+`&${ENTRY_NILAI}=${encodeURIComponent(nilai)}`;
+
+fetch(url,{mode:"no-cors"})
+
+.then(()=>console.log("Terkirim"))
+
+.catch(()=>console.log("Gagal"));
+
 }
+
 </script>
 
 </body>
+
 </html>
