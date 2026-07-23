@@ -3,1189 +3,654 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Secure Closing - Prayana Mart</title>
+<title>Asesmen KKA - GRIASTA School</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
 <style>
-:root{
-  --dark:#050816;
-  --card:#0b1020;
-  --card2:#111827;
-  --red:#dc2626;
-  --green:#16a34a;
-  --blue:#2563eb;
-  --yellow:#facc15;
-  --text:#f8fafc;
-  --muted:#94a3b8;
-  --border:#334155;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
 }
 
-*{box-sizing:border-box}
-
 body{
-  margin:0;
   min-height:100vh;
-  font-family:'Segoe UI',Tahoma,sans-serif;
-  background:radial-gradient(circle at top,#1e293b 0,#050816 48%,#000 100%);
-  color:var(--text);
+  background: linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
   display:flex;
   justify-content:center;
-  align-items:flex-start;
-  padding:18px;
+  align-items:center;
+  overflow-x:hidden;
+  padding: 20px 0;
+}
+
+/* Background Effect */
+body::before{
+  content:"";
+  position:absolute;
+  width:700px;
+  height:700px;
+  background:#60a5fa;
+  border-radius:50%;
+  left:-220px;
+  top:-220px;
+  filter:blur(140px);
+  opacity:.35;
+  z-index: 1;
+}
+
+body::after{
+  content:"";
+  position:absolute;
+  width:650px;
+  height:650px;
+  background:#38bdf8;
+  border-radius:50%;
+  right:-180px;
+  bottom:-180px;
+  filter:blur(140px);
+  opacity:.30;
+  z-index: 1;
 }
 
 .container{
-  width:100%;
-  max-width:650px;
-  background:linear-gradient(180deg,#111827,#020617);
-  border:1px solid #334155;
-  border-radius:24px;
-  padding:24px;
-  box-shadow:0 0 40px rgba(220,38,38,.22);
+  position:relative;
+  z-index:10;
+  width:95%;
+  max-width:900px;
 }
 
-.brand{text-align:center;margin-bottom:20px}
-
-.brand h2{
-  margin:0;
-  color:#fff;
-  font-size:26px;
-  letter-spacing:2px;
+.card{
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(25px);
+  -webkit-backdrop-filter:blur(25px);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:28px;
+  padding:45px;
+  box-shadow:0 25px 60px rgba(0,0,0,.35);
+  color:white;
+  animation:fade .8s ease;
 }
 
-.sub-header{
-  margin-top:8px;
-  color:var(--red);
-  font-size:11px;
+@keyframes fade{
+  from{
+    opacity:0;
+    transform:translateY(40px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.logo{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  background:white;
+  margin:auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:45px;
+  color:#2563eb;
+  box-shadow:0 15px 35px rgba(0,0,0,.25);
+  margin-bottom:25px;
+}
+
+h1{
+  text-align:center;
+  font-size:36px;
   font-weight:800;
-  letter-spacing:2px;
-  text-transform:uppercase;
+  margin-bottom:10px;
 }
 
-.security-bar{
-  background:#220909;
-  color:#fecaca;
-  border:1px solid #7f1d1d;
-  padding:12px;
-  border-radius:14px;
-  font-size:12px;
+.subtitle{
   text-align:center;
-  margin-bottom:18px;
+  font-size:17px;
+  opacity:.95;
+  margin-bottom:30px;
+  line-height:1.7;
 }
 
-.clock-box{
-  background:#020617;
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:14px;
+.teacher{
   text-align:center;
-  margin-bottom:18px;
+  margin-bottom:35px;
+  font-size:15px;
+  opacity:.9;
 }
 
-.clock-title{
-  font-size:10px;
-  color:var(--muted);
-  letter-spacing:1.5px;
-  text-transform:uppercase;
+.form-group{
+  margin-bottom:22px;
 }
-
-#jam_wita,#waktu_layar{
-  margin-top:5px;
-  font-size:20px;
-  font-weight:900;
-  color:var(--yellow);
-}
-
-.form-group{margin-bottom:13px}
 
 label{
   display:block;
-  font-size:10px;
-  font-weight:900;
-  color:#cbd5e1;
-  margin-bottom:5px;
-  letter-spacing:.6px;
-  text-transform:uppercase;
+  margin-bottom:8px;
+  font-weight:600;
 }
 
-input,select,textarea{
+input,select{
   width:100%;
-  padding:13px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:#020617;
-  color:#fff;
-  font-size:14px;
-  outline:none;
-}
-
-input:focus,select:focus,textarea:focus{
-  border-color:var(--red);
-  box-shadow:0 0 0 3px rgba(220,38,38,.25);
-}
-
-input[readonly]{
-  color:#93c5fd;
-  font-weight:900;
-  background:#0f172a;
-}
-
-textarea{min-height:80px;resize:vertical}
-
-button{
-  width:100%;
-  border:0;
+  padding:15px;
   border-radius:14px;
-  padding:14px;
-  font-weight:900;
-  cursor:pointer;
-  color:#fff;
-  margin-top:8px;
+  border:none;
+  outline:none;
+  font-size:15px;
+  background:white;
+  color: #0f172a;
 }
 
-.btn-login{background:linear-gradient(135deg,#dc2626,#7f1d1d)}
-.btn-search{background:#14532d}
-#printBtn{background:#111827;border:1px solid #64748b}
-
-.logout-btn{
-  width:auto;
-  background:#7f1d1d;
-  font-size:10px;
-  padding:8px 12px;
-}
-
-.section-title{
-  margin:18px 0 10px;
-  padding:9px 11px;
-  background:#220909;
-  color:#fecaca;
-  border-left:5px solid var(--red);
-  border-radius:10px;
-  font-size:11px;
-  font-weight:900;
-  text-transform:uppercase;
-}
-
-.grid-2{
+.menu{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
+  gap:25px;
+  margin-top:35px;
 }
 
-.laba-box{
-  margin:18px 0;
-  padding:18px;
-  border-radius:18px;
-  border:2px solid var(--green);
-  background:#052e16;
+.btn{
+  padding:22px;
+  border-radius:22px;
+  cursor:pointer;
+  border:none;
+  font-size:18px;
+  font-weight:700;
+  transition:.3s;
+  color:white;
+}
+
+.btn i{
+  font-size:32px;
+  margin-bottom:15px;
+  display:block;
+}
+
+.btn:hover{
+  transform:translateY(-8px);
+}
+
+.diagnostik{
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+}
+
+.formatif{
+  background:linear-gradient(135deg,#f97316,#ea580c);
+}
+
+.footer{
   text-align:center;
+  margin-top:35px;
+  font-size:13px;
+  opacity:.8;
 }
 
-.laba-box input{
-  border:0;
-  background:transparent;
-  text-align:center;
-  color:#86efac;
-  font-size:24px;
-  font-weight:900;
+/* Quiz Page */
+.quiz-page{
+  display:none;
 }
-
-.result-area{
-  margin-top:16px;
-  padding:18px;
-  border-radius:18px;
-  text-align:center;
-}
-
-#status{
-  font-size:22px;
-  font-weight:900;
-}
-
-#terbilang_status{
-  font-size:11px;
-  font-style:italic;
-}
-
-.hidden{display:none}
-.required{color:#f87171}
 
 .topbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:15px;
+  margin-bottom:25px;
 }
 
-.warning-small{
-  color:#fca5a5;
-  font-size:11px;
-  margin-top:-6px;
-  margin-bottom:10px;
+.badge{
+  background:white;
+  color:#2563eb;
+  padding:10px 18px;
+  border-radius:30px;
+  font-weight:700;
 }
 
-#recent_list{
-  font-size:12px;
-  color:#cbd5e1;
+.progress{
+  height:12px;
+  background:rgba(255,255,255,.25);
+  border-radius:50px;
+  overflow:hidden;
+  margin:20px 0;
 }
 
-#recent_list li{
-  color:#93c5fd;
-  cursor:pointer;
-  margin-bottom:5px;
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:#22c55e;
+  transition:.4s;
 }
 
-.locked{
-  opacity:.45;
-  pointer-events:none;
+.question{
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:20px;
+  line-height:1.6;
 }
 
-.dashboard{
-  margin-top:18px;
-  padding:16px;
-  border-radius:18px;
-  background:#020617;
-  border:1px solid #334155;
-}
-
-.dashboard-title{
-  font-size:12px;
-  font-weight:900;
-  color:#facc15;
-  text-transform:uppercase;
-  letter-spacing:1px;
-  margin-bottom:8px;
-}
-
-.dashboard-period{
-  font-size:11px;
-  color:#94a3b8;
-  margin-bottom:12px;
-}
-
-.dash-grid{
+.options{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-bottom:12px;
+  gap:15px;
 }
 
-.dash-card{
-  background:#111827;
-  border:1px solid #334155;
-  border-radius:14px;
-  padding:12px;
+.option{
+  background:white;
+  color:#111827;
+  padding:18px;
+  border-radius:15px;
+  cursor:pointer;
+  transition:.25s;
+  font-weight:500;
+  border: 2px solid transparent;
 }
 
-.dash-label{
-  font-size:10px;
-  color:#94a3b8;
-  text-transform:uppercase;
+.option:hover{
+  background:#dbeafe;
+  transform:scale(1.01);
 }
 
-.dash-value{
-  margin-top:5px;
-  font-size:17px;
-  font-weight:900;
-  color:#fff;
+.option.selected{
+  background:#2563eb;
+  color:white;
+  border-color:#ffffff;
 }
 
-.chart-box{
-  margin-top:14px;
-  background:#0f172a;
-  border:1px solid #334155;
-  border-radius:14px;
-  padding:12px;
+.nav{
+  display:flex;
+  justify-content:space-between;
+  margin-top:35px;
 }
 
-.chart-title{
-  font-size:11px;
-  font-weight:900;
-  margin-bottom:8px;
-  color:#e2e8f0;
+.nav button{
+  padding:15px 28px;
+  border:none;
+  border-radius:15px;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:700;
+  transition: .3s;
 }
 
-canvas{
-  width:100%;
-  height:190px;
-  background:#020617;
-  border-radius:10px;
+.prev{
+  background:#64748b;
+  color:white;
 }
 
-.absensi-list{
-  margin-top:10px;
-  font-size:11px;
-  color:#e5e7eb;
+.next{
+  background:#2563eb;
+  color:white;
 }
 
-.absensi-item{
-  padding:9px;
-  border-bottom:1px solid #334155;
+.finish{
+  background:#16a34a;
+  color:white;
+  display:none;
 }
 
-.bonus-ok{
-  color:#86efac;
-  font-weight:900;
-}
-
-.bonus-no{
-  color:#fca5a5;
-  font-weight:900;
-}
-
-@media(max-width:560px){
-  .grid-2,.dash-grid{grid-template-columns:1fr}
-  .container{padding:18px}
-  canvas{height:170px}
+@media(max-width:768px){
+  .card{
+    padding:28px;
+  }
+  .menu{
+    grid-template-columns:1fr;
+  }
+  h1{
+    font-size:28px;
+  }
+  .logo{
+    width:90px;
+    height:90px;
+    font-size:35px;
+  }
+  .question{
+    font-size:18px;
+  }
 }
 </style>
 </head>
 
-<body onload="initSystem()">
+<body>
 
-<div id="login_panel" class="container">
-  <div class="brand">
-    <h2>PRAYANA MART</h2>
-    <div class="sub-header">Restricted Closing Access</div>
-  </div>
+<div class="container">
 
-  <div class="security-bar" id="akses_info">Mengecek status akses sistem...</div>
+  <div class="card" id="landing">
+    <div class="logo">
+      <i class="fa-solid fa-laptop-code"></i>
+    </div>
+    <h1>ASESMEN KKA</h1>
+    <p class="subtitle">
+      Koding & Kecerdasan Artifisial<br>
+      Scratch Programming dan Makey-Makey
+    </p>
 
-  <div class="clock-box">
-    <div class="clock-title">Waktu Sistem WITA</div>
-    <div id="jam_wita">--:--:--</div>
-  </div>
-
-  <div class="dashboard">
-    <div class="dashboard-title">Dashboard Bulanan</div>
-    <div class="dashboard-period" id="periode_dashboard">Periode: -</div>
-
-    <div class="dash-grid">
-      <div class="dash-card">
-        <div class="dash-label">Total Penjualan</div>
-        <div class="dash-value" id="dash_penjualan">Rp 0</div>
-      </div>
-      <div class="dash-card">
-        <div class="dash-label">Total Tabungan</div>
-        <div class="dash-value" id="dash_tabungan">Rp 0</div>
-      </div>
-      <div class="dash-card">
-        <div class="dash-label">Total Keuntungan</div>
-        <div class="dash-value" id="dash_keuntungan">Rp 0</div>
-      </div>
-      <div class="dash-card">
-        <div class="dash-label">Total Uang Lebih</div>
-        <div class="dash-value" id="dash_lebih">Rp 0</div>
-      </div>
-      <div class="dash-card">
-        <div class="dash-label">Jumlah Slip</div>
-        <div class="dash-value" id="dash_slip">0</div>
-      </div>
-      <div class="dash-card">
-        <div class="dash-label">Nabung Wajib</div>
-        <div class="dash-value">30% Laba</div>
-      </div>
+    <div class="teacher">
+      <b>I Wayan Aditya Prayana Putra, S.Kom.</b><br>
+      Guru Informatika & KKA<br>
+      GRIASTA School
     </div>
 
-    <div class="chart-box">
-      <div class="chart-title">Grafik Penjualan Per Tanggal</div>
-      <canvas id="chart_penjualan"></canvas>
-    </div>
-
-    <div class="chart-box">
-      <div class="chart-title">Grafik Tabungan Per Tanggal</div>
-      <canvas id="chart_tabungan"></canvas>
-    </div>
-
-    <div class="chart-box">
-      <div class="chart-title">Grafik Keuntungan Per Tanggal</div>
-      <canvas id="chart_keuntungan"></canvas>
-    </div>
-
-    <div class="chart-box">
-      <div class="chart-title">Grafik Uang Lebih Per Tanggal</div>
-      <canvas id="chart_lebih"></canvas>
-    </div>
-
-    <div class="chart-box">
-      <div class="chart-title">Persentase Penjualan Per Kasir</div>
-      <canvas id="chart_kasir"></canvas>
-    </div>
-
-    <div class="chart-box">
-      <div class="chart-title">Rekap Absensi & Bonus</div>
-      <div id="rekap_absensi" class="absensi-list">Belum ada data.</div>
-    </div>
-  </div>
-
-  <div id="login_area" style="margin-top:18px">
     <div class="form-group">
-      <label>Pilih Kasir</label>
-      <select id="login_nama">
-        <option value="">-- Pilih Kasir --</option>
-        <option value="003040621">Ni Wayan Desiari</option>
-        <option value="004040126">Elis Fidrotul Aliyah</option>
-        <option value="001110221">Owner</option>
+      <label for="nama">Nama Peserta</label>
+      <input type="text" id="nama" placeholder="Masukkan nama lengkap">
+    </div>
+
+    <div class="form-group">
+      <label for="kelas">Kelas</label>
+      <select id="kelas">
+        <option value="">Pilih Kelas</option>
+        <option>VIII A</option>
+        <option>VIII B</option>
+        <option>VIII C</option>
+        <option>VIII D</option>
+        <option>VIII E</option>
+        <option>VIII F</option>
       </select>
     </div>
 
-    <div class="form-group">
-      <label>PIN / NIK</label>
-      <input type="password" id="login_nik" placeholder="Masukkan PIN">
+    <div class="menu">
+      <button class="btn diagnostik" onclick="mulai('diagnostik')">
+        <i class="fa-solid fa-stethoscope"></i>
+        ASESMEN<br>DIAGNOSTIK
+      </button>
+
+      <button class="btn formatif" onclick="mulai('formatif')">
+        <i class="fa-solid fa-graduation-cap"></i>
+        ASESMEN<br>FORMATIF
+      </button>
     </div>
 
-    <button class="btn-login" onclick="cekLogin()">MASUK SISTEM</button>
-  </div>
-
-  <div style="margin-top:18px">
-    <label>Cari Riwayat Slip</label>
-    <input type="text" id="token_search" placeholder="Masukkan Token Slip">
-    <button class="btn-search" onclick="cariRiwayat()">LIHAT DATA LAMA</button>
-    <div id="recent_list"></div>
-  </div>
-</div>
-
-<div id="main_form" class="container hidden">
-  <div class="topbar">
-    <button class="logout-btn" onclick="location.reload()">LOGOUT</button>
-    <div id="waktu_layar">--:--:-- WITA</div>
-  </div>
-
-  <div class="brand">
-    <h2>SECURE CLOSING</h2>
-    <div class="sub-header">Prayana Mart Dual Shift</div>
-  </div>
-
-  <div class="security-bar">
-    Sistem ini hanya aktif pukul 12.00 - 15.30 dan 20.45 - 21.30 WITA.
-  </div>
-
-  <div class="section-title">Petugas</div>
-  <div class="grid-2">
-    <div class="form-group">
-      <label>Kasir</label>
-      <input type="text" id="final_nama" readonly>
-    </div>
-    <div class="form-group">
-      <label>NIK</label>
-      <input type="text" id="final_nik" readonly>
+    <div class="footer">
+      © 2026 GRIASTA School • Koding dan Kecerdasan Artifisial
     </div>
   </div>
 
-  <div class="grid-2">
-    <div class="form-group">
-      <label>Tanggal Closing</label>
-      <input type="date" id="tanggal_closing">
+  <div class="card quiz-page" id="quizPage">
+    <div class="topbar">
+      <div class="badge" id="jenisTes">
+        Diagnostik
+      </div>
+      <div class="badge">
+        Soal <span id="nomor">1</span>
+      </div>
     </div>
-    <div class="form-group">
-      <label>Jenis Closing</label>
-      <select id="jenis_shift">
-        <option value="Dual Shift">Dual Shift</option>
-        <option value="Shift 1">Shift 1</option>
-        <option value="Shift 2">Shift 2</option>
-      </select>
+
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
     </div>
-  </div>
 
-  <div class="section-title">Modal & Omset</div>
-
-  <div class="form-group">
-    <label>Uang Modal Awal</label>
-    <input type="text" id="kas_awal" placeholder="0" oninput="formatRupiahInput(this)">
-  </div>
-
-  <div class="grid-2">
-    <div class="form-group">
-      <label>Omset Shift 1</label>
-      <input type="text" id="shift1" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()">
+    <div class="question" id="question">
+      Memuat soal...
     </div>
-    <div class="form-group">
-      <label>Omset Shift 2</label>
-      <input type="text" id="shift2" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()">
-    </div>
-  </div>
 
-  <div class="section-title">Pengeluaran Tunai</div>
+    <div class="options" id="options">
+      </div>
 
-  <div class="grid-2">
-    <div class="form-group">
-      <label>Pengambilan</label>
-      <input type="text" id="pengambilan" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()">
-    </div>
-    <div class="form-group">
-      <label>Pembatalan / Void</label>
-      <input type="text" id="pembatalan" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()">
+    <div class="nav">
+      <button class="prev" id="prevBtn">
+        <i class="fa-solid fa-arrow-left"></i> Sebelumnya
+      </button>
+
+      <button class="next" id="nextBtn">
+        Selanjutnya <i class="fa-solid fa-arrow-right"></i>
+      </button>
+
+      <button class="finish" id="finishBtn">
+        <i class="fa-solid fa-check"></i> Selesai
+      </button>
     </div>
   </div>
 
-  <div class="form-group">
-    <label>Bon Karyawan / Hutang</label>
-    <input type="text" id="bon" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()">
-  </div>
-
-  <div class="section-title">Keuntungan & Nabung Wajib</div>
-
-  <div class="laba-box">
-    <label>Keuntungan Hari Ini <span class="required">*</span></label>
-    <input type="text" id="laba" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()">
-  </div>
-
-  <div class="form-group">
-    <label>Nabung Wajib 30% dari Keuntungan</label>
-    <input type="text" id="nabung" readonly placeholder="Otomatis 30% dari keuntungan">
-    <div class="warning-small">Nabung otomatis dihitung 30% dari nilai keuntungan dan wajib tersimpan di slip.</div>
-  </div>
-
-  <div class="section-title">Non Tunai</div>
-
-  <div class="grid-2">
-    <div class="form-group">
-      <label>QRIS</label>
-      <input type="text" id="qris" placeholder="0" oninput="formatRupiahInput(this)">
-    </div>
-    <div class="form-group">
-      <label>Transfer Bank</label>
-      <input type="text" id="transfer" placeholder="0" oninput="formatRupiahInput(this)">
-    </div>
-  </div>
-
-  <div class="section-title">Verifikasi Setoran</div>
-
-  <div class="grid-2">
-    <div class="form-group">
-      <label>Target Setor Bersih</label>
-      <input type="text" id="jumlah_sistem" readonly>
-    </div>
-    <div class="form-group">
-      <label>Setoran Nyata <span class="required">*</span></label>
-      <input type="text" id="jumlah_fisik" placeholder="0" oninput="formatRupiahInput(this); hitungSemua()">
-    </div>
-  </div>
-
-  <div class="grid-2">
-    <div class="form-group">
-      <label>Uang Lebih</label>
-      <input type="text" id="uang_lebih" readonly>
-    </div>
-    <div class="form-group">
-      <label>Uang Kurang</label>
-      <input type="text" id="uang_kurang" readonly>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label>Catatan Closing</label>
-    <textarea id="catatan" placeholder="Catatan kendala, stok, selisih, dll."></textarea>
-  </div>
-
-  <div id="status_box" class="result-area hidden">
-    <div id="status"></div>
-    <small id="terbilang_status"></small>
-  </div>
-
-  <button id="printBtn" class="hidden" onclick="cetak()">CETAK SLIP CLOSING</button>
 </div>
 
 <script>
-const formatIDR = angka => new Intl.NumberFormat("id-ID").format(Number(angka) || 0);
-
-function waktuWITA(){
-  return new Date(new Date().toLocaleString("en-US", {timeZone:"Asia/Makassar"}));
-}
-
-function menitSekarangWITA(){
-  const now = waktuWITA();
-  return now.getHours() * 60 + now.getMinutes();
-}
-
-function aksesTerbuka(){
-  const menit = menitSekarangWITA();
-
-  const siangMulai = 12 * 60;
-  const siangAkhir = 15 * 60 + 30;
-
-  const malamMulai = 20 * 60 + 45;
-  const malamAkhir = 21 * 60 + 30;
-
-  return (
-    menit >= siangMulai && menit <= siangAkhir ||
-    menit >= malamMulai && menit <= malamAkhir
-  );
-}
-
-function updateJam(){
-  const now = waktuWITA();
-  const tanggal = now.toLocaleDateString("id-ID");
-  const jam = now.toLocaleTimeString("id-ID");
-
-  document.getElementById("jam_wita").innerText = jam + " WITA";
-
-  const layar = document.getElementById("waktu_layar");
-  if(layar) layar.innerText = tanggal + " | " + jam + " WITA";
-
-  cekStatusAkses(false);
-}
-
-function cekStatusAkses(showPopup = true){
-  const info = document.getElementById("akses_info");
-  const loginArea = document.getElementById("login_area");
-
-  if(aksesTerbuka()){
-    info.innerHTML = "AKSES DIBUKA - Sistem closing dapat digunakan sekarang.";
-    info.style.background = "#052e16";
-    info.style.color = "#bbf7d0";
-    info.style.borderColor = "#166534";
-    loginArea.classList.remove("locked");
-  }else{
-    info.innerHTML = "AKSES DIKUNCI - Hanya bisa diakses pukul 12.00 - 15.30 dan 20.45 - 21.30 WITA.";
-    info.style.background = "#220909";
-    info.style.color = "#fecaca";
-    info.style.borderColor = "#7f1d1d";
-    loginArea.classList.add("locked");
-
-    if(showPopup){
-      alert("AKSES DITOLAK!\n\nWeb closing hanya bisa diakses pada:\nSiang: 12.00 - 15.30 WITA\nMalam: 20.45 - 21.30 WITA");
+// Bank Soal Berdasarkan Modul KKA (Scratch & Makey-Makey)
+const questions = {
+  diagnostik: [
+    {
+      q: "Komponen utama dalam sistem komputer yang berfungsi menerima instruksi atau data dari luar disebut...",
+      options: ["Input (Perangkat Masukan)", "Proses (Pengolah Data)", "Output (Perangkat Keluaran)", "Storage (Penyimpanan)"],
+      answer: 0
+    },
+    {
+      q: "Menurut pemahaman kalian, apakah benda di sekitar seperti buah atau plat konduktif bisa dijadikan tombol kontrol komputer?",
+      options: [
+        "Tidak bisa sama sekali",
+        "Bisa, jika dihubungkan dengan papan sirkuit khusus seperti Makey-Makey",
+        "Bisa, langsung dicolokan ke port daya USB",
+        "Hanya bisa jika menggunakan perangkat bertegangan tinggi"
+      ],
+      answer: 1
+    },
+    {
+      q: "Apa yang dimaksud dengan Algoritma dalam pemrograman maupun kehidupan sehari-hari?",
+      options: [
+        "Kumpulan kode rahasia sistem operasi",
+        "Urutan langkah-langkah logis dan sistematis untuk menyelesaikan suatu masalah",
+        "Komponen fisik penyimpan memori komputer",
+        "Tampilan desain grafis pada aplikasi"
+      ],
+      answer: 1
+    },
+    {
+      q: "Manakah di bawah ini yang merupakan contoh dari perangkat keluaran (Output Device)?",
+      options: ["Keyboard", "Mouse", "Layar Monitor / Speaker", "Papan Makey-Makey"],
+      answer: 2
+    },
+    {
+      q: "Bagaimana cara agar karakter atau Sprite di dalam game dapat bergerak sesuai perintah pengguna?",
+      options: [
+        "Karakter akan bergerak otomatis tanpa instruksi",
+        "Mengatur blok instruksi/koding secara tepat pada program",
+        "Mengetuk layar monitor secara terus-menerus",
+        "Mematikan lalu menghidupkan komputer kembali"
+      ],
+      answer: 1
     }
-  }
-}
+  ],
+  formatif: [
+    {
+      q: "Platform pemrograman visual berbasis blok yang digunakan untuk membuat animasi, cerita interaktif, dan game adalah...",
+      options: ["Python", "C++", "Scratch", "HTML"],
+      answer: 2
+    },
+    {
+      q: "Objek atau karakter yang dapat diberi perintah berupa blok program pada Scratch disebut...",
+      options: ["Stage", "Sprite", "Backdrop", "Costume"],
+      answer: 1
+    },
+    {
+      q: "Makey-Makey dapat mengubah benda sehari-hari menjadi tombol keyboard karena memanfaatkan prinsip dasar...",
+      options: [
+        "Rangkaian listrik sederhana & bahan konduktor",
+        "Sinyal gelombang Bluetooth",
+        "Sensor pemindai kamera",
+        "Inframerah jarak jauh"
+      ],
+      answer: 0
+    },
+    {
+      q: "Proses melacak, menemukan, dan membetulkan kesalahan (error/bug) pada blok program Scratch disebut...",
+      options: ["Compiling", "Debugging", "Executing", "Programming"],
+      answer: 1
+    },
+    {
+      q: "Blok Scratch yang berfungsi sebagai pemicu (event) agar program berjalan saat tombol spasi ditekan adalah...",
+      options: [
+        "when [space] key pressed",
+        "move 10 steps",
+        "play sound [meow] until done",
+        "change [score] by 1"
+      ],
+      answer: 0
+    },
+    {
+      q: "Kategori blok Scratch yang digunakan untuk menyimpan data yang nilainya dapat berubah-ubah (seperti nilai/skor game) adalah...",
+      options: ["Motion", "Sound", "Variables", "Events"],
+      answer: 2
+    },
+    {
+      q: "Manakah di bawah ini benda yang TIDAK dapat digunakan sebagai tombol pada Makey-Makey?",
+      options: ["Buah Apel", "Aluminium Foil", "Plastisin Konduktif", "Penggaris Plastik Kering"],
+      answer: 3
+    },
+    {
+      q: "Perilaku menyusun instruksi dengan menyambung-nyambung blok warna-warni tanpa mengetik sintaksis teks dinamakan...",
+      options: [
+        "Visual / Block-Based Programming",
+        "Text-Based Programming",
+        "Machine Learning",
+        "Assembly Programming"
+      ],
+      answer: 0
+    }
+  ]
+};
 
-function initSystem(){
-  setTanggalHariIni();
-  tampilkanRiwayatSingkat();
-  renderDashboard();
-  updateJam();
-  cekStatusAkses(true);
-  setInterval(updateJam, 1000);
-}
+let mode = "";
+let currentQuestionIndex = 0;
+let userAnswers = [];
 
-function setTanggalHariIni(){
-  const tgl = document.getElementById("tanggal_closing");
-  if(tgl) tgl.valueAsDate = waktuWITA();
-}
+// DOM Elements
+const landingEl = document.getElementById("landing");
+const quizPageEl = document.getElementById("quizPage");
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const nomorEl = document.getElementById("nomor");
+const progressBar = document.getElementById("progressBar");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const finishBtn = document.getElementById("finishBtn");
 
-function cekLogin(){
-  if(!aksesTerbuka()){
-    alert("AKSES DITOLAK!\n\nSekarang bukan jam closing.\nAkses hanya dibuka pukul 12.00 - 15.30 dan 20.45 - 21.30 WITA.");
+function mulai(jenis) {
+  const nama = document.getElementById("nama").value.trim();
+  const kelas = document.getElementById("kelas").value;
+
+  if (nama === "" || kelas === "") {
+    alert("Silakan isi Nama dan Kelas terlebih dahulu!");
     return;
   }
 
-  const sel = document.getElementById("login_nama");
-  const inputNik = document.getElementById("login_nik").value.trim();
+  mode = jenis;
+  currentQuestionIndex = 0;
+  userAnswers = new Array(questions[mode].length).fill(null);
 
-  if(!sel.value){
-    alert("Pilih kasir terlebih dahulu!");
-    return;
-  }
+  landingEl.style.display = "none";
+  quizPageEl.style.display = "block";
+  document.getElementById("jenisTes").innerHTML =
+    jenis === "diagnostik" ? "🩺 Diagnostik" : "🎓 Formatif";
 
-  if(inputNik === sel.value){
-    document.getElementById("login_panel").classList.add("hidden");
-    document.getElementById("main_form").classList.remove("hidden");
-    document.getElementById("final_nama").value = sel.options[sel.selectedIndex].text;
-    document.getElementById("final_nik").value = sel.value;
-    hitungSemua();
-  }else{
-    alert("PIN / NIK salah!");
-  }
+  renderQuestion();
 }
 
-function formatRupiahInput(el){
-  const angka = el.value.replace(/[^0-9]/g,"");
-  el.value = angka ? formatIDR(angka) : "";
-}
+function renderQuestion() {
+  const currentList = questions[mode];
+  const qData = currentList[currentQuestionIndex];
 
-function angkaDariFormat(value){
-  return Number(String(value || "0").replace(/[^0-9]/g,"")) || 0;
-}
+  // Update Topbar & Progress
+  nomorEl.innerText = `${currentQuestionIndex + 1} / ${currentList.length}`;
+  const progressPercent = ((currentQuestionIndex + 1) / currentList.length) * 100;
+  progressBar.style.width = `${progressPercent}%`;
 
-function v(id){
-  const el = document.getElementById(id);
-  return angkaDariFormat(el ? el.value : 0);
-}
+  // Render Soal
+  questionEl.innerText = qData.q;
 
-function terbilang(n){
-  n = Math.abs(Number(n));
-  const satuan = ["","Satu","Dua","Tiga","Empat","Lima","Enam","Tujuh","Delapan","Sembilan","Sepuluh","Sebelas"];
-
-  if(n === 0) return "Nol";
-  if(n < 12) return satuan[n];
-  if(n < 20) return terbilang(n-10) + " Belas";
-  if(n < 100) return (terbilang(Math.floor(n/10)) + " Puluh " + terbilang(n%10)).trim();
-  if(n < 200) return ("Seratus " + terbilang(n-100)).trim();
-  if(n < 1000) return (terbilang(Math.floor(n/100)) + " Ratus " + terbilang(n%100)).trim();
-  if(n < 2000) return ("Seribu " + terbilang(n-1000)).trim();
-  if(n < 1000000) return (terbilang(Math.floor(n/1000)) + " Ribu " + terbilang(n%1000)).trim();
-  if(n < 1000000000) return (terbilang(Math.floor(n/1000000)) + " Juta " + terbilang(n%1000000)).trim();
-
-  return "Angka terlalu besar";
-}
-
-function hitungNabungOtomatis(){
-  const laba = v("laba");
-  const nabung = Math.round(laba * 0.3);
-  document.getElementById("nabung").value = formatIDR(nabung);
-  return nabung;
-}
-
-function hitungSemua(){
-  const nabung = hitungNabungOtomatis();
-
-  const totalOmset = v("shift1") + v("shift2");
-  const pengurang = v("pengambilan") + v("pembatalan") + v("bon") + nabung;
-  const sistem = totalOmset - pengurang;
-
-  document.getElementById("jumlah_sistem").value = formatIDR(sistem);
-
-  const fisik = v("jumlah_fisik");
-  const selisih = fisik - sistem;
-
-  const uangLebih = selisih > 0 ? selisih : 0;
-  const uangKurang = selisih < 0 ? Math.abs(selisih) : 0;
-
-  document.getElementById("uang_lebih").value = formatIDR(uangLebih);
-  document.getElementById("uang_kurang").value = formatIDR(uangKurang);
-
-  const statusBox = document.getElementById("status_box");
-  const printBtn = document.getElementById("printBtn");
-
-  if(fisik > 0 || sistem !== 0){
-    statusBox.classList.remove("hidden");
-    printBtn.classList.remove("hidden");
-
-    if(selisih === 0){
-      statusBox.style.background = "#166534";
-      document.getElementById("status").innerText = "PAS";
-    }else if(selisih > 0){
-      statusBox.style.background = "#ca8a04";
-      document.getElementById("status").innerText = "LEBIH: Rp " + formatIDR(Math.abs(selisih));
-    }else{
-      statusBox.style.background = "#991b1b";
-      document.getElementById("status").innerText = "KURANG: Rp " + formatIDR(Math.abs(selisih));
+  // Render Pilihan Jawaban
+  optionsEl.innerHTML = "";
+  qData.options.forEach((opt, idx) => {
+    const optDiv = document.createElement("div");
+    optDiv.className = "option";
+    
+    if (userAnswers[currentQuestionIndex] === idx) {
+      optDiv.classList.add("selected");
     }
 
-    document.getElementById("terbilang_status").innerText = terbilang(Math.abs(selisih)) + " Rupiah";
-  }else{
-    statusBox.classList.add("hidden");
-    printBtn.classList.add("hidden");
-  }
-}
-
-function buatTokenUnik(){
-  return "PRY-" + Date.now().toString().slice(-6);
-}
-
-function validasiSebelumCetak(){
-  if(!aksesTerbuka()){
-    alert("AKSES DITOLAK!\n\nTidak bisa cetak di luar jam akses closing.");
-    return false;
-  }
-
-  if(!document.getElementById("tanggal_closing").value){
-    alert("Tanggal closing wajib diisi!");
-    return false;
-  }
-
-  if(v("laba") <= 0){
-    alert("Keuntungan wajib diisi karena nabung dihitung 30% dari keuntungan!");
-    document.getElementById("laba").focus();
-    return false;
-  }
-
-  if(v("nabung") <= 0){
-    alert("Nabung wajib minimal 30% dari keuntungan!");
-    return false;
-  }
-
-  if(v("jumlah_fisik") <= 0){
-    alert("Setoran nyata wajib diisi!");
-    document.getElementById("jumlah_fisik").focus();
-    return false;
-  }
-
-  return true;
-}
-
-function cetak(){
-  if(!validasiSebelumCetak()) return;
-
-  const now = waktuWITA();
-  const data = {
-    token: buatTokenUnik(),
-    waktu: now.toLocaleDateString("id-ID") + " " + now.toLocaleTimeString("id-ID") + " WITA",
-    tanggal: document.getElementById("tanggal_closing").value,
-    jenis_shift: document.getElementById("jenis_shift").value,
-    nama: document.getElementById("final_nama").value,
-    nik: document.getElementById("final_nik").value,
-    kas_awal: document.getElementById("kas_awal").value || "0",
-    shift1: document.getElementById("shift1").value || "0",
-    shift2: document.getElementById("shift2").value || "0",
-    omset: formatIDR(v("shift1") + v("shift2")),
-    ambil: document.getElementById("pengambilan").value || "0",
-    batal: document.getElementById("pembatalan").value || "0",
-    bon: document.getElementById("bon").value || "0",
-    nabung: document.getElementById("nabung").value || "0",
-    qris: document.getElementById("qris").value || "0",
-    tf: document.getElementById("transfer").value || "0",
-    laba: document.getElementById("laba").value || "0",
-    sistem: document.getElementById("jumlah_sistem").value,
-    fisik: document.getElementById("jumlah_fisik").value,
-    selisih: v("jumlah_fisik") - v("jumlah_sistem"),
-    uang_lebih: document.getElementById("uang_lebih").value || "0",
-    uang_kurang: document.getElementById("uang_kurang").value || "0",
-    catatan: document.getElementById("catatan").value || "-"
-  };
-
-  const db = JSON.parse(localStorage.getItem("riwayat_prayanamart") || "[]");
-  db.push(data);
-  localStorage.setItem("riwayat_prayanamart", JSON.stringify(db));
-
-  renderDashboard();
-  tampilkanRiwayatSingkat();
-  renderSlip(data);
-}
-
-function renderSlip(data){
-  const slsLabel = data.selisih === 0 ? "PAS" : data.selisih > 0 ? "LEBIH" : "KURANG";
-  const slsAngka = data.selisih === 0 ? "" : "Rp " + formatIDR(Math.abs(data.selisih));
-
-  const struk = `
-  <div style="width:65mm;font-family:Arial;font-size:11px;padding:6mm;color:#000;line-height:1.45">
-    <center>
-      <b style="font-size:16px">PRAYANA MART</b><br>
-      SECURE CLOSING SLIP<br>
-      -----------------------------<br>
-      ${data.waktu}<br>
-      Tanggal: ${data.tanggal}<br>
-      Jenis: ${data.jenis_shift}<br>
-      TOKEN: ${data.token}<br>
-      -----------------------------
-    </center>
-
-    <b>KASIR:</b> ${data.nama}<br>
-    <b>NIK:</b> ${data.nik}<br>
-    -----------------------------<br>
-
-    <table width="100%" style="font-size:11px">
-      <tr><td>MODAL LACI</td><td align="right">Rp ${data.kas_awal}</td></tr>
-      <tr><td>OMSET SHIFT 1</td><td align="right">Rp ${data.shift1}</td></tr>
-      <tr><td>OMSET SHIFT 2</td><td align="right">Rp ${data.shift2}</td></tr>
-      <tr><td><b>TOTAL OMSET</b></td><td align="right"><b>Rp ${data.omset}</b></td></tr>
-      <tr><td>PENGAMBILAN</td><td align="right">- Rp ${data.ambil}</td></tr>
-      <tr><td>BATAL/VOID</td><td align="right">- Rp ${data.batal}</td></tr>
-      <tr><td>BON</td><td align="right">- Rp ${data.bon}</td></tr>
-      <tr><td>NABUNG 30%</td><td align="right">- Rp ${data.nabung}</td></tr>
-    </table>
-
-    -----------------------------<br>
-
-    <table width="100%" style="font-size:12px;font-weight:bold">
-      <tr><td>TARGET SETOR</td><td align="right">Rp ${data.sistem}</td></tr>
-      <tr><td>SETORAN NYATA</td><td align="right">Rp ${data.fisik}</td></tr>
-      <tr><td>SELISIH</td><td align="right">${slsLabel}</td></tr>
-      ${data.selisih !== 0 ? `<tr><td></td><td align="right">${slsAngka}</td></tr>` : ""}
-      <tr><td>UANG LEBIH</td><td align="right">Rp ${data.uang_lebih}</td></tr>
-      <tr><td>UANG KURANG</td><td align="right">Rp ${data.uang_kurang}</td></tr>
-    </table>
-
-    -----------------------------<br>
-    <b>TERBILANG SELISIH:</b><br>
-    <i>${terbilang(Math.abs(data.selisih))} Rupiah</i><br>
-    -----------------------------<br>
-    QRIS: Rp ${data.qris}<br>
-    Transfer: Rp ${data.tf}<br>
-    Laba: Rp ${data.laba}<br>
-    Nabung Wajib 30%: Rp ${data.nabung}<br>
-    -----------------------------<br>
-    <b>CATATAN:</b><br>${data.catatan}<br>
-    -----------------------------<br><br>
-
-    <center>
-      Kasir &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Manager<br><br><br>
-      (________) &nbsp;&nbsp;&nbsp;&nbsp; (________)
-    </center>
-  </div>`;
-
-  const w = window.open("", "", "width=450,height=650");
-  w.document.write("<html><body style='margin:0'>" + struk + "</body></html>");
-  w.document.close();
-
-  setTimeout(() => {
-    w.focus();
-    w.print();
-  }, 500);
-}
-
-function tampilkanRiwayatSingkat(){
-  const db = JSON.parse(localStorage.getItem("riwayat_prayanamart") || "[]");
-  const container = document.getElementById("recent_list");
-
-  if(db.length === 0){
-    container.innerHTML = "<div style='margin-top:10px;color:#94a3b8'>Belum ada riwayat slip.</div>";
-    return;
-  }
-
-  let html = "<b>5 Slip Terakhir:</b><ul>";
-  db.slice(-5).reverse().forEach(item=>{
-    html += `<li onclick="isiToken('${item.token}')">${item.token} - ${item.nama}</li>`;
-  });
-  html += "</ul>";
-  container.innerHTML = html;
-}
-
-function isiToken(t){
-  document.getElementById("token_search").value = t;
-}
-
-function cariRiwayat(){
-  const t = document.getElementById("token_search").value.trim();
-  const db = JSON.parse(localStorage.getItem("riwayat_prayanamart") || "[]");
-  const found = db.find(item => item.token === t);
-
-  if(found) renderSlip(found);
-  else alert("Token tidak ditemukan!");
-}
-
-function getPeriodeClosing(){
-  const now = waktuWITA();
-  let start, end;
-
-  if(now.getDate() >= 2){
-    start = new Date(now.getFullYear(), now.getMonth(), 2);
-    end = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-  }else{
-    start = new Date(now.getFullYear(), now.getMonth() - 1, 2);
-    end = new Date(now.getFullYear(), now.getMonth(), 1);
-  }
-
-  start.setHours(0,0,0,0);
-  end.setHours(23,59,59,999);
-
-  return {start,end};
-}
-
-function formatTanggalPendek(date){
-  return date.toLocaleDateString("id-ID", {
-    day:"2-digit",
-    month:"short"
-  });
-}
-
-function renderDashboard(){
-  const db = JSON.parse(localStorage.getItem("riwayat_prayanamart") || "[]");
-  const {start,end} = getPeriodeClosing();
-
-  document.getElementById("periode_dashboard").innerText =
-    "Periode: " + formatTanggalPendek(start) + " - " + formatTanggalPendek(end);
-
-  const dataBulan = db.filter(item=>{
-    if(!item.tanggal) return false;
-    const tgl = new Date(item.tanggal + "T00:00:00");
-    return tgl >= start && tgl <= end;
+    optDiv.innerText = `${String.fromCharCode(65 + idx)}. ${opt}`;
+    optDiv.onclick = () => selectOption(idx);
+    optionsEl.appendChild(optDiv);
   });
 
-  let totalPenjualan = 0;
-  let totalTabungan = 0;
-  let totalKeuntungan = 0;
-  let totalLebih = 0;
-
-  const perTanggalPenjualan = {};
-  const perTanggalTabungan = {};
-  const perTanggalKeuntungan = {};
-  const perTanggalLebih = {};
-  const perKasir = {};
-  const absensi = {};
-
-  dataBulan.forEach(item=>{
-    const tgl = item.tanggal;
-    const nama = item.nama || "Tanpa Nama";
-
-    const omset = angkaDariFormat(item.omset);
-    const nabung = angkaDariFormat(item.nabung);
-    const laba = angkaDariFormat(item.laba);
-    const lebih = angkaDariFormat(item.uang_lebih);
-
-    totalPenjualan += omset;
-    totalTabungan += nabung;
-    totalKeuntungan += laba;
-    totalLebih += lebih;
-
-    perTanggalPenjualan[tgl] = (perTanggalPenjualan[tgl] || 0) + omset;
-    perTanggalTabungan[tgl] = (perTanggalTabungan[tgl] || 0) + nabung;
-    perTanggalKeuntungan[tgl] = (perTanggalKeuntungan[tgl] || 0) + laba;
-    perTanggalLebih[tgl] = (perTanggalLebih[tgl] || 0) + lebih;
-
-    perKasir[nama] = (perKasir[nama] || 0) + omset;
-
-    if(!absensi[nama]) absensi[nama] = {};
-    if(!absensi[nama][tgl]) absensi[nama][tgl] = [];
-
-    absensi[nama][tgl].push(item.jenis_shift || "Shift");
-  });
-
-  document.getElementById("dash_penjualan").innerText = "Rp " + formatIDR(totalPenjualan);
-  document.getElementById("dash_tabungan").innerText = "Rp " + formatIDR(totalTabungan);
-  document.getElementById("dash_keuntungan").innerText = "Rp " + formatIDR(totalKeuntungan);
-  document.getElementById("dash_lebih").innerText = "Rp " + formatIDR(totalLebih);
-  document.getElementById("dash_slip").innerText = dataBulan.length;
-
-  gambarBarChart("chart_penjualan", perTanggalPenjualan, "#dc2626");
-  gambarBarChart("chart_tabungan", perTanggalTabungan, "#16a34a");
-  gambarBarChart("chart_keuntungan", perTanggalKeuntungan, "#facc15");
-  gambarBarChart("chart_lebih", perTanggalLebih, "#38bdf8");
-  gambarPieKasir("chart_kasir", perKasir, totalPenjualan);
-  renderAbsensi(absensi, start, end);
+  // Atur Tombol Navigasi
+  prevBtn.style.display = currentQuestionIndex === 0 ? "none" : "inline-block";
+  
+  if (currentQuestionIndex === currentList.length - 1) {
+    nextBtn.style.display = "none";
+    finishBtn.style.display = "inline-block";
+  } else {
+    nextBtn.style.display = "inline-block";
+    finishBtn.style.display = "none";
+  }
 }
 
-function gambarBarChart(canvasId, dataObj, warna){
-  const canvas = document.getElementById(canvasId);
-  const ctx = canvas.getContext("2d");
-
-  canvas.width = canvas.offsetWidth * 2;
-  canvas.height = canvas.offsetHeight * 2;
-
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  const entries = Object.entries(dataObj).sort((a,b)=>new Date(a[0]) - new Date(b[0]));
-  const padding = 35;
-  const chartW = canvas.width - padding * 2;
-  const chartH = canvas.height - padding * 2;
-
-  ctx.fillStyle = "#94a3b8";
-  ctx.font = "20px Arial";
-
-  if(entries.length === 0){
-    ctx.fillText("Belum ada data", padding, canvas.height / 2);
-    return;
-  }
-
-  const max = Math.max(...entries.map(e=>e[1]), 1);
-  const barW = Math.max((chartW / entries.length) - 8, 8);
-
-  entries.forEach((entry, i)=>{
-    const label = entry[0].slice(8,10);
-    const value = entry[1];
-    const h = (value / max) * chartH;
-    const x = padding + i * (chartW / entries.length);
-    const y = canvas.height - padding - h;
-
-    ctx.fillStyle = warna;
-    ctx.fillRect(x, y, barW, h);
-
-    ctx.fillStyle = "#cbd5e1";
-    ctx.font = "18px Arial";
-    ctx.fillText(label, x, canvas.height - 10);
-  });
+function selectOption(index) {
+  userAnswers[currentQuestionIndex] = index;
+  renderQuestion();
 }
 
-function gambarPieKasir(canvasId, dataObj, total){
-  const canvas = document.getElementById(canvasId);
-  const ctx = canvas.getContext("2d");
-
-  canvas.width = canvas.offsetWidth * 2;
-  canvas.height = canvas.offsetHeight * 2;
-
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  const entries = Object.entries(dataObj);
-  const colors = ["#dc2626","#2563eb","#16a34a","#facc15","#a855f7","#fb923c"];
-
-  if(entries.length === 0 || total === 0){
-    ctx.fillStyle = "#94a3b8";
-    ctx.font = "20px Arial";
-    ctx.fillText("Belum ada data", 35, canvas.height / 2);
-    return;
+prevBtn.onclick = () => {
+  if (currentQuestionIndex > 0) {
+    currentQuestionIndex--;
+    renderQuestion();
   }
+};
 
-  let startAngle = 0;
-  const cx = canvas.width / 2;
-  const cy = canvas.height / 2 - 20;
-  const radius = Math.min(canvas.width, canvas.height) / 4;
+nextBtn.onclick = () => {
+  if (currentQuestionIndex < questions[mode].length - 1) {
+    currentQuestionIndex++;
+    renderQuestion();
+  }
+};
 
-  entries.forEach((entry, i)=>{
-    const value = entry[1];
-    const slice = (value / total) * Math.PI * 2;
+finishBtn.onclick = () => {
+  if (userAnswers.includes(null)) {
+    if (!confirm("Masih ada soal yang belum dijawab. Yakin ingin menyelesaikan asesmen?")) {
+      return;
+    }
+  }
+  tampilkanHasil();
+};
 
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, radius, startAngle, startAngle + slice);
-    ctx.closePath();
-    ctx.fillStyle = colors[i % colors.length];
-    ctx.fill();
+function tampilkanHasil() {
+  const currentList = questions[mode];
+  let skor = 0;
 
-    startAngle += slice;
+  userAnswers.forEach((ans, idx) => {
+    if (ans === currentList[idx].answer) {
+      skor++;
+    }
   });
 
-  let y = canvas.height - 70;
-  entries.forEach((entry, i)=>{
-    const persen = total > 0 ? ((entry[1] / total) * 100).toFixed(1) : 0;
+  const nilai = Math.round((skor / currentList.length) * 100);
+  const nama = document.getElementById("nama").value;
+  const kelas = document.getElementById("kelas").value;
 
-    ctx.fillStyle = colors[i % colors.length];
-    ctx.fillRect(30, y - 14, 18, 18);
-
-    ctx.fillStyle = "#e5e7eb";
-    ctx.font = "18px Arial";
-    ctx.fillText(entry[0] + " - " + persen + "%", 58, y);
-
-    y += 24;
-  });
-}
-
-function hitungJumlahHariPeriode(start,end){
-  const temp = new Date(start);
-  let jumlah = 0;
-
-  while(temp <= end){
-    jumlah++;
-    temp.setDate(temp.getDate() + 1);
-  }
-
-  return jumlah;
-}
-
-function renderAbsensi(absensi, start, end){
-  const box = document.getElementById("rekap_absensi");
-  const totalHari = hitungJumlahHariPeriode(start,end);
-  const kasirList = Object.keys(absensi);
-
-  if(kasirList.length === 0){
-    box.innerHTML = "Belum ada data absensi.";
-    return;
-  }
-
-  let html = "";
-
-  kasirList.forEach(nama=>{
-    let poinHadir = 0;
-    let full = 0;
-    let single = 0;
-
-    Object.keys(absensi[nama]).forEach(tgl=>{
-      const jumlahSlip = absensi[nama][tgl].length;
-
-      if(jumlahSlip >= 2){
-        poinHadir += 1;
-        full++;
-      }else{
-        poinHadir += 0.5;
-        single++;
-      }
-    });
-
-    const persen = totalHari > 0 ? (poinHadir / totalHari) * 100 : 0;
-    const bonus = persen >= 70;
-
-    html += `
-      <div class="absensi-item">
-        <b>${nama}</b><br>
-        Full: ${full} hari | Shift sekali: ${single} hari<br>
-        Kehadiran: <b>${persen.toFixed(1)}%</b><br>
-        Status Bonus:
-        <span class="${bonus ? "bonus-ok" : "bonus-no"}">
-          ${bonus ? "CAIR" : "BELUM CAIR"}
-        </span>
+  quizPageEl.innerHTML = `
+    <div style="text-align: center;">
+      <i class="fa-solid fa-award" style="font-size: 65px; color: #facc15; margin-bottom: 15px;"></i>
+      <h2>Hasil ${mode === "diagnostik" ? "Asesmen Diagnostik" : "Asesmen Formatif"}</h2>
+      <p style="margin-top: 8px; font-size: 15px; opacity: 0.9;">Nama: <b>${nama}</b> | Kelas: <b>${kelas}</b></p>
+      
+      <div style="background: rgba(255,255,255,0.18); padding: 25px; border-radius: 20px; margin: 25px 0;">
+        <span style="font-size: 14px; opacity: 0.9;">Nilai Akhir</span>
+        <h1 style="font-size: 60px; color: #22c55e; margin: 10px 0;">${nilai}</h1>
+        <p>Berhasil menjawab benar <b>${skor}</b> dari <b>${currentList.length}</b> soal</p>
       </div>
-    `;
-  });
 
-  box.innerHTML = html;
+      <p style="font-size: 14px; opacity: 0.9; line-height: 1.6; margin-bottom: 25px;">
+        ${
+          nilai >= 75
+            ? "Luar biasa! Pemahaman Anda mengenai Scratch dan Makey-Makey sudah sangat baik."
+            : "Tetap semangat! Tingkatkan lagi pemahaman materi modul Scratch & Makey-Makey."
+        }
+      </p>
+
+      <button onclick="location.reload()" class="btn diagnostik" style="padding: 15px 30px; font-size: 16px;">
+        <i class="fa-solid fa-rotate-left" style="font-size: 18px; display: inline; margin-right: 8px;"></i>
+        Ulangi / Kembali
+      </button>
+    </div>
+  `;
 }
 </script>
 
