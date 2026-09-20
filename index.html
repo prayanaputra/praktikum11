@@ -4,306 +4,3410 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>QUICK COUNT — Election Simulator Indonesia</title>
+
 <style>
-:root{--bg:#070b14;--panel:#0e1422;--panel2:#121a2b;--line:#26324a;--text:#f5f7fb;--muted:#8e9ab1;--accent:#5eead4;--gold:#fbbf24;--red:#fb7185;--blue:#60a5fa;--green:#4ade80}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 0,#17223b 0,#070b14 42%);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
-button,input,select{font:inherit}button{cursor:pointer;border:0}
-.app{max-width:1200px;margin:auto;padding:18px}
-.top{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);background:#0a0f1bd9;backdrop-filter:blur(14px);border-radius:18px;padding:14px 18px;position:sticky;top:10px;z-index:10}
-.brand{font-weight:900;letter-spacing:.08em}.brand span{color:var(--accent)}
-.phase{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
-.screen{margin-top:18px}.hero{padding:38px 25px;border:1px solid var(--line);border-radius:25px;background:linear-gradient(135deg,#111b2e,#0b101b);text-align:center}
-h1{font-size:clamp(34px,7vw,72px);line-height:.95;margin:10px 0}.hero p{color:var(--muted);max-width:680px;margin:15px auto 28px;line-height:1.6}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.card{background:linear-gradient(180deg,#111827,#0d1421);border:1px solid var(--line);border-radius:18px;padding:18px}.card h3{margin:0 0 8px}.muted{color:var(--muted)}.small{font-size:12px}.center{text-align:center}
-.btn{background:var(--accent);color:#031513;font-weight:900;padding:12px 17px;border-radius:12px;transition:.18s}.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}.btn.secondary{background:#1a2436;color:var(--text);border:1px solid var(--line)}.btn.danger{background:var(--red);color:#21050a}.btn.gold{background:var(--gold);color:#201500}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.full{width:100%}
-label{display:block;color:var(--muted);font-size:12px;margin:0 0 7px}input,select{width:100%;background:#080e19;color:var(--text);border:1px solid var(--line);padding:12px;border-radius:10px;outline:none}
-.parties{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.party{padding:15px;border:1px solid var(--line);border-radius:14px;background:#0a101c;text-align:left}.party.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}.party .logo{font-size:25px}.party b{display:block;margin:5px 0}.party button{width:100%;margin-top:9px}
-.stat{display:flex;justify-content:space-between;margin:10px 0;font-size:13px}.bar{height:8px;background:#202a3b;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .5s}
-.kpi{font-size:29px;font-weight:900}.news{border-left:3px solid var(--gold);padding:10px 14px;background:#15120a;border-radius:8px;color:#f8e6a7;margin:12px 0}
-.choice{display:block;width:100%;text-align:left;background:#111a2a;color:var(--text);border:1px solid var(--line);padding:14px;border-radius:12px;margin:8px 0}.choice:hover{border-color:var(--accent);background:#152337}
-.timeline{display:flex;gap:6px;overflow:auto;margin:15px 0}.step{padding:7px 10px;border:1px solid var(--line);border-radius:999px;white-space:nowrap;font-size:11px;color:var(--muted)}.step.on{color:#001a17;background:var(--accent);border-color:var(--accent);font-weight:800}
-.table{width:100%;border-collapse:collapse}.table td,.table th{padding:11px;border-bottom:1px solid var(--line);text-align:left}.rank{font-weight:900}.flash{animation:flash .55s}@keyframes flash{50%{transform:scale(1.03)}}
-.modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;padding:18px;z-index:30}.modal.show{display:flex}.modalbox{max-width:650px;width:100%;background:#0d1421;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 25px 90px #000}
-.footer{text-align:center;color:#647087;font-size:11px;padding:30px 0}
-@media(max-width:850px){.grid,.grid2{grid-template-columns:1fr 1fr}.parties{grid-template-columns:1fr 1fr}.top{position:relative}.hero{padding:28px 16px}}
-@media(max-width:520px){.grid,.grid2,.parties{grid-template-columns:1fr}.app{padding:10px}.top{border-radius:13px}}
+:root{
+ --bg:#060914;
+ --panel:#0d1422;
+ --panel2:#121b2d;
+ --line:#243149;
+ --text:#f7f9fc;
+ --muted:#8d9ab0;
+ --cyan:#5eead4;
+ --blue:#60a5fa;
+ --gold:#fbbf24;
+ --red:#fb7185;
+ --green:#4ade80;
+ --purple:#a78bfa;
+}
+
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ min-height:100vh;
+ color:var(--text);
+ background:
+ radial-gradient(circle at 20% 0%,#182642 0%,transparent 35%),
+ radial-gradient(circle at 90% 10%,#162438 0%,transparent 30%),
+ var(--bg);
+ font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+button,input,select{font:inherit}
+
+button{
+ cursor:pointer;
+ border:0;
+}
+
+.app{
+ max-width:1250px;
+ margin:auto;
+ padding:16px;
+}
+
+.topbar{
+ position:sticky;
+ top:10px;
+ z-index:20;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:14px 18px;
+ background:#09101ddd;
+ backdrop-filter:blur(18px);
+ border:1px solid var(--line);
+ border-radius:18px;
+}
+
+.logo{
+ font-weight:950;
+ letter-spacing:.08em;
+}
+
+.logo span{color:var(--cyan)}
+
+.top-info{
+ color:var(--muted);
+ font-size:12px;
+ text-transform:uppercase;
+ letter-spacing:.1em;
+}
+
+.screen{margin-top:18px}
+
+.hero{
+ padding:45px 25px;
+ text-align:center;
+ background:linear-gradient(135deg,#111b2e,#0a101b);
+ border:1px solid var(--line);
+ border-radius:26px;
+}
+
+.hero h1{
+ font-size:clamp(45px,9vw,90px);
+ line-height:.85;
+ margin:12px 0;
+}
+
+.hero h1 span{color:var(--cyan)}
+
+.hero p{
+ max-width:720px;
+ margin:18px auto;
+ line-height:1.65;
+ color:var(--muted);
+}
+
+h1,h2,h3{margin-top:0}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:14px;
+}
+
+.grid2{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:14px;
+}
+
+.card{
+ padding:18px;
+ border-radius:18px;
+ border:1px solid var(--line);
+ background:linear-gradient(180deg,#111a2a,#0b121f);
+}
+
+.card h3{margin-bottom:7px}
+
+.muted{color:var(--muted)}
+.small{font-size:12px}
+
+.center{text-align:center}
+
+.actions{
+ display:flex;
+ flex-wrap:wrap;
+ gap:9px;
+ margin-top:15px;
+}
+
+.btn{
+ padding:12px 17px;
+ border-radius:11px;
+ background:var(--cyan);
+ color:#001b17;
+ font-weight:900;
+ transition:.18s;
+}
+
+.btn:hover{
+ transform:translateY(-2px);
+ filter:brightness(1.08);
+}
+
+.btn.secondary{
+ color:var(--text);
+ background:#172236;
+ border:1px solid var(--line);
+}
+
+.btn.gold{
+ background:var(--gold);
+ color:#211700;
+}
+
+.btn.red{
+ background:var(--red);
+ color:#25040a;
+}
+
+.full{width:100%}
+
+label{
+ display:block;
+ margin:12px 0 6px;
+ color:var(--muted);
+ font-size:12px;
+}
+
+input,select{
+ width:100%;
+ padding:12px;
+ color:var(--text);
+ background:#070d18;
+ border:1px solid var(--line);
+ border-radius:10px;
+ outline:none;
+}
+
+input:focus,select:focus{
+ border-color:var(--cyan);
+}
+
+.parties{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:9px;
+}
+
+.party{
+ padding:13px;
+ background:#080f1b;
+ border:1px solid var(--line);
+ border-radius:13px;
+ transition:.18s;
+}
+
+.party:hover{border-color:#50627f}
+
+.party.selected{
+ border-color:var(--cyan);
+ box-shadow:0 0 0 1px var(--cyan) inset;
+}
+
+.party-logo{
+ font-size:25px;
+}
+
+.party b{
+ display:block;
+ margin:4px 0;
+ font-size:13px;
+}
+
+.party button{
+ width:100%;
+ margin-top:8px;
+}
+
+.timeline{
+ display:flex;
+ gap:6px;
+ overflow:auto;
+ margin-bottom:14px;
+ padding-bottom:3px;
+}
+
+.step{
+ white-space:nowrap;
+ padding:7px 10px;
+ border-radius:999px;
+ color:var(--muted);
+ border:1px solid var(--line);
+ font-size:11px;
+}
+
+.step.active{
+ color:#001b17;
+ background:var(--cyan);
+ border-color:var(--cyan);
+ font-weight:900;
+}
+
+.kpi{
+ font-size:32px;
+ font-weight:950;
+}
+
+.stat{
+ display:flex;
+ justify-content:space-between;
+ margin:9px 0;
+ font-size:13px;
+}
+
+.bar{
+ height:8px;
+ overflow:hidden;
+ background:#202a3b;
+ border-radius:99px;
+}
+
+.bar i{
+ display:block;
+ height:100%;
+ width:0;
+ background:var(--cyan);
+ border-radius:99px;
+ transition:.5s;
+}
+
+.dashboard{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:10px;
+ margin-bottom:14px;
+}
+
+.dashboard .card{
+ padding:14px;
+}
+
+.choice{
+ width:100%;
+ padding:14px;
+ margin:7px 0;
+ text-align:left;
+ color:var(--text);
+ background:#101a2a;
+ border:1px solid var(--line);
+ border-radius:12px;
+}
+
+.choice:hover{
+ border-color:var(--cyan);
+ background:#152338;
+}
+
+.news{
+ padding:12px 15px;
+ margin:12px 0;
+ color:#f8e6a7;
+ background:#19160b;
+ border-left:3px solid var(--gold);
+ border-radius:8px;
+}
+
+.danger-news{
+ color:#ffd7de;
+ background:#210d13;
+ border-left-color:var(--red);
+}
+
+.event-card{
+ padding:25px;
+ text-align:center;
+ border-radius:20px;
+ border:1px solid var(--line);
+ background:linear-gradient(135deg,#141e31,#0b111d);
+}
+
+.event-icon{
+ font-size:45px;
+ margin-bottom:10px;
+}
+
+.action-grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+}
+
+.action-card{
+ padding:17px;
+ border:1px solid var(--line);
+ background:#0b121f;
+ border-radius:15px;
+}
+
+.action-card .icon{
+ font-size:28px;
+}
+
+.action-card h3{
+ margin:7px 0;
+ font-size:16px;
+}
+
+.money{
+ color:var(--gold);
+ font-weight:900;
+}
+
+.up{color:var(--green)}
+.down{color:var(--red)}
+
+table{
+ width:100%;
+ border-collapse:collapse;
+}
+
+th,td{
+ padding:11px;
+ text-align:left;
+ border-bottom:1px solid var(--line);
+}
+
+.rank{
+ font-weight:950;
+}
+
+.modal{
+ position:fixed;
+ inset:0;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:18px;
+ background:#000b;
+ z-index:100;
+}
+
+.modal.show{display:flex}
+
+.modal-box{
+ width:min(700px,100%);
+ max-height:90vh;
+ overflow:auto;
+ padding:22px;
+ background:#0d1523;
+ border:1px solid var(--line);
+ border-radius:22px;
+ box-shadow:0 30px 100px #000;
+}
+
+.modal-actions{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ margin-top:17px;
+}
+
+.footer{
+ padding:30px 0 15px;
+ text-align:center;
+ color:#637088;
+ font-size:11px;
+}
+
+.flash{
+ animation:flash .5s;
+}
+
+@keyframes flash{
+ 50%{transform:scale(1.025)}
+}
+
+@media(max-width:900px){
+ .dashboard{grid-template-columns:repeat(2,1fr)}
+ .grid,.grid2{grid-template-columns:1fr 1fr}
+ .action-grid{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:600px){
+ .app{padding:9px}
+ .topbar{position:relative}
+ .grid,.grid2,.action-grid{grid-template-columns:1fr}
+ .dashboard{grid-template-columns:1fr 1fr}
+ .hero{padding:32px 16px}
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
-  <header class="top">
-    <div class="brand">QUICK<span>COUNT</span> <span style="font-size:10px">ID</span></div>
-    <div class="phase" id="phase">SIMULATOR</div>
-  </header>
-  <main id="screen" class="screen"></main>
-  <div class="footer">SIMULASI FIKTIF • Tidak merepresentasikan survei atau hasil pemilu nyata</div>
+
+<header class="topbar">
+ <div class="logo">QUICK<span>COUNT</span> ID</div>
+ <div class="top-info" id="phaseLabel">MAIN MENU</div>
+</header>
+
+<main id="screen" class="screen"></main>
+
+<div class="footer">
+ SIMULASI POLITIK FIKTIF • Tidak merepresentasikan survei, kampanye,
+ kandidat, atau hasil pemilu nyata.
+</div>
+
 </div>
 
 <div class="modal" id="modal">
-  <div class="modalbox" id="modalbox"></div>
+ <div class="modal-box" id="modalBox"></div>
 </div>
 
 <script>
-const parties=[
- {id:"PDIP",name:"PDI Perjuangan",logo:"◉",base:24,style:"massa & jaringan"},
- {id:"GOLKAR",name:"Partai Golkar",logo:"🌳",base:18,style:"jaringan nasional"},
- {id:"GERINDRA",name:"Partai Gerindra",logo:"🦅",base:21,style:"nasionalisme"},
- {id:"NASDEM",name:"Partai NasDem",logo:"★",base:10,style:"media & perubahan"},
- {id:"PKB",name:"PKB",logo:"☀",base:9,style:"basis komunitas"},
- {id:"PKS",name:"PKS",logo:"🌾",base:8,style:"kader & komunitas"},
- {id:"DEMOKRAT",name:"Partai Demokrat",logo:"⭐",base:8,style:"pemilih moderat"},
- {id:"PAN",name:"PAN",logo:"🔵",base:7,style:"jaringan daerah"}
+
+/* =========================================================
+   DATA PARTAI
+========================================================= */
+
+const PARTIES=[
+ {
+  id:"PDIP",
+  name:"PDI Perjuangan",
+  logo:"◉",
+  style:"massa & jaringan",
+  base:23
+ },
+ {
+  id:"GOLKAR",
+  name:"Partai Golkar",
+  logo:"🌳",
+  style:"jaringan nasional",
+  base:18
+ },
+ {
+  id:"GERINDRA",
+  name:"Partai Gerindra",
+  logo:"🦅",
+  style:"nasionalisme",
+  base:21
+ },
+ {
+  id:"NASDEM",
+  name:"Partai NasDem",
+  logo:"★",
+  style:"media & perubahan",
+  base:10
+ },
+ {
+  id:"PKB",
+  name:"PKB",
+  logo:"☀️",
+  style:"basis komunitas",
+  base:9
+ },
+ {
+  id:"PKS",
+  name:"PKS",
+  logo:"🌾",
+  style:"kader & komunitas",
+  base:8
+ },
+ {
+  id:"DEMOKRAT",
+  name:"Partai Demokrat",
+  logo:"⭐",
+  style:"pemilih moderat",
+  base:8
+ },
+ {
+  id:"PAN",
+  name:"PAN",
+  logo:"🔵",
+  style:"jaringan daerah",
+  base:7
+ }
 ];
 
-let S={
- phase:0,turn:1,party:null,candidate:"",vice:"",slogan:"",
- money:100,pop:50,trust:50,media:50,base:50,swing:50,contro:0,
- debate:0,events:0,score:0,history:[],opponents:[],
- votes:{},qc:0,recap:0,winner:false
+
+/* =========================================================
+   GAME STATE
+========================================================= */
+
+let G={
+ phase:0,
+ turn:1,
+ maxTurn:12,
+
+ candidate:"",
+ vice:"",
+ slogan:"",
+
+ party:null,
+
+ money:100,
+ debt:0,
+
+ popularity:50,
+ momentum:50,
+ trust:50,
+ media:50,
+ base:50,
+ swing:50,
+ reputation:50,
+ controversy:0,
+
+ mediaPartner:null,
+
+ team:[],
+
+ opponent:{
+  popularity:50,
+  momentum:50,
+  trust:50,
+  money:100
+ },
+
+ history:[],
+
+ qc:0,
+ finalScore:0,
+
+ regions:[],
+ regionIndex:0,
+
+ ended:false
 };
 
-const phases=["Setup","Tim","Kampanye","Debat","Serangan","Masa Tenang","Pemungutan","Quick Count","Rekapitulasi","Hasil"];
 
-function save(){localStorage.setItem("quickcountID",JSON.stringify(S))}
-function load(){try{const x=JSON.parse(localStorage.getItem("quickcountID"));if(x)S=x}catch(e){}}
-function pct(x){return Math.max(0,Math.min(100,Math.round(x)))}
-function rnd(a,b){return Math.random()*(b-a)+a}
-function clamp(x,a=0,b=100){return Math.max(a,Math.min(b,x))}
-function money(n){return "Rp "+Math.max(0,Math.round(n)).toLocaleString("id-ID")+" jt"}
-function setPhase(n){S.phase=n;document.getElementById("phase").textContent=phases[n]||"SIMULATOR";save()}
-function screen(html){document.getElementById("screen").innerHTML=html;window.scrollTo({top:0,behavior:"smooth"})}
-function modal(title,body,buttons=""){document.getElementById("modalbox").innerHTML=`<h2>${title}</h2>${body}<div class="actions">${buttons}</div>`;document.getElementById("modal").classList.add("show")}
-function closeModal(){document.getElementById("modal").classList.remove("show")}
-function stat(label,val,cls=""){return `<div class="stat"><span>${label}</span><b class="${cls}">${val}</b></div>`}
-function meter(label,val){return `<div class="stat"><span>${label}</span><b>${pct(val)}</b></div><div class="bar"><i style="width:${pct(val)}%"></i></div>`}
+/* =========================================================
+   PHASES
+========================================================= */
+
+const PHASES=[
+ "Setup",
+ "Tim",
+ "Kampanye",
+ "Debat",
+ "Serangan",
+ "Masa Tenang",
+ "Pemungutan",
+ "Quick Count",
+ "Rekapitulasi",
+ "Hasil"
+];
+
+
+/* =========================================================
+   BASIC FUNCTIONS
+========================================================= */
+
+function saveGame(){
+ localStorage.setItem(
+  "QC_ID_SAVE",
+  JSON.stringify(G)
+ );
+}
+
+function loadGame(){
+ try{
+  const saved=localStorage.getItem("QC_ID_SAVE");
+
+  if(saved){
+   const x=JSON.parse(saved);
+
+   if(x && x.candidate){
+    G=x;
+   }
+  }
+ }catch(e){}
+}
+
+function rnd(min,max){
+ return Math.random()*(max-min)+min;
+}
+
+function chance(percent){
+ return Math.random()*100<percent;
+}
+
+function clamp(x,min=0,max=100){
+ return Math.max(min,Math.min(max,x));
+}
+
+function money(x){
+ return "Rp "+Math.max(0,Math.round(x)).toLocaleString("id-ID")+" jt";
+}
+
+function pct(x){
+ return clamp(x).toFixed(1)+"%";
+}
+
+function phase(n){
+ G.phase=n;
+
+ document.getElementById("phaseLabel")
+ .textContent=PHASES[n]||"SIMULATOR";
+
+ saveGame();
+}
+
+function normalize(){
+
+ G.money=Math.max(0,G.money);
+ G.debt=Math.max(0,G.debt);
+
+ G.popularity=clamp(G.popularity);
+ G.momentum=clamp(G.momentum);
+ G.trust=clamp(G.trust);
+ G.media=clamp(G.media);
+ G.base=clamp(G.base);
+ G.swing=clamp(G.swing);
+ G.reputation=clamp(G.reputation);
+ G.controversy=clamp(G.controversy);
+
+ G.opponent.popularity=clamp(G.opponent.popularity);
+ G.opponent.momentum=clamp(G.opponent.momentum);
+ G.opponent.trust=clamp(G.opponent.trust);
+ G.opponent.money=Math.max(0,G.opponent.money);
+}
+
+function setScreen(html){
+ document.getElementById("screen").innerHTML=html;
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+}
+
+function modal(title,body,buttons=[]){
+
+ let html=`
+  <h2>${title}</h2>
+  <div>${body}</div>
+  <div class="modal-actions">
+ `;
+
+ buttons.forEach(b=>{
+  html+=`
+   <button class="btn ${b.class||""}" onclick="${b.action}">
+    ${b.text}
+   </button>
+  `;
+ });
+
+ html+=`</div>`;
+
+ document.getElementById("modalBox").innerHTML=html;
+ document.getElementById("modal").classList.add("show");
+}
+
+function closeModal(){
+ document.getElementById("modal").classList.remove("show");
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
 
 function intro(){
- setPhase(0);
- screen(`<section class="hero">
-   <div class="small muted">INDONESIA • ELECTION STRATEGY SIMULATOR</div>
-   <h1>QUICK<br><span style="color:var(--accent)">COUNT</span></h1>
-   <p>Bangun kandidatmu dari nol. Pilih partai, susun tim, hadapi debat, kelola kampanye, merespons serangan lawan, lalu saksikan suara masuk sampai rekapitulasi nasional.</p>
-   <div class="actions" style="justify-content:center"><button class="btn" onclick="setup()">MULAI SIMULASI</button><button class="btn secondary" onclick="how()">CARA MAIN</button></div>
- </section>`);
-}
-function how(){
- modal("Cara Main",`<p class="muted">Setiap keputusan mengubah popularitas, kepercayaan, basis, swing voters, media exposure, uang kampanye, dan kontroversi. Hasil pemilu dihitung dari statistik permainan + faktor acak.</p>
- <div class="news">Semua kandidat, peristiwa, survei, dan hasil dalam permainan ini adalah simulasi fiktif.</div>`,
- `<button class="btn" onclick="closeModal();setup()">Mulai</button>`);
-}
-function setup(){
- setPhase(0);
- screen(`<div class="grid2">
-  <div class="card"><h2>01 — Identitas Kandidat</h2>
-   <label>NAMA KANDIDAT</label><input id="cand" placeholder="Contoh: Arga Pratama">
-   <label style="margin-top:12px">NAMA WAKIL</label><input id="vice" placeholder="Contoh: Naya Putri">
-   <label style="margin-top:12px">SLOGAN</label><input id="slogan" placeholder="Contoh: Bersama Melangkah">
+
+ phase(0);
+
+ setScreen(`
+ <section class="hero">
+
+  <div class="small muted">
+   INDONESIA • POLITICAL STRATEGY SIMULATOR
   </div>
-  <div class="card"><h2>02 — Pilih Partai</h2><div class="parties">${parties.map(p=>`<div class="party" id="p-${p.id}"><div class="logo">${p.logo}</div><b>${p.name}</b><span class="small muted">${p.style}</span><button class="btn secondary" onclick="chooseParty('${p.id}')">PILIH</button></div>`).join("")}</div></div>
+
+  <h1>
+   QUICK<br>
+   <span>COUNT</span>
+  </h1>
+
+  <p>
+   Bangun kandidatmu dari nol.
+   Pilih partai, susun tim, cari dana,
+   pilih media partner, tampil di televisi,
+   hadapi debat, serangan lawan,
+   masa tenang, hari pemilihan,
+   quick count hingga rekapitulasi.
+  </p>
+
+  <div class="actions" style="justify-content:center">
+
+   <button class="btn"
+    onclick="setup()">
+    MULAI SIMULASI
+   </button>
+
+   <button class="btn secondary"
+    onclick="howToPlay()">
+    CARA MAIN
+   </button>
+
+   ${
+    G.candidate
+    ?
+    `<button class="btn gold"
+     onclick="resumeGame()">
+     LANJUTKAN
+     </button>`
+    :""
+   }
+
+  </div>
+
+ </section>
+ `);
+}
+
+function howToPlay(){
+
+ modal(
+  "CARA MAIN",
+  `
+  <p class="muted">
+   Game ini menggunakan sistem campaign management.
+  </p>
+
+  <div class="news">
+   📈 Angka tidak selalu naik.
+   Setiap keputusan memiliki risiko.
+  </div>
+
+  <p>
+   <b>Momentum</b> menjadi salah satu faktor terpenting.
+   Momentum tinggi membuat fundraising lebih mudah,
+   tetapi momentum rendah dapat membuat donatur,
+   media, bahkan pemberi pinjaman menolak.
+  </p>
+
+  <p>
+   Jika uang habis, kamu bisa mencari donatur,
+   fundraising, media support atau pinjaman.
+   Jika semuanya gagal, game otomatis masuk
+   ke turn berikutnya.
+  </p>
+
+  <p>
+   Lawan juga bergerak setiap turn.
+  </p>
+  `,
+  [
+   {
+    text:"MENGERTI",
+    action:"closeModal()"
+   }
+  ]
+ );
+}
+
+function resumeGame(){
+ renderCurrent();
+}
+
+
+/* =========================================================
+   SETUP
+========================================================= */
+
+function setup(){
+
+ G={
+  ...G,
+  phase:0,
+  turn:1,
+  candidate:"",
+  vice:"",
+  slogan:"",
+  party:null,
+  money:100,
+  debt:0,
+  popularity:50,
+  momentum:50,
+  trust:50,
+  media:50,
+  base:50,
+  swing:50,
+  reputation:50,
+  controversy:0,
+  mediaPartner:null,
+  team:[],
+  history:[],
+  qc:0,
+  ended:false
+ };
+
+ setScreen(`
+ <div class="grid2">
+
+  <div class="card">
+
+   <h2>01 — Kandidat</h2>
+
+   <label>NAMA KANDIDAT</label>
+   <input id="candidate"
+    placeholder="Contoh: Arga Pratama">
+
+   <label>NAMA WAKIL</label>
+   <input id="vice"
+    placeholder="Contoh: Naya Putri">
+
+   <label>SLOGAN</label>
+   <input id="slogan"
+    placeholder="Contoh: Bersama Melangkah">
+
+   <div class="news">
+    💡 Nama kandidat dan seluruh cerita
+    dalam game ini bersifat fiktif.
+   </div>
+
+  </div>
+
+  <div class="card">
+
+   <h2>02 — Pilih Partai</h2>
+
+   <div class="parties">
+
+   ${PARTIES.map(p=>`
+
+    <div
+     class="party"
+     id="party-${p.id}"
+    >
+
+     <div class="party-logo">
+      ${p.logo}
+     </div>
+
+     <b>${p.name}</b>
+
+     <span class="small muted">
+      ${p.style}
+     </span>
+
+     <button
+      class="btn secondary"
+      onclick="selectParty('${p.id}')"
+     >
+      PILIH
+     </button>
+
+    </div>
+
+   `).join("")}
+
+   </div>
+
+  </div>
+
  </div>
- <div class="card" style="margin-top:14px"><div class="small muted">PARTAI TERPILIH</div><h3 id="picked">Belum dipilih</h3><button class="btn full" onclick="finishSetup()">LANJUT KE PEMBENTUKAN TIM →</button></div>`);
+
+ <div class="card" style="margin-top:14px">
+
+  <div class="small muted">
+   PARTAI TERPILIH
+  </div>
+
+  <h3 id="selectedParty">
+   Belum dipilih
+  </h3>
+
+  <button
+   class="btn full"
+   onclick="finishSetup()"
+  >
+   LANJUT →
+  </button>
+
+ </div>
+ `);
 }
-function chooseParty(id){
- S.party=parties.find(p=>p.id===id);
- document.querySelectorAll(".party").forEach(x=>x.classList.remove("selected"));
- document.getElementById("p-"+id).classList.add("selected");
- document.getElementById("picked").textContent=S.party.name;
+
+function selectParty(id){
+
+ G.party=PARTIES.find(p=>p.id===id);
+
+ document
+ .querySelectorAll(".party")
+ .forEach(x=>x.classList.remove("selected"));
+
+ document
+ .getElementById("party-"+id)
+ .classList.add("selected");
+
+ document
+ .getElementById("selectedParty")
+ .textContent=G.party.name;
 }
+
 function finishSetup(){
- const c=document.getElementById("cand").value.trim(),v=document.getElementById("vice").value.trim(),sl=document.getElementById("slogan").value.trim();
- if(!S.party||!c||!v){alert("Lengkapi kandidat, wakil, dan pilih partai.");return}
- S.candidate=c;S.vice=v;S.slogan=sl||"Bersama Melangkah";
- setPhase(1);team();
-}
-function team(){
- screen(`<div class="timeline">${phases.slice(0,6).map((x,i)=>`<div class="step ${i<=1?"on":""}">${i+1}. ${x}</div>`).join("")}</div>
- <div class="grid">
-  ${[
-   ["Manajer Kampanye","Naikkan efektivitas semua kegiatan kampanye.","media",12],
-   ["Juru Bicara","Meningkatkan dampak debat dan respons isu.","debate",12],
-   ["Tim Digital","Memperkuat media exposure dan swing voters.","media",10],
-   ["Tim Lapangan","Memperkuat basis loyal dan turnout.","base",10],
-   ["Relawan","Biaya kampanye lebih murah.","money",8],
-   ["Konsultan Strategi","Bonus kecil pada keputusan berisiko.","score",15]
-  ].map((x,i)=>`<div class="card"><h3>${i+1}. ${x[0]}</h3><p class="muted small">${x[1]}</p><button class="btn secondary full" onclick="hire(${i},'${x[2]}',${x[3]})">REKRUT — Rp ${x[3]} jt</button></div>`).join("")}
- </div>`);
-}
-let hired=[];
-function hire(i,type,cost){
- if(S.money<cost){alert("Dana kampanye tidak cukup.");return}
- if(hired.includes(i)){alert("Sudah direkrut.");return}
- hired.push(i);S.money-=cost;
- if(type==="media")S.media+=8;
- if(type==="debate")S.debate+=8;
- if(type==="base")S.base+=8;
- if(type==="money")S.money+=10;
- if(type==="score")S.score+=10;
- if(hired.length>=3){
-  modal("Tim terbentuk",`<p>Tim inti ${S.candidate} telah siap. Kamu masih punya <b>${money(S.money)}</b>.</p>`,
-  `<button class="btn" onclick="closeModal();campaign()">MULAI KAMPANYE →</button>`);
+
+ const c=
+ document.getElementById("candidate").value.trim();
+
+ const v=
+ document.getElementById("vice").value.trim();
+
+ const s=
+ document.getElementById("slogan").value.trim();
+
+ if(!c||!v||!G.party){
+  alert("Lengkapi kandidat, wakil dan partai.");
+  return;
  }
- save();
+
+ G.candidate=c;
+ G.vice=v;
+ G.slogan=s||"Bersama Melangkah";
+
+ G.popularity=G.party.base+rnd(5,15);
+ G.base=G.party.base*2+rnd(15,25);
+ G.momentum=rnd(45,60);
+
+ phase(1);
+
+ team();
 }
-function dashboard(){
- return `<div class="grid">
- <div class="card"><div class="small muted">ELEKTABILITAS</div><div class="kpi">${pct(S.pop)}%</div>${meter("Momentum",S.pop)}</div>
- <div class="card"><div class="small muted">KEPERCAYAAN</div><div class="kpi">${pct(S.trust)}</div>${meter("Reputasi",S.trust)}</div>
- <div class="card"><div class="small muted">DANA</div><div class="kpi">${money(S.money)}</div>${meter("Efisiensi",S.money/2)}</div>
- </div>
- <div class="card" style="margin-top:14px"><div class="grid2">
- <div>${meter("Basis Loyal",S.base)}${meter("Swing Voters",S.swing)}${meter("Media Exposure",S.media)}</div>
- <div>${meter("Debat",S.debate)}${meter("Kontroversi",S.contro)}${meter("Momentum",S.score)}</div>
- </div></div>`;
-}
-const campaignActs=[
- ["📱","Kampanye Digital",18,7,4,8,0,"media"],
- ["🎤","Rapat Umum",25,9,6,4,3,"base"],
- ["🏘️","Blusukan",14,5,8,2,0,"trust"],
- ["📺","Iklan Nasional",32,11,2,10,1,"media"],
- ["🤝","Konsolidasi Tokoh",20,4,9,3,0,"base"],
- ["🎙️","Podcast & Debat Publik",12,6,3,7,0,"debate"]
+
+
+/* =========================================================
+   TEAM
+========================================================= */
+
+const TEAM=[
+ {
+  name:"Manajer Kampanye",
+  cost:15,
+  effect:"Efektivitas kampanye meningkat.",
+  key:"campaign"
+ },
+ {
+  name:"Juru Bicara",
+  cost:12,
+  effect:"Debat dan respons isu lebih kuat.",
+  key:"debate"
+ },
+ {
+  name:"Tim Digital",
+  cost:10,
+  effect:"Media exposure meningkat.",
+  key:"media"
+ },
+ {
+  name:"Tim Lapangan",
+  cost:10,
+  effect:"Basis loyal meningkat.",
+  key:"base"
+ },
+ {
+  name:"Tim Fundraising",
+  cost:12,
+  effect:"Peluang mendapatkan dana meningkat.",
+  key:"fund"
+ },
+ {
+  name:"Konsultan Strategi",
+  cost:15,
+  effect:"Mengurangi risiko keputusan.",
+  key:"strategy"
+ }
 ];
-function campaign(){
- setPhase(2);
- screen(`<div class="timeline">${phases.slice(0,6).map((x,i)=>`<div class="step ${i<=2?"on":""}">${i+1}. ${x}</div>`).join("")}</div>
+
+function team(){
+
+ phase(1);
+
+ setScreen(`
+ ${timeline()}
+
  ${dashboard()}
- <div class="news">TURN ${S.turn}/5 — Pilih strategi kampanye. Setelah 5 turn, kamu masuk masa debat.</div>
- <div class="grid">${campaignActs.map((a,i)=>`<div class="card"><div style="font-size:30px">${a[0]}</div><h3>${a[1]}</h3><p class="small muted">Biaya ${money(a[2])}</p><button class="btn secondary full" onclick="act(${i})">JALANKAN</button></div>`).join("")}</div>`);
+
+ <div class="card">
+  <h2>Bentuk Tim Kampanye</h2>
+
+  <p class="muted">
+   Rekrut maksimal 4 anggota tim.
+   Setiap anggota memberi bonus berbeda.
+  </p>
+
+  <div class="action-grid">
+
+  ${TEAM.map((t,i)=>`
+
+   <div class="action-card">
+
+    <div class="icon">
+     ${["🧠","🎙️","📱","🏘️","💰","♟️"][i]}
+    </div>
+
+    <h3>${t.name}</h3>
+
+    <p class="small muted">
+     ${t.effect}
+    </p>
+
+    <div class="money">
+     ${money(t.cost)}
+    </div>
+
+    <button
+     class="btn secondary full"
+     style="margin-top:10px"
+     onclick="hireTeam(${i})"
+     ${G.team.includes(t.name)?"disabled":""}
+    >
+     ${G.team.includes(t.name)?"SUDAH DIREKRUT":"REKRUT"}
+    </button>
+
+   </div>
+
+  `).join("")}
+
+  </div>
+
+  <div class="actions">
+   <button
+    class="btn"
+    onclick="startCampaign()"
+   >
+    MULAI KAMPANYE →
+   </button>
+  </div>
+
+ </div>
+ `);
 }
-function act(i){
- const a=campaignActs[i];
- if(S.money<a[2]){alert("Dana tidak cukup.");return}
- S.money-=a[2];
- S.pop+=a[3];S.trust+=a[4];S.media+=a[5];S.contro+=a[6];
- if(a[7]==="base")S.base+=5;
- if(a[7]==="trust")S.trust+=5;
- if(a[7]==="media")S.media+=5;
- if(a[7]==="debate")S.debate+=5;
- S.score+=rnd(2,7);S.turn++;
- randomNews();
- if(S.turn>5){debate();return}
- save();campaign();
+
+function hireTeam(i){
+
+ const t=TEAM[i];
+
+ if(G.team.length>=4){
+  alert("Tim maksimal 4 orang.");
+  return;
+ }
+
+ if(G.money<t.cost){
+  fundingEmergency("team");
+  return;
+ }
+
+ G.money-=t.cost;
+ G.team.push(t.name);
+
+ if(t.key==="media")G.media+=8;
+ if(t.key==="base")G.base+=8;
+ if(t.key==="fund")G.reputation+=7;
+ if(t.key==="debate")G.trust+=5;
+ if(t.key==="campaign")G.momentum+=5;
+ if(t.key==="strategy")G.reputation+=5;
+
+ normalize();
+ saveGame();
+ team();
 }
-function randomNews(){
- if(Math.random()<.34){
-  const news=[
-   ["📈 Survei internal menunjukkan kenaikan perhatian publik.",4,0],
-   ["📰 Pernyataan lawan menjadi perbincangan di media.",2,1],
-   ["🤝 Relawan baru bergabung.",3,0],
-   ["⚠️ Kritik terhadap program kampanye muncul.",-2,4]
-  ][Math.floor(Math.random()*4)];
-  S.pop+=news[1];S.contro+=news[2];
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+function timeline(){
+
+ return `
+ <div class="timeline">
+ ${PHASES.map((p,i)=>`
+  <div class="step ${i===G.phase?"active":""}">
+   ${i+1}. ${p}
+  </div>
+ `).join("")}
+ </div>
+ `;
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function meter(label,value){
+
+ return `
+ <div class="stat">
+  <span>${label}</span>
+  <b>${pct(value)}</b>
+ </div>
+
+ <div class="bar">
+  <i style="width:${clamp(value)}%"></i>
+ </div>
+ `;
+}
+
+function dashboard(){
+
+ return `
+ <div class="dashboard">
+
+  <div class="card">
+   <div class="small muted">
+    MOMENTUM
+   </div>
+   <div class="kpi">
+    ${pct(G.momentum)}
+   </div>
+   ${meter("Trend",G.momentum)}
+  </div>
+
+  <div class="card">
+   <div class="small muted">
+    POPULARITAS
+   </div>
+   <div class="kpi">
+    ${pct(G.popularity)}
+   </div>
+   ${meter("Publik",G.popularity)}
+  </div>
+
+  <div class="card">
+   <div class="small muted">
+    KEPERCAYAAN
+   </div>
+   <div class="kpi">
+    ${pct(G.trust)}
+   </div>
+   ${meter("Trust",G.trust)}
+  </div>
+
+  <div class="card">
+   <div class="small muted">
+    DANA
+   </div>
+   <div class="kpi money">
+    ${money(G.money)}
+   </div>
+   <div class="small muted">
+    Hutang: ${money(G.debt)}
+   </div>
+  </div>
+
+ </div>
+
+ <div class="card" style="margin-bottom:14px">
+
+  <div class="grid2">
+
+   <div>
+    ${meter("Basis Loyal",G.base)}
+    ${meter("Swing Voters",G.swing)}
+    ${meter("Media Exposure",G.media)}
+   </div>
+
+   <div>
+    ${meter("Reputasi",G.reputation)}
+    ${meter("Kontroversi",G.controversy)}
+    ${meter("Dana / 2",G.money/2)}
+   </div>
+
+  </div>
+
+ </div>
+ `;
+}
+
+
+/* =========================================================
+   CAMPAIGN
+========================================================= */
+
+function startCampaign(){
+ G.turn=1;
+ phase(2);
+ renderCampaign();
+}
+
+const CAMPAIGNS=[
+ {
+  icon:"📱",
+  name:"Kampanye Digital",
+  cost:10,
+  desc:"Serang algoritma. Bisa viral, bisa tenggelam.",
+  action:"digital"
+ },
+ {
+  icon:"🎤",
+  name:"Rapat Umum",
+  cost:18,
+  desc:"Mobilisasi massa dan relawan.",
+  action:"rally"
+ },
+ {
+  icon:"🏘️",
+  name:"Blusukan",
+  cost:8,
+  desc:"Bangun hubungan langsung dengan warga.",
+  action:"blusukan"
+ },
+ {
+  icon:"📺",
+  name:"Iklan Nasional",
+  cost:25,
+  desc:"Jangkauan besar tetapi mahal.",
+  action:"advertising"
+ },
+ {
+  icon:"🤝",
+  name:"Konsolidasi Tokoh",
+  cost:14,
+  desc:"Temui tokoh dan komunitas daerah.",
+  action:"community"
+ },
+ {
+  icon:"🎙️",
+  name:"Podcast",
+  cost:7,
+  desc:"Bangun citra kandidat secara personal.",
+  action:"podcast"
+ }
+];
+
+function renderCampaign(){
+
+ phase(2);
+
+ normalize();
+
+ setScreen(`
+ ${timeline()}
+
+ ${dashboard()}
+
+ <div class="news">
+  <b>TURN ${G.turn}/${G.maxTurn}</b>
+  —
+  Setiap aksi memiliki risiko.
+  Momentum dapat naik maupun turun.
+ </div>
+
+ <div class="action-grid">
+
+ ${CAMPAIGNS.map((a,i)=>`
+
+  <div class="action-card">
+
+   <div class="icon">
+    ${a.icon}
+   </div>
+
+   <h3>${a.name}</h3>
+
+   <p class="small muted">
+    ${a.desc}
+   </p>
+
+   <div class="money">
+    ${money(a.cost)}
+   </div>
+
+   <button
+    class="btn secondary full"
+    style="margin-top:10px"
+    onclick="campaignAction('${a.action}',${a.cost})"
+   >
+    JALANKAN
+   </button>
+
+  </div>
+
+ `).join("")}
+
+ </div>
+
+ <div class="grid" style="margin-top:14px">
+
+  <div class="card">
+   <h3>💰 Funding</h3>
+   <p class="small muted">
+    Cari dana sebelum kas habis.
+   </p>
+
+   <button
+    class="btn gold full"
+    onclick="fundraisingMenu()"
+   >
+    RAISE FUND
+   </button>
+  </div>
+
+  <div class="card">
+   <h3>📺 Televisi</h3>
+   <p class="small muted">
+    Pilih acara TV untuk menaikkan exposure.
+   </p>
+
+   <button
+    class="btn secondary full"
+    onclick="tvMenu()"
+   >
+    ACARA TV
+   </button>
+  </div>
+
+  <div class="card">
+   <h3>📰 Media Partner</h3>
+   <p class="small muted">
+    Pilih partner media.
+   </p>
+
+   <button
+    class="btn secondary full"
+    onclick="mediaMenu()"
+   >
+    PILIH MEDIA
+   </button>
+  </div>
+
+ </div>
+
+ <div class="card" style="margin-top:14px">
+
+  <h3>⚔️ Lawan</h3>
+
+  ${meter(
+   "Momentum Lawan",
+   G.opponent.momentum
+  )}
+
+  ${meter(
+   "Popularitas Lawan",
+   G.opponent.popularity
+  )}
+
+ </div>
+ `);
+}
+
+
+/* =========================================================
+   CAMPAIGN ACTION
+========================================================= */
+
+function campaignAction(type,cost){
+
+ if(G.money<cost){
+  fundingEmergency("campaign");
+  return;
+ }
+
+ G.money-=cost;
+
+ let result;
+
+ switch(type){
+
+  case"digital":
+
+   result=rnd(-9,11);
+
+   G.media+=result;
+   G.momentum+=result*.7;
+   G.popularity+=result*.35;
+
+   break;
+
+
+  case"rally":
+
+   result=rnd(-8,12);
+
+   G.base+=result*.7;
+   G.momentum+=result*.8;
+   G.popularity+=result*.3;
+
+   break;
+
+
+  case"blusukan":
+
+   result=rnd(-5,9);
+
+   G.trust+=result*.8;
+   G.base+=result*.5;
+   G.momentum+=result*.45;
+
+   break;
+
+
+  case"advertising":
+
+   result=rnd(-11,14);
+
+   G.media+=result;
+   G.popularity+=result*.55;
+   G.momentum+=result*.65;
+
+   break;
+
+
+  case"community":
+
+   result=rnd(-4,9);
+
+   G.base+=result;
+   G.trust+=result*.6;
+   G.reputation+=result*.4;
+
+   break;
+
+
+  case"podcast":
+
+   result=rnd(-6,10);
+
+   G.media+=result*.8;
+   G.trust+=result*.5;
+   G.momentum+=result*.5;
+
+   break;
+ }
+
+ randomEvent();
+
+ normalize();
+
+ endTurn(
+  `${type.toUpperCase()} menghasilkan perubahan momentum `+
+  `${result>=0?"+":""}${result.toFixed(1)}.`
+ );
+}
+
+
+/* =========================================================
+   RANDOM EVENT
+========================================================= */
+
+const EVENTS=[
+
+ {
+  icon:"🔥",
+  title:"VIDEO VIRAL",
+  text:"Potongan pidato kandidat menyebar luas.",
+  run(){
+   G.media+=rnd(5,14);
+   G.momentum+=rnd(4,11);
+   G.popularity+=rnd(1,7);
+  }
+ },
+
+ {
+  icon:"⚠️",
+  title:"PERNYATAAN LAMA MUNCUL",
+  text:"Pernyataan lama kembali diperdebatkan.",
+  run(){
+   G.momentum-=rnd(4,10);
+   G.trust-=rnd(3,8);
+   G.controversy+=rnd(3,8);
+  }
+ },
+
+ {
+  icon:"📈",
+  title:"SURVEI MENGUNTUNGKAN",
+  text:"Angka internal menunjukkan tren positif.",
+  run(){
+   G.momentum+=rnd(3,9);
+   G.popularity+=rnd(2,7);
+  }
+ },
+
+ {
+  icon:"📉",
+  title:"TREND MENURUN",
+  text:"Perhatian publik mulai beralih.",
+  run(){
+   G.momentum-=rnd(3,9);
+   G.media-=rnd(1,6);
+  }
+ },
+
+ {
+  icon:"🤝",
+  title:"TOKOH MEMBERI DUKUNGAN",
+  text:"Seorang tokoh lokal menyatakan dukungan.",
+  run(){
+   G.base+=rnd(4,10);
+   G.trust+=rnd(2,7);
+   G.momentum+=rnd(2,8);
+  }
+ },
+
+ {
+  icon:"💥",
+  title:"SERANGAN LAWAN VIRAL",
+  text:"Narasi negatif terhadap kandidat menjadi trending.",
+  run(){
+   G.momentum-=rnd(4,12);
+   G.controversy+=rnd(2,6);
+   G.media+=rnd(1,6);
+  }
+ }
+];
+
+function randomEvent(){
+
+ if(!chance(38))return;
+
+ const e=
+ EVENTS[
+  Math.floor(Math.random()*EVENTS.length)
+ ];
+
+ e.run();
+
+ G.history.push(e.title);
+
+ normalize();
+
+ modal(
+  `${e.icon} ${e.title}`,
+  `<p>${e.text}</p>
+   <div class="news">
+    Momentum sekarang:
+    <b>${pct(G.momentum)}</b>
+   </div>`,
+  [
+   {
+    text:"LANJUT",
+    action:"closeModal()"
+   }
+  ]
+ );
+}
+
+
+/* =========================================================
+   END TURN
+========================================================= */
+
+function endTurn(message){
+
+ normalize();
+
+ G.turn++;
+
+ opponentAction();
+
+ /*
+  Natural momentum drift.
+  Bisa positif atau negatif.
+ */
+
+ let drift=rnd(-5,5);
+
+ G.momentum+=drift;
+
+ /*
+  Kontroversi tinggi memperbesar risiko.
+ */
+
+ if(G.controversy>60){
+  G.momentum-=rnd(2,7);
+ }
+
+ normalize();
+
+ saveGame();
+
+ if(G.money<=0){
+
+  setTimeout(()=>{
+   fundingEmergency("turn");
+  },300);
+
+  return;
+ }
+
+ if(G.turn>G.maxTurn){
+
+  debateStart();
+
+  return;
+ }
+
+ modal(
+  "TURN SELESAI",
+  `
+   <p>${message}</p>
+
+   <div class="news">
+    Tren pasar politik:
+    <b>${drift>=0?"+":""}${drift.toFixed(1)}</b>
+   </div>
+
+   <p>
+    Momentum sekarang:
+    <b>${pct(G.momentum)}</b>
+   </p>
+  `,
+  [
+   {
+    text:"LANJUT TURN BERIKUTNYA",
+    action:"closeModal();renderCampaign()"
+   }
+  ]
+ );
+}
+
+
+/* =========================================================
+   OPPONENT
+========================================================= */
+
+function opponentAction(){
+
+ const r=rnd(0,100);
+
+ if(r<35){
+
+  G.opponent.momentum+=rnd(-4,9);
+  G.opponent.popularity+=rnd(-2,6);
+
+ }
+
+ else if(r<60){
+
+  /*
+   Lawan menyerang.
+  */
+
+  G.momentum-=rnd(1,6);
+  G.controversy+=rnd(0,4);
+
+ }
+
+ else if(r<80){
+
+  G.opponent.trust+=rnd(0,6);
+
+ }
+
+ else{
+
+  G.opponent.money+=rnd(5,30);
+ }
+
+ normalize();
+}
+
+
+/* =========================================================
+   FUNDRAISING MENU
+========================================================= */
+
+function fundraisingMenu(){
+
+ modal(
+  "💰 RAISE FUND",
+  `
+  <p class="muted">
+   Peluang keberhasilan dipengaruhi
+   momentum, trust, reputasi dan tim fundraising.
+  </p>
+
+  <div class="action-grid">
+
+   <div class="action-card">
+    <h3>📱 Crowdfunding</h3>
+    <p class="small muted">
+     Murah, tetapi sangat tergantung momentum.
+    </p>
+    <button class="btn full"
+     onclick="fundCrowd()">
+     MULAI
+    </button>
+   </div>
+
+   <div class="action-card">
+    <h3>🤝 Temui Donatur</h3>
+    <p class="small muted">
+     Potensi dana besar, tetapi belum tentu diterima.
+    </p>
+    <button class="btn full"
+     onclick="fundDonor()">
+     MULAI
+    </button>
+   </div>
+
+   <div class="action-card">
+    <h3>🎟️ Fundraising Event</h3>
+    <p class="small muted">
+     Acara mahal dengan potensi dana besar.
+    </p>
+    <button class="btn full"
+     onclick="fundEvent()">
+     MULAI
+    </button>
+   </div>
+
+  </div>
+
+  <div class="card" style="margin-top:12px">
+   <h3>🏦 Pinjaman</h3>
+   <p class="small muted">
+    Limit pinjaman tergantung momentum.
+   </p>
+   <button class="btn gold"
+    onclick="loanMenu()">
+    CEK PINJAMAN
+   </button>
+  </div>
+  `,
+  [
+   {
+    text:"TUTUP",
+    action:"closeModal()"
+   }
+  ]
+ );
+}
+
+
+/* =========================================================
+   FUNDING FUNCTIONS
+========================================================= */
+
+function fundCrowd(){
+
+ closeModal();
+
+ const cost=3;
+
+ if(G.money<cost){
+  fundingEmergency("crowd");
+  return;
+ }
+
+ G.money-=cost;
+
+ let bonus=G.team.includes("Tim Fundraising")?12:0;
+
+ let probability=
+  25+
+  G.momentum*.45+
+  G.media*.15+
+  bonus;
+
+ if(chance(probability)){
+
+  let amount=rnd(8,45);
+
+  if(G.momentum>75)
+   amount*=1.35;
+
+  G.money+=amount;
+
+  G.momentum+=rnd(-2,6);
+  G.media+=rnd(1,5);
+
+  modal(
+   "🚀 CROWDFUNDING BERHASIL",
+   `<p>
+    Kampanye digital mendapatkan dukungan publik.
+   </p>
+   <div class="kpi money">${money(amount)}</div>`,
+   [
+    {
+     text:"LANJUT",
+     action:"closeModal();renderCampaign()"
+    }
+   ]
+  );
+
+ }else{
+
+  G.momentum-=rnd(2,7);
+
+  modal(
+   "📉 CROWDFUNDING SEPI",
+   `<p>
+    Target donasi tidak tercapai.
+   </p>`,
+   [
+    {
+     text:"LANJUT",
+     action:"closeModal();renderCampaign()"
+    }
+   ]
+  );
+ }
+
+ normalize();
+ saveGame();
+}
+
+function fundDonor(){
+
+ closeModal();
+
+ const cost=5;
+
+ if(G.money<cost){
+  fundingEmergency("donor");
+  return;
+ }
+
+ G.money-=cost;
+
+ let bonus=
+  G.team.includes("Tim Fundraising")
+  ?15:0;
+
+ let probability=
+  25+
+  G.momentum*.35+
+  G.trust*.3+
+  G.reputation*.2+
+  bonus;
+
+ if(chance(probability)){
+
+  let amount=rnd(20,75);
+
+  G.money+=amount;
+  G.trust+=rnd(0,4);
+  G.momentum+=rnd(-2,7);
+
+  modal(
+   "🤝 DONATUR MASUK",
+   `<p>
+    Pertemuan menghasilkan dukungan finansial.
+   </p>
+   <div class="kpi money">${money(amount)}</div>`,
+   [
+    {
+     text:"LANJUT",
+     action:"closeModal();renderCampaign()"
+    }
+   ]
+  );
+
+ }else{
+
+  G.reputation-=rnd(1,5);
+
+  modal(
+   "❌ DONATUR MENOLAK",
+   `<p>
+    Donatur memilih tidak mendukung kampanye
+    saat ini.
+   </p>`,
+   [
+    {
+     text:"LANJUT",
+     action:"closeModal();renderCampaign()"
+    }
+   ]
+  );
+ }
+
+ normalize();
+ saveGame();
+}
+
+function fundEvent(){
+
+ closeModal();
+
+ const cost=15;
+
+ if(G.money<cost){
+  fundingEmergency("event");
+  return;
+ }
+
+ G.money-=cost;
+
+ let probability=
+  30+
+  G.media*.3+
+  G.popularity*.2+
+  G.momentum*.25;
+
+ if(chance(probability)){
+
+  let amount=rnd(25,100);
+
+  G.money+=amount;
+  G.media+=rnd(3,9);
+  G.momentum+=rnd(-2,8);
+
+  modal(
+   "🎟️ FUNDRAISING MELEDAK",
+   `<p>
+    Acara mendapat perhatian besar.
+   </p>
+   <div class="kpi money">${money(amount)}</div>`,
+   [
+    {
+     text:"LANJUT",
+     action:"closeModal();renderCampaign()"
+    }
+   ]
+  );
+
+ }else{
+
+  G.media-=rnd(1,6);
+  G.momentum-=rnd(2,7);
+
+  modal(
+   "😬 ACARA KURANG RAMAI",
+   `<p>
+    Biaya acara tidak kembali sepenuhnya.
+   </p>`,
+   [
+    {
+     text:"LANJUT",
+     action:"closeModal();renderCampaign()"
+    }
+   ]
+  );
+ }
+
+ normalize();
+ saveGame();
+}
+
+
+/* =========================================================
+   LOAN
+========================================================= */
+
+function loanLimit(){
+
+ let limit=
+  5+
+  G.momentum*.55+
+  G.trust*.3+
+  G.reputation*.2-
+  G.controversy*.3;
+
+ return Math.max(
+  0,
+  Math.round(limit)
+ );
+}
+
+function loanMenu(){
+
+ const limit=loanLimit();
+
+ modal(
+  "🏦 PINJAMAN KAMPANYE",
+  `
+  <p>
+   Lembaga pendanaan menilai kondisi kampanye
+   sebelum memberikan pinjaman.
+  </p>
+
+  ${meter("Momentum",G.momentum)}
+  ${meter("Trust",G.trust)}
+  ${meter("Reputasi",G.reputation)}
+  ${meter("Risiko",100-G.controversy)}
+
+  <div class="news">
+   Limit estimasi:
+   <b>${money(limit)}</b>
+  </div>
+
+  ${
+   limit>=10
+   ?
+   `<p class="muted">
+     Bunga simulasi: 8%.
+   </p>`
+   :
+   `<p class="down">
+     Tidak ada lembaga yang bersedia memberikan
+     pinjaman dengan kondisi saat ini.
+   </p>`
+  }
+  `,
+  [
+   ...(limit>=10?[{
+    text:"AJUKAN PINJAMAN",
+    class:"gold",
+    action:`takeLoan(${Math.min(limit,60)})`
+   }]:[]),
+
+   {
+    text:"BATAL",
+    action:"closeModal()"
+   }
+  ]
+ );
+}
+
+function takeLoan(amount){
+
+ closeModal();
+
+ const successChance=
+  40+
+  G.momentum*.4+
+  G.trust*.25-
+  G.controversy*.25;
+
+ if(!chance(successChance)){
+
+  modal(
+   "❌ PINJAMAN DITOLAK",
+   `<p>
+    Pemberi pinjaman menilai risiko kampanye
+    terlalu tinggi.
+   </p>`,
+   [
+    {
+     text:"LANJUT",
+     action:"closeModal();afterFundingCheck()"
+    }
+   ]
+  );
+
+  return;
+ }
+
+ G.money+=amount;
+ G.debt+=amount*1.08;
+
+ G.momentum-=rnd(0,3);
+
+ saveGame();
+
+ modal(
+  "🏦 PINJAMAN DISETUJUI",
+  `
+  <p>
+   Dana masuk ke kas kampanye.
+  </p>
+
+  <div class="kpi money">
+   ${money(amount)}
+  </div>
+
+  <p class="muted">
+   Kewajiban total:
+   ${money(G.debt)}
+  </p>
+  `,
+  [
+   {
+    text:"LANJUT",
+    action:"closeModal();renderCampaign()"
+   }
+  ]
+ );
+}
+
+
+/* =========================================================
+   MEDIA PARTNER
+========================================================= */
+
+const MEDIA=[
+ {
+  name:"📺 TV Nasional",
+  cost:12,
+  desc:"Jangkauan nasional.",
+  run(){
+   G.media+=rnd(5,13);
+   G.momentum+=rnd(-5,8);
+   G.popularity+=rnd(-3,8);
+  }
+ },
+ {
+  name:"📰 Portal Berita",
+  cost:7,
+  desc:"Citra serius dan informatif.",
+  run(){
+   G.trust+=rnd(3,9);
+   G.media+=rnd(3,8);
+   G.momentum+=rnd(-3,6);
+  }
+ },
+ {
+  name:"📱 Platform Digital",
+  cost:5,
+  desc:"Kuat untuk pemilih muda.",
+  run(){
+   G.media+=rnd(6,15);
+   G.swing+=rnd(-3,10);
+   G.momentum+=rnd(-6,9);
+  }
+ },
+ {
+  name:"🏘️ Media Lokal",
+  cost:4,
+  desc:"Memperkuat basis daerah.",
+  run(){
+   G.base+=rnd(5,12);
+   G.trust+=rnd(2,7);
+   G.momentum+=rnd(-3,6);
+  }
+ }
+];
+
+function mediaMenu(){
+
+ let body=`
+ <p class="muted">
+  Pilih media partner. Setiap partner punya
+  efek dan risiko berbeda.
+ </p>
+
+ <div class="action-grid">
+ `;
+
+ MEDIA.forEach((m,i)=>{
+
+  body+=`
+   <div class="action-card">
+
+    <h3>${m.name}</h3>
+
+    <p class="small muted">
+     ${m.desc}
+    </p>
+
+    <div class="money">
+     ${money(m.cost)}
+    </div>
+
+    <button
+     class="btn secondary full"
+     style="margin-top:10px"
+     onclick="selectMedia(${i})"
+    >
+     PILIH
+    </button>
+
+   </div>
+  `;
+
+ });
+
+ body+=`</div>`;
+
+ modal(
+  "📰 MEDIA PARTNER",
+  body,
+  [
+   {
+    text:"TUTUP",
+    action:"closeModal()"
+   }
+  ]
+ );
+}
+
+function selectMedia(i){
+
+ const m=MEDIA[i];
+
+ if(G.money<m.cost){
+  closeModal();
+  fundingEmergency("media");
+  return;
+ }
+
+ G.money-=m.cost;
+ G.mediaPartner=m.name;
+
+ m.run();
+
+ normalize();
+ saveGame();
+
+ closeModal();
+
+ modal(
+  "MEDIA PARTNER TERPILIH",
+  `
+   <p>
+    Kamu memilih <b>${m.name}</b>.
+   </p>
+
+   <div class="news">
+    Media exposure sekarang:
+    <b>${pct(G.media)}</b>
+   </div>
+  `,
+  [
+   {
+    text:"LANJUT",
+    action:"closeModal();renderCampaign()"
+   }
+  ]
+ );
+}
+
+
+/* =========================================================
+   TV
+========================================================= */
+
+const TV=[
+ {
+  name:"Debat Prime Time",
+  cost:10,
+  desc:"Risiko tinggi, exposure besar.",
+  run(){
+   let x=rnd(-11,12);
+   G.momentum+=x;
+   G.popularity+=x*.55;
+   G.trust+=x*.25;
+   return x;
+  }
+ },
+ {
+  name:"Talk Show Malam",
+  cost:6,
+  desc:"Membentuk citra personal.",
+  run(){
+   let x=rnd(-7,9);
+   G.media+=x;
+   G.popularity+=x*.5;
+   G.momentum+=x*.55;
+   return x;
+  }
+ },
+ {
+  name:"Interview Investigatif",
+  cost:4,
+  desc:"Pertanyaan sulit dengan potensi reputasi besar.",
+  run(){
+   let x=rnd(-10,10);
+   G.trust+=x;
+   G.reputation+=x*.5;
+   G.momentum+=x*.45;
+   if(x<0)G.controversy+=Math.abs(x)*.5;
+   return x;
+  }
+ }
+];
+
+function tvMenu(){
+
+ let body=`
+ <p class="muted">
+  Acara televisi bisa membuat momentum melonjak
+  atau justru menjadi bencana.
+ </p>
+
+ <div class="action-grid">
+ `;
+
+ TV.forEach((t,i)=>{
+
+  body+=`
+   <div class="action-card">
+
+    <div class="icon">📺</div>
+
+    <h3>${t.name}</h3>
+
+    <p class="small muted">
+     ${t.desc}
+    </p>
+
+    <div class="money">
+     ${money(t.cost)}
+    </div>
+
+    <button
+     class="btn secondary full"
+     style="margin-top:10px"
+     onclick="playTV(${i})"
+    >
+     TAMPIL
+    </button>
+
+   </div>
+  `;
+
+ });
+
+ body+=`</div>`;
+
+ modal(
+  "📺 ACARA TELEVISI",
+  body,
+  [
+   {
+    text:"TUTUP",
+    action:"closeModal()"
+   }
+  ]
+ );
+}
+
+function playTV(i){
+
+ const t=TV[i];
+
+ if(G.money<t.cost){
+  closeModal();
+  fundingEmergency("tv");
+  return;
+ }
+
+ G.money-=t.cost;
+
+ const result=t.run();
+
+ normalize();
+ saveGame();
+
+ closeModal();
+
+ modal(
+  "📺 HASIL ACARA TV",
+  `
+   <p>
+    Penampilan di <b>${t.name}</b>
+   </p>
+
+   <div class="kpi ${result>=0?"up":"down"}">
+    ${result>=0?"+":""}${result.toFixed(1)}
+   </div>
+
+   <p>
+    ${result>=0
+      ?"Respons publik cukup positif."
+      :"Penampilan justru menjadi bahan kritik."
+    }
+   </p>
+  `,
+  [
+   {
+    text:"LANJUT",
+    action:"closeModal();renderCampaign()"
+   }
+  ]
+ );
+}
+
+
+/* =========================================================
+   FUNDING EMERGENCY
+========================================================= */
+
+function fundingEmergency(source){
+
+ normalize();
+
+ const limit=loanLimit();
+
+ const donorChance=
+  G.momentum*.4+
+  G.trust*.3+
+  G.reputation*.2+
+  (G.team.includes("Tim Fundraising")?15:0);
+
+ /*
+  Kalau masih ada uang, jangan masuk emergency.
+ */
+
+ if(G.money>0){
+  renderCampaign();
+  return;
+ }
+
+ /*
+  Tidak ada yang mau membantu.
+  Otomatis masuk turn berikutnya.
+ */
+
+ if(donorChance<25 && limit<10){
+
+  modal(
+   "💸 KAS KAMPANYE HABIS",
+   `
+    <div class="news danger-news">
+     Tidak ada donatur atau lembaga
+     yang bersedia membantu.
+    </div>
+
+    <p>
+     Momentum:
+     <b>${pct(G.momentum)}</b>
+    </p>
+
+    <p>
+     Kampanye terpaksa melewati sesi
+     pendanaan dan masuk ke turn berikutnya.
+    </p>
+   `,
+   [
+    {
+     text:"LANJUT TURN",
+     action:"closeModal();forceNextTurn()"
+    }
+   ]
+  );
+
+  return;
+ }
+
+ let body=`
+  <p>
+   Kas kampanye sedang kritis.
+  </p>
+
+  ${meter("Momentum",G.momentum)}
+
+  ${meter("Trust",G.trust)}
+
+  ${meter("Reputasi",G.reputation)}
+
+  <div class="news">
+   Pilihan yang tersedia bergantung
+   pada kondisi kampanye.
+  </div>
+
+  <div class="action-grid">
+ `;
+
+ if(donorChance>=25){
+
+  body+=`
+   <div class="action-card">
+    <h3>🤝 Donatur Darurat</h3>
+    <p class="small muted">
+     Peluang:
+     ${Math.round(donorChance)}%
+    </p>
+    <button class="btn full"
+     onclick="emergencyDonor()">
+     CARI DONATUR
+    </button>
+   </div>
+  `;
+ }
+
+ if(limit>=10){
+
+  body+=`
+   <div class="action-card">
+    <h3>🏦 Pinjaman</h3>
+    <p class="small muted">
+     Estimasi limit:
+     ${money(limit)}
+    </p>
+    <button class="btn gold full"
+     onclick="loanMenu()">
+     AJUKAN
+    </button>
+   </div>
+  `;
+ }
+
+ body+=`</div>`;
+
+ modal(
+  "🚨 DANA KRITIS",
+  body,
+  [
+   {
+    text:"LANJUT TANPA DANA",
+    action:"closeModal();forceNextTurn()"
+   }
+  ]
+ );
+}
+
+function emergencyDonor(){
+
+ closeModal();
+
+ const probability=
+  20+
+  G.momentum*.45+
+  G.trust*.25+
+  G.reputation*.15+
+  (G.team.includes("Tim Fundraising")?15:0);
+
+ if(chance(probability)){
+
+  const amount=
+   rnd(8,40)*
+   (G.momentum>70?1.25:1);
+
+  G.money+=amount;
+  G.momentum+=rnd(-2,5);
+
+  modal(
+   "🤝 DONATUR MENOLONG",
+   `
+    <p>
+     Dukungan datang di saat genting.
+    </p>
+
+    <div class="kpi money">
+     ${money(amount)}
+    </div>
+   `,
+   [
+    {
+     text:"LANJUT",
+     action:"closeModal();renderCampaign()"
+    }
+   ]
+  );
+
+ }else{
+
+  G.momentum-=rnd(2,8);
+
+  modal(
+   "❌ TIDAK ADA YANG MAU MEMBANTU",
+   `
+    <p>
+     Donatur memilih menunggu sampai
+     momentum kampanye membaik.
+    </p>
+   `,
+   [
+    {
+     text:"MASUK TURN BERIKUTNYA",
+     action:"closeModal();forceNextTurn()"
+    }
+   ]
+  );
+ }
+
+ normalize();
+ saveGame();
+}
+
+function afterFundingCheck(){
+
+ if(G.money<=0){
+  fundingEmergency();
+ }else{
+  renderCampaign();
  }
 }
-function debate(){
- setPhase(3);S.turn=1;
- const q=[
-  ["Ekonomi & lapangan kerja","Program utama apa yang akan menjadi prioritas pertama?"],
-  ["Pendidikan","Bagaimana memastikan kualitas pendidikan tidak hanya berpusat di kota besar?"],
-  ["Korupsi & tata kelola","Apa langkah konkret memperkuat transparansi pemerintahan?"]
- ][Math.min(S.turn-1,2)];
- screen(`<div class="timeline">${phases.slice(0,6).map((x,i)=>`<div class="step ${i<=3?"on":""}">${i+1}. ${x}</div>`).join("")}</div>
- ${dashboard()}<div class="card center"><div class="small muted">DEBAT NASIONAL • RONDE ${S.turn}</div><h2>${q[0]}</h2><p class="muted">${q[1]}</p>
- <button class="choice" onclick="debatePick(1)">Fokus pada program konkret dan target terukur.</button>
- <button class="choice" onclick="debatePick(2)">Soroti kegagalan kebijakan lama dan tawarkan perubahan.</button>
- <button class="choice" onclick="debatePick(3)">Gunakan jawaban populis yang mudah diingat.</button>
- </div>`);
+
+function forceNextTurn(){
+
+ G.turn++;
+
+ opponentAction();
+
+ G.momentum+=rnd(-6,6);
+
+ randomEvent();
+
+ normalize();
+
+ if(G.turn>G.maxTurn){
+
+  debateStart();
+
+ }else{
+
+  renderCampaign();
+ }
 }
-function debatePick(n){
- if(n===1){S.trust+=9;S.debate+=8;S.pop+=5}
- if(n===2){S.pop+=8;S.media+=7;S.contro+=4}
- if(n===3){S.pop+=10;S.trust-=2;S.media+=10}
- S.turn++;
- if(S.turn<=3){debate();return}
- attack();
+
+
+/* =========================================================
+   DEBATE
+========================================================= */
+
+let debateRound=1;
+
+function debateStart(){
+
+ phase(3);
+
+ debateRound=1;
+
+ debateScreen();
 }
-function attack(){
- setPhase(4);
+
+const DEBATES=[
+ {
+  topic:"Ekonomi & Lapangan Kerja",
+  q:"Apa prioritas ekonomi pertama Anda?",
+  choices:[
+   ["Program konkret dengan target terukur.",8,7,2],
+   ["Serang kegagalan kebijakan sebelumnya.",7,-2,6],
+   ["Jawaban populis yang mudah diingat.",9,-3,9]
+  ]
+ },
+ {
+  topic:"Pendidikan",
+  q:"Bagaimana memperkecil kesenjangan pendidikan?",
+  choices:[
+   ["Fokus pemerataan fasilitas dan kualitas guru.",7,8,1],
+   ["Janjikan perubahan besar dalam waktu singkat.",10,0,5],
+   ["Alihkan pertanyaan ke isu ekonomi.",-2,-4,4]
+  ]
+ },
+ {
+  topic:"Pemerintahan",
+  q:"Bagaimana meningkatkan transparansi?",
+  choices:[
+   ["Buka data dan target kinerja.",7,9,0],
+   ["Bentuk lembaga baru.",5,2,3],
+   ["Serang integritas lawan.",8,-4,10]
+  ]
+ }
+];
+
+function debateScreen(){
+
+ const d=DEBATES[debateRound-1];
+
+ setScreen(`
+ ${timeline()}
+
+ ${dashboard()}
+
+ <div class="event-card">
+
+  <div class="small muted">
+   DEBAT NASIONAL • RONDE ${debateRound}
+  </div>
+
+  <h2>${d.topic}</h2>
+
+  <p class="muted">
+   ${d.q}
+  </p>
+
+  ${d.choices.map((c,i)=>`
+   <button
+    class="choice"
+    onclick="debateChoice(${i})"
+   >
+    ${c[0]}
+   </button>
+  `).join("")}
+
+ </div>
+ `);
+}
+
+function debateChoice(i){
+
+ const c=
+ DEBATES[debateRound-1].choices[i];
+
+ G.popularity+=rnd(-3,4)+c[1]*.5;
+ G.trust+=c[2];
+ G.media+=c[3];
+ G.momentum+=rnd(-4,5)+c[1]*.25;
+
+ if(c[3]>7)
+  G.controversy+=rnd(1,4);
+
+ normalize();
+
+ debateRound++;
+
+ if(debateRound<=3){
+
+  debateScreen();
+
+ }else{
+
+  attackPhase();
+ }
+}
+
+
+/* =========================================================
+   POLITICAL ATTACK
+========================================================= */
+
+function attackPhase(){
+
+ phase(4);
+
  const attacks=[
-  ["⚠️ PROGRAM TIDAK REALISTIS","Lawan menuduh target ekonomi kamu terlalu tinggi."],
-  ["📰 POTONGAN VIDEO VIRAL","Video lama kandidat kamu diperdebatkan di media sosial."],
-  ["💬 SERANGAN PERSONAL","Tim lawan melontarkan kritik terhadap gaya kepemimpinanmu."]
+  [
+   "⚠️ PROGRAM DIANGGAP TIDAK REALISTIS",
+   "Tim lawan mempertanyakan kemampuan membiayai program."
+  ],
+  [
+   "📱 VIDEO LAMA VIRAL",
+   "Potongan video kandidat kembali beredar."
+  ],
+  [
+   "💥 SERANGAN KERAS",
+   "Lawan menyerang rekam jejak politik kandidat."
+  ]
  ];
- const x=attacks[Math.floor(Math.random()*attacks.length)];
- screen(`<div class="timeline">${phases.slice(0,6).map((x,i)=>`<div class="step ${i<=4?"on":""}">${i+1}. ${x}</div>`).join("")}</div>
- ${dashboard()}<div class="card"><div class="news"><b>${x[0]}</b><br>${x[1]}</div>
- <button class="choice" onclick="respond(1)">Klarifikasi dengan data dan bukti.</button>
- <button class="choice" onclick="respond(2)">Serang balik kebijakan lawan.</button>
- <button class="choice" onclick="respond(3)">Tidak menanggapi, fokus pada program.</button></div>`);
+
+ const a=
+ attacks[Math.floor(Math.random()*attacks.length)];
+
+ setScreen(`
+ ${timeline()}
+
+ ${dashboard()}
+
+ <div class="event-card">
+
+  <div class="event-icon">⚔️</div>
+
+  <h2>${a[0]}</h2>
+
+  <p class="muted">
+   ${a[1]}
+  </p>
+
+  <button
+   class="choice"
+   onclick="attackResponse(1)"
+  >
+   📊 Klarifikasi dengan data
+  </button>
+
+  <button
+   class="choice"
+   onclick="attackResponse(2)"
+  >
+   🔥 Serang balik lawan
+  </button>
+
+  <button
+   class="choice"
+   onclick="attackResponse(3)"
+  >
+   🧘 Abaikan dan fokus program
+  </button>
+
+ </div>
+ `);
 }
-function respond(n){
- if(n===1){S.trust+=8;S.pop+=4;S.contro=Math.max(0,S.contro-3)}
- if(n===2){S.pop+=8;S.media+=7;S.contro+=7}
- if(n===3){S.trust+=4;S.base+=4;S.media-=2}
- save();quiet();
+
+function attackResponse(n){
+
+ if(n===1){
+
+  G.trust+=rnd(3,9);
+  G.momentum+=rnd(1,7);
+  G.controversy-=rnd(1,4);
+
+ }
+
+ if(n===2){
+
+  G.popularity+=rnd(3,10);
+  G.media+=rnd(4,10);
+  G.momentum+=rnd(-4,9);
+  G.controversy+=rnd(4,9);
+
+ }
+
+ if(n===3){
+
+  G.trust+=rnd(1,6);
+  G.base+=rnd(2,7);
+  G.media-=rnd(1,5);
+  G.momentum+=rnd(-3,6);
+
+ }
+
+ normalize();
+
+ quietPeriod();
 }
-function quiet(){
- setPhase(5);
- screen(`<div class="timeline">${phases.slice(0,6).map((x,i)=>`<div class="step on">${i+1}. ${x}</div>`).join("")}</div>
- <div class="hero"><div class="small muted">MASA TENANG</div><h2>${S.candidate}</h2><p>Kampanye berhenti. Semua keputusan sudah dikunci. Besok masyarakat memberikan suara.</p>${meter("Elektabilitas",S.pop)}${meter("Kepercayaan",S.trust)}<div class="actions" style="justify-content:center"><button class="btn gold" onclick="voting()">🗳️ MASUK HARI PEMILIHAN</button></div></div>`);
+
+
+/* =========================================================
+   MASA TENANG
+========================================================= */
+
+function quietPeriod(){
+
+ phase(5);
+
+ setScreen(`
+ ${timeline()}
+
+ <div class="hero">
+
+  <div class="small muted">
+   MASA TENANG
+  </div>
+
+  <h1>
+   🕊️
+  </h1>
+
+  <h2>
+   KAMPANYE DIKUNCI
+  </h2>
+
+  <p>
+   Semua strategi telah selesai.
+   Tidak ada lagi kampanye.
+   Besok masyarakat memberikan suara.
+  </p>
+
+  <div class="grid2">
+
+   <div>
+    ${meter("Momentum",G.momentum)}
+    ${meter("Popularitas",G.popularity)}
+   </div>
+
+   <div>
+    ${meter("Trust",G.trust)}
+    ${meter("Basis",G.base)}
+   </div>
+
+  </div>
+
+  <div class="actions"
+   style="justify-content:center">
+
+   <button
+    class="btn gold"
+    onclick="electionDay()"
+   >
+    🗳️ HARI PEMILIHAN
+   </button>
+
+  </div>
+
+ </div>
+ `);
 }
-function voting(){
- setPhase(6);
- S.votes={};
- const regions=["Aceh","Sumatera Utara","Sumatera Barat","Riau","Jambi","Sumatera Selatan","DKI Jakarta","Jawa Barat","Jawa Tengah","DI Yogyakarta","Jawa Timur","Bali","NTB","NTT","Kalimantan","Sulawesi","Maluku","Papua"];
- let base=S.pop*.6+S.trust*.25+S.base*.15-S.contro*.1;
- regions.forEach((r,i)=>S.votes[r]=clamp(base+rnd(-13,13)+((r==="Bali")?5:0)));
- S.qc=0;S.recap=0;
- screen(`<div class="hero"><div class="small muted">HARI PEMUNGUTAN SUARA</div><h2>TPS DIBUKA</h2><p>Simulasi suara sedang dikunci dari seluruh wilayah. Klik untuk mulai menerima hasil.</p><div class="kpi" id="voteClock">00:00</div><button class="btn" onclick="quickcount()">MULAI PERHITUNGAN</button></div>`);
+
+
+/* =========================================================
+   ELECTION DAY
+========================================================= */
+
+const REGIONS=[
+ "Aceh",
+ "Sumatera Utara",
+ "Sumatera Barat",
+ "Riau",
+ "Jambi",
+ "Sumatera Selatan",
+ "Bengkulu",
+ "Lampung",
+ "DKI Jakarta",
+ "Jawa Barat",
+ "Jawa Tengah",
+ "DI Yogyakarta",
+ "Jawa Timur",
+ "Banten",
+ "Bali",
+ "NTB",
+ "NTT",
+ "Kalimantan Barat",
+ "Kalimantan Selatan",
+ "Kalimantan Timur",
+ "Sulawesi Selatan",
+ "Sulawesi Utara",
+ "Maluku",
+ "Papua"
+];
+
+function electionDay(){
+
+ phase(6);
+
+ G.regions=REGIONS.map(region=>{
+
+  let regionalModifier=rnd(-14,14);
+
+  if(region==="Bali")
+   regionalModifier+=5;
+
+  let score=
+   G.popularity*.35+
+   G.momentum*.2+
+   G.trust*.2+
+   G.base*.15+
+   G.swing*.1+
+   regionalModifier-
+   G.controversy*.08;
+
+  return {
+   name:region,
+   score:clamp(score,5,95)
+  };
+
+ });
+
+ G.regionIndex=0;
+
+ setScreen(`
+ <div class="hero">
+
+  <div class="small muted">
+   HARI PEMUNGUTAN SUARA
+  </div>
+
+  <h1>🗳️</h1>
+
+  <h2>
+   TPS DIBUKA
+  </h2>
+
+  <p>
+   Suara mulai dihitung.
+   Tidak ada keputusan kampanye yang bisa diubah.
+  </p>
+
+  <div class="kpi">
+   ${G.candidate}
+  </div>
+
+  <button
+   class="btn gold"
+   onclick="startQuickCount()"
+  >
+   MULAI PENGHITUNGAN
+  </button>
+
+ </div>
+ `);
 }
-function quickcount(){
- setPhase(7);S.qc=0;
- screen(`<div class="timeline">${phases.slice(6,10).map((x,i)=>`<div class="step ${i===0?"on":""}">${i+7}. ${x}</div>`).join("")}</div>
- <div class="hero"><div class="small muted">LIVE QUICK COUNT</div><h2>SUARA MASUK</h2><div class="kpi" id="qcPct">0%</div><div class="bar"><i id="qcBar" style="width:0%"></i></div><p id="qcText">Menghubungkan TPS...</p></div>
- <div class="card" id="qcBoard"><table class="table"><thead><tr><th>Kandidat</th><th>Estimasi</th></tr></thead><tbody><tr><td>${S.candidate}</td><td id="qcScore">—</td></tr><tr><td>Lawan</td><td id="opScore">—</td></tr></tbody></table></div>`);
+
+
+/* =========================================================
+   QUICK COUNT
+========================================================= */
+
+function startQuickCount(){
+
+ phase(7);
+
+ setScreen(`
+ ${timeline()}
+
+ <div class="hero">
+
+  <div class="small muted">
+   LIVE QUICK COUNT
+  </div>
+
+  <h2>
+   SUARA MASUK
+  </h2>
+
+  <div class="kpi"
+   id="qcPercent">
+   0%
+  </div>
+
+  <div class="bar">
+   <i id="qcBar"></i>
+  </div>
+
+  <p id="qcStatus">
+   Menghubungkan TPS...
+  </p>
+
+ </div>
+
+ <div class="grid2"
+  style="margin-top:14px">
+
+  <div class="card">
+   <div class="small muted">
+    ${G.candidate}
+   </div>
+   <div class="kpi"
+    id="qcCandidate">
+    —
+   </div>
+  </div>
+
+  <div class="card">
+   <div class="small muted">
+    LAWAN
+   </div>
+   <div class="kpi"
+    id="qcOpponent">
+    —
+   </div>
+  </div>
+
+ </div>
+ `);
+
  let p=0;
- const timer=setInterval(()=>{
-  p=Math.min(100,p+Math.floor(rnd(5,13)));
-  let our=clamp((S.pop*.62+S.trust*.22+S.base*.16)+rnd(-4,4));
-  let op=100-our;
-  document.getElementById("qcPct").textContent=p+"%";
-  document.getElementById("qcBar").style.width=p+"%";
-  document.getElementById("qcScore").textContent=our.toFixed(2)+"%";
-  document.getElementById("opScore").textContent=op.toFixed(2)+"%";
-  document.getElementById("qcText").textContent=p<100?"Data TPS terus masuk…":"Quick count selesai. Menunggu rekapitulasi resmi.";
-  if(p>=100){clearInterval(timer);S.qc=our;setTimeout(recap,800)}
- },260);
+
+ const interval=setInterval(()=>{
+
+  p+=Math.floor(rnd(4,12));
+
+  if(p>100)p=100;
+
+  let score=
+   G.popularity*.35+
+   G.momentum*.25+
+   G.trust*.18+
+   G.base*.12+
+   G.swing*.1;
+
+  score+=rnd(-4,4);
+
+  score=clamp(score);
+
+  G.qc=score;
+
+  document.getElementById("qcPercent")
+   .textContent=p+"%";
+
+  document.getElementById("qcBar")
+   .style.width=p+"%";
+
+  document.getElementById("qcCandidate")
+   .textContent=score.toFixed(2)+"%";
+
+  document.getElementById("qcOpponent")
+   .textContent=(100-score).toFixed(2)+"%";
+
+  document.getElementById("qcStatus")
+   .textContent=
+   p<100
+   ?"Data TPS terus masuk..."
+   :"Quick count selesai.";
+
+  if(p>=100){
+
+   clearInterval(interval);
+
+   setTimeout(
+    recapStart,
+    1200
+   );
+  }
+
+ },280);
 }
-function recap(){
- setPhase(8);
- const entries=Object.entries(S.votes);
- let total=0,done=0;
- screen(`<div class="timeline">${phases.slice(7,10).map((x,i)=>`<div class="step on">${i+8}. ${x}</div>`).join("")}</div>
- <div class="card"><h2>REKAPITULASI NASIONAL</h2><p class="muted">Hasil resmi simulasi dibuka wilayah demi wilayah.</p><table class="table" id="recapTable"><thead><tr><th>Wilayah</th><th>Suara ${S.candidate}</th><th>Status</th></tr></thead><tbody></tbody></table></div>`);
- let idx=0;
- const t=setInterval(()=>{
-  if(idx>=entries.length){clearInterval(t);S.recap=total/entries.length;setTimeout(result,900);return}
-  const [name,val]=entries[idx++];
-  total+=val;done++;
-  document.querySelector("#recapTable tbody").insertAdjacentHTML("beforeend",`<tr><td>${name}</td><td>${val.toFixed(2)}%</td><td>✓ SAH</td></tr>`);
- },230);
-}
-function result(){
- setPhase(9);
- const final=clamp(S.recap+rnd(-2.5,2.5));
- const win=final>=50;S.winner=win;
- screen(`<div class="hero">
-  <div class="small muted">HASIL AKHIR • SIMULASI</div>
-  <h1>${win?"🏆":"📣"}</h1><h2>${win?"KANDIDAT TERPILIH":"HASIL AKHIR"}</h2>
-  <p>${S.candidate} — ${S.party.name}<br><span class="muted">${S.slogan}</span></p>
-  <div class="kpi">${final.toFixed(2)}%</div>
-  <p>${win?"Mayoritas simulasi berhasil diraih.":"Simulasi berakhir tanpa kemenangan mayoritas."}</p>
+
+
+/* =========================================================
+   RECAP
+========================================================= */
+
+function recapStart(){
+
+ phase(8);
+
+ setScreen(`
+ ${timeline()}
+
+ <div class="card">
+
+  <h2>
+   REKAPITULASI RESMI
+  </h2>
+
+  <p class="muted">
+   Wilayah dibuka satu per satu.
+  </p>
+
+  <table>
+
+   <thead>
+    <tr>
+     <th>Wilayah</th>
+     <th>${G.candidate}</th>
+     <th>Status</th>
+    </tr>
+   </thead>
+
+   <tbody id="recapBody"></tbody>
+
+  </table>
+
  </div>
- <div class="grid" style="margin-top:14px">
-  <div class="card">${stat("Partai",S.party.name)}${stat("Kandidat",S.candidate)}${stat("Wakil",S.vice)}</div>
-  <div class="card">${stat("Quick Count",S.qc.toFixed(2)+"%")}${stat("Rekapitulasi",S.recap.toFixed(2)+"%")}${stat("Kontroversi",pct(S.contro))}</div>
-  <div class="card">${stat("Kepercayaan",pct(S.trust))}${stat("Basis",pct(S.base))}${stat("Media",pct(S.media))}</div>
- </div>
- <div class="actions"><button class="btn" onclick="newGame()">MAIN LAGI</button><button class="btn secondary" onclick="intro()">MENU UTAMA</button></div>`);
+ `);
+
+ let i=0;
+ let total=0;
+
+ const interval=setInterval(()=>{
+
+  if(i>=G.regions.length){
+
+   clearInterval(interval);
+
+   G.finalScore=
+    total/G.regions.length;
+
+   setTimeout(
+    finalResult,
+    1000
+   );
+
+   return;
+  }
+
+  const r=G.regions[i];
+
+  total+=r.score;
+
+  document.getElementById("recapBody")
+   .insertAdjacentHTML(
+    "beforeend",
+    `
+    <tr>
+     <td>${r.name}</td>
+     <td>${r.score.toFixed(2)}%</td>
+     <td>✓ SAH</td>
+    </tr>
+    `
+   );
+
+  i++;
+
+ },220);
 }
-function newGame(){localStorage.removeItem("quickcountID");location.reload()}
-load();intro();
+
+
+/* =========================================================
+   FINAL RESULT
+========================================================= */
+
+function finalResult(){
+
+ phase(9);
+
+ let final=clamp(
+  G.finalScore+rnd(-2.5,2.5)
+ );
+
+ G.finalScore=final;
+
+ const win=final>=50;
+
+ G.ended=true;
+
+ saveGame();
+
+ setScreen(`
+ ${timeline()}
+
+ <div class="hero">
+
+  <div class="small muted">
+   HASIL AKHIR • SIMULASI
+  </div>
+
+  <div style="font-size:60px">
+   ${win?"🏆":"📣"}
+  </div>
+
+  <h1 style="font-size:42px">
+   ${win
+    ?"KANDIDAT TERPILIH"
+    :"HASIL PEMILIHAN"}
+  </h1>
+
+  <h2>
+   ${G.candidate}
+   —
+   ${G.vice}
+  </h2>
+
+  <p>
+   ${G.party.name}
+   <br>
+   <span class="muted">
+    "${G.slogan}"
+   </span>
+  </p>
+
+  <div class="kpi">
+   ${final.toFixed(2)}%
+  </div>
+
+  <p>
+   ${
+    win
+    ?"Kandidat berhasil meraih mayoritas simulasi."
+    :"Kandidat belum meraih mayoritas simulasi."
+   }
+  </p>
+
+ </div>
+
+ <div class="grid"
+  style="margin-top:14px">
+
+  <div class="card">
+   ${resultStat("Quick Count",G.qc.toFixed(2)+"%")}
+   ${resultStat("Rekapitulasi",G.finalScore.toFixed(2)+"%")}
+   ${resultStat("Dana Akhir",money(G.money))}
+  </div>
+
+  <div class="card">
+   ${resultStat("Momentum",pct(G.momentum))}
+   ${resultStat("Trust",pct(G.trust))}
+   ${resultStat("Popularitas",pct(G.popularity))}
+  </div>
+
+  <div class="card">
+   ${resultStat("Basis",pct(G.base))}
+   ${resultStat("Media",pct(G.media))}
+   ${resultStat("Hutang",money(G.debt))}
+  </div>
+
+ </div>
+
+ <div class="card"
+  style="margin-top:14px">
+
+  <h3>
+   📊 Statistik Kampanye
+  </h3>
+
+  <table>
+
+   <tr>
+    <td>Partai</td>
+    <td>${G.party.name}</td>
+   </tr>
+
+   <tr>
+    <td>Media Partner</td>
+    <td>${G.mediaPartner||"Tidak ada"}</td>
+   </tr>
+
+   <tr>
+    <td>Anggota Tim</td>
+    <td>${G.team.length}</td>
+   </tr>
+
+   <tr>
+    <td>Kontroversi</td>
+    <td>${pct(G.controversy)}</td>
+   </tr>
+
+   <tr>
+    <td>Event</td>
+    <td>${G.history.length}</td>
+   </tr>
+
+  </table>
+
+ </div>
+
+ <div class="actions">
+
+  <button
+   class="btn"
+   onclick="newGame()"
+  >
+   MAIN LAGI
+  </button>
+
+  <button
+   class="btn secondary"
+   onclick="intro()"
+  >
+   MENU UTAMA
+  </button>
+
+ </div>
+ `);
+}
+
+function resultStat(a,b){
+
+ return `
+ <div class="stat">
+  <span>${a}</span>
+  <b>${b}</b>
+ </div>
+ `;
+}
+
+
+/* =========================================================
+   RENDER CURRENT
+========================================================= */
+
+function renderCurrent(){
+
+ if(!G.candidate){
+  intro();
+  return;
+ }
+
+ if(G.ended){
+  finalResult();
+  return;
+ }
+
+ switch(G.phase){
+
+  case 1:
+   team();
+   break;
+
+  case 2:
+   renderCampaign();
+   break;
+
+  case 3:
+   debateScreen();
+   break;
+
+  case 4:
+   attackPhase();
+   break;
+
+  case 5:
+   quietPeriod();
+   break;
+
+  case 6:
+   electionDay();
+   break;
+
+  default:
+   intro();
+ }
+}
+
+
+/* =========================================================
+   NEW GAME
+========================================================= */
+
+function newGame(){
+
+ localStorage.removeItem("QC_ID_SAVE");
+
+ location.reload();
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+loadGame();
+intro();
+
 </script>
+
 </body>
+</html>
