@@ -2,1765 +2,273 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Tarik Tambang IPA — Duel Simultan</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LKPD Bab 3 Pertemuan 1 - Web Spreadsheet</title>
 <style>
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
-
-html,body{
-    margin:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#020617;
-    user-select:none;
-}
-
-button,input{
-    font-family:inherit;
-}
-
-.screen{
-    position:absolute;
-    inset:0;
-    display:none;
-}
-
-.screen.active{
-    display:flex;
-}
-
-/* =====================================================
-   START
-===================================================== */
-
-#startScreen{
-    align-items:center;
-    justify-content:center;
-    background:
-        radial-gradient(circle at 15% 20%,#2563eb55,transparent 30%),
-        radial-gradient(circle at 85% 80%,#ef444455,transparent 30%),
-        linear-gradient(135deg,#020617,#172554,#450a0a);
-}
-
-.start-card{
-    width:min(950px,92vw);
-    padding:55px;
-    text-align:center;
-    border-radius:35px;
-    background:#0f172af2;
-    border:2px solid #ffffff20;
-    box-shadow:0 30px 100px #0008;
-}
-
-.logo{
-    font-size:clamp(45px,7vw,95px);
-    line-height:.9;
-    font-weight:1000;
-    color:white;
-    text-shadow:0 8px 0 #1e3a8a;
-}
-
-.logo span{
-    color:#facc15;
-}
-
-.tagline{
-    margin-top:25px;
-    color:#cbd5e1;
-    font-size:clamp(20px,2.5vw,32px);
-    font-weight:800;
-}
-
-.rope-demo{
-    width:75%;
-    height:18px;
-    margin:45px auto;
-    border-radius:20px;
-    background:repeating-linear-gradient(
-        45deg,
-        #92400e 0 12px,
-        #f59e0b 12px 24px
-    );
-}
-
-.start-btn{
-    border:0;
-    padding:22px 70px;
-    border-radius:20px;
-    background:#facc15;
-    color:#111827;
-    font-size:28px;
-    font-weight:1000;
-    box-shadow:0 8px 0 #ca8a04;
-}
-
-.start-btn:active{
-    transform:translateY(7px);
-    box-shadow:0 1px 0 #ca8a04;
-}
-
-/* =====================================================
-   SETUP
-===================================================== */
-
-#setupScreen{
-    align-items:center;
-    justify-content:center;
-    background:
-        radial-gradient(circle at top left,#1d4ed8,transparent 35%),
-        radial-gradient(circle at bottom right,#dc2626,transparent 35%),
-        #020617;
-}
-
-.setup{
-    width:min(1000px,92vw);
-    background:#0f172af5;
-    padding:40px;
-    border-radius:30px;
-}
-
-.setup h1{
-    color:white;
-    text-align:center;
-    font-size:clamp(32px,4vw,55px);
-}
-
-.inputs{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:25px;
-}
-
-.team-input{
-    padding:30px;
-    border-radius:25px;
-}
-
-.team-input.blue{
-    background:linear-gradient(135deg,#2563eb,#1e3a8a);
-}
-
-.team-input.red{
-    background:linear-gradient(135deg,#ef4444,#991b1b);
-}
-
-.team-input h2{
-    color:white;
-    text-align:center;
-}
-
-.team-input input{
-    width:100%;
-    padding:18px;
-    border:0;
-    border-radius:15px;
-    text-align:center;
-    font-size:23px;
-    font-weight:900;
-}
-
-.setup-actions{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    margin-top:30px;
-}
-
-.btn{
-    border:0;
-    border-radius:15px;
-    padding:17px 35px;
-    font-size:21px;
-    font-weight:900;
-}
-
-.primary{
-    background:#facc15;
-}
-
-.secondary{
-    background:#334155;
-    color:white;
-}
-
-/* =====================================================
-   GAME
-===================================================== */
-
-#gameScreen{
-    flex-direction:column;
-    background:
-        radial-gradient(circle at center,#33415555,transparent 45%),
-        #020617;
-}
-
-/* TOP */
-
-.top{
-    height:12%;
-    min-height:80px;
-    display:grid;
-    grid-template-columns:1fr 1.4fr 1fr;
-    gap:20px;
-    align-items:center;
-    padding:12px 25px;
-}
-
-.team-header{
-    color:white;
-    padding:12px 20px;
-    border-radius:18px;
-    font-size:clamp(18px,2vw,28px);
-    font-weight:1000;
-}
-
-.team-header.blue{
-    background:linear-gradient(135deg,#2563eb,#1e3a8a);
-}
-
-.team-header.red{
-    background:linear-gradient(135deg,#ef4444,#991b1b);
-    text-align:right;
-}
-
-.round-info{
-    color:white;
-    text-align:center;
-    font-size:24px;
-    font-weight:1000;
-}
-
-/* QUESTION */
-
-.question-area{
-    height:28%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:10px 7%;
-}
-
-.question-card{
-    width:min(1200px,90vw);
-    background:white;
-    border-radius:28px;
-    padding:25px 45px;
-    text-align:center;
-    box-shadow:0 20px 60px #0008;
-}
-
-.question-label{
-    color:#64748b;
-    font-weight:900;
-    margin-bottom:10px;
-}
-
-.question{
-    font-size:clamp(25px,3vw,45px);
-    line-height:1.15;
-    color:#0f172a;
-    font-weight:1000;
-}
-
-/* =====================================================
-   ROPE
-===================================================== */
-
-.arena{
-    height:23%;
-    position:relative;
-    margin:0 5%;
-}
-
-.center-line{
-    position:absolute;
-    left:50%;
-    top:0;
-    bottom:0;
-    width:4px;
-    background:#ffffff30;
-}
-
-.limit{
-    position:absolute;
-    top:0;
-    bottom:0;
-    width:7px;
-    border-radius:10px;
-}
-
-.limit.left{
-    left:8%;
-    background:#60a5fa;
-}
-
-.limit.right{
-    right:8%;
-    background:#f87171;
-}
-
-.character{
-    position:absolute;
-    top:25%;
-    font-size:clamp(45px,6vw,80px);
-    z-index:5;
-}
-
-.character.left{
-    left:0;
-}
-
-.character.right{
-    right:0;
-}
-
-.rope{
-    position:absolute;
-    left:8%;
-    width:84%;
-    top:50%;
-    height:18px;
-    border-radius:20px;
-    background:repeating-linear-gradient(
-        45deg,
-        #92400e 0 10px,
-        #f59e0b 10px 20px
-    );
-    transition:transform .7s cubic-bezier(.2,.8,.2,1);
-    box-shadow:0 5px 10px #0008;
-}
-
-.knot{
-    position:absolute;
-    left:50%;
-    top:50%;
-    width:58px;
-    height:58px;
-    transform:translate(-50%,-50%);
-    background:#facc15;
-    border:7px solid #92400e;
-    border-radius:50%;
-    z-index:10;
-}
-
-.flag{
-    position:absolute;
-    left:50%;
-    top:-45px;
-    transform:translateX(-50%);
-    font-size:30px;
-}
-
-/* =====================================================
-   DUEL
-===================================================== */
-
-.duel{
-    height:37%;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
-    padding:10px 25px 25px;
-}
-
-.player-panel{
-    border-radius:25px;
-    padding:18px;
-    position:relative;
-    overflow:hidden;
-}
-
-.player-panel.blue{
-    background:linear-gradient(145deg,#1d4ed8,#172554);
-}
-
-.player-panel.red{
-    background:linear-gradient(145deg,#dc2626,#450a0a);
-}
-
-.player-title{
-    color:white;
-    text-align:center;
-    font-size:clamp(20px,2.5vw,34px);
-    font-weight:1000;
-    margin-bottom:10px;
-}
-
-.status{
-    color:#ffffffcc;
-    text-align:center;
-    font-weight:800;
-    height:28px;
-}
-
-.answer-buttons{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-    height:calc(100% - 65px);
-}
-
-.answer{
-    border:0;
-    border-radius:22px;
-    color:white;
-    font-size:clamp(22px,3vw,40px);
-    font-weight:1000;
-    box-shadow:0 8px 0 #0005;
-    transition:.15s;
-}
-
-.answer:active{
-    transform:translateY(6px);
-    box-shadow:0 2px 0 #0005;
-}
-
-.answer.true{
-    background:linear-gradient(135deg,#22c55e,#15803d);
-}
-
-.answer.false{
-    background:linear-gradient(135deg,#ef4444,#991b1b);
-}
-
-.answer.selected{
-    outline:6px solid #facc15;
-    transform:scale(.97);
-}
-
-.answer:disabled{
-    opacity:.4;
-}
-
-/* =====================================================
-   ROUND RESULT
-===================================================== */
-
-.overlay{
-    position:absolute;
-    inset:0;
-    z-index:100;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    background:#020617bb;
-    backdrop-filter:blur(7px);
-}
-
-.overlay.show{
-    display:flex;
-}
-
-.result-card{
-    width:min(750px,88vw);
-    padding:40px;
-    border-radius:30px;
-    background:white;
-    text-align:center;
-    animation:pop .35s ease;
-}
-
-@keyframes pop{
-    from{
-        transform:scale(.6);
-        opacity:0;
-    }
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
-}
-
-.result-icon{
-    font-size:80px;
-}
-
-.result-title{
-    font-size:clamp(35px,5vw,60px);
-    font-weight:1000;
-    color:#0f172a;
-}
-
-.result-detail{
-    font-size:22px;
-    color:#475569;
-    font-weight:800;
-    line-height:1.5;
-}
-
-.next{
-    margin-top:20px;
-    border:0;
-    border-radius:15px;
-    padding:17px 50px;
-    background:#2563eb;
-    color:white;
-    font-size:22px;
-    font-weight:1000;
-}
-
-/* =====================================================
-   WIN
-===================================================== */
-
-#winScreen{
-    align-items:center;
-    justify-content:center;
-    background:
-        radial-gradient(circle,#1e3a8a,#020617 65%);
-}
-
-.win{
-    width:min(850px,90vw);
-    padding:50px;
-    border-radius:35px;
-    background:#0f172af2;
-    text-align:center;
-    color:white;
-}
-
-.trophy{
-    font-size:110px;
-    animation:trophy .8s infinite alternate;
-}
-
-@keyframes trophy{
-    from{transform:rotate(-5deg)}
-    to{transform:rotate(5deg) scale(1.08)}
-}
-
-.win h1{
-    font-size:clamp(40px,6vw,75px);
-    color:#facc15;
-}
-
-.winner{
-    font-size:clamp(30px,4vw,55px);
-    font-weight:1000;
-}
-
-.final{
-    margin:20px;
-    font-size:23px;
-    color:#cbd5e1;
-}
-
-/* CONFETTI */
-
-.confetti{
-    position:fixed;
-    top:-30px;
-    z-index:200;
-    animation:fall linear forwards;
-}
-
-@keyframes fall{
-    to{
-        transform:translateY(110vh) rotate(720deg);
-    }
-}
-
-@media(max-width:800px){
-
-    .inputs{
-        grid-template-columns:1fr;
-    }
-
-    .top{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .round-info{
-        display:none;
-    }
-
-    .duel{
-        padding:5px;
-        gap:7px;
-    }
-
-    .player-panel{
-        padding:10px;
-    }
-
-    .answer-buttons{
-        gap:7px;
-    }
-
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#eef2f7;color:#172033}
+header{background:linear-gradient(135deg,#172554,#1e3a8a);color:#fff;padding:24px 28px}
+header h1{margin:0 0 6px;font-size:26px}
+header p{margin:3px 0;opacity:.9}
+.container{max-width:1250px;margin:22px auto;padding:0 16px}
+.card{background:#fff;border-radius:14px;box-shadow:0 5px 18px #00000012;margin-bottom:18px;overflow:hidden}
+.card h2{font-size:18px;margin:0;padding:15px 18px;background:#f8fafc;border-bottom:1px solid #e5e7eb}
+.content{padding:18px}
+.info{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.info input,.content input,.content textarea,select{width:100%;border:1px solid #cbd5e1;border-radius:7px;padding:9px;font-size:14px}
+label{font-size:12px;color:#64748b;display:block;margin-bottom:5px;font-weight:700}
+.task{border:1px solid #dbe3ef;border-radius:10px;padding:14px;margin:12px 0;background:#fbfdff}
+.task strong{display:block;margin-bottom:7px}
+table.sheet{width:100%;border-collapse:collapse;table-layout:fixed}
+.sheet th,.sheet td{border:1px solid #cbd5e1;min-width:105px;height:38px;padding:0}
+.sheet th{background:#e2e8f0;font-size:12px;text-align:center;width:42px}
+.sheet td input{border:0;border-radius:0;width:100%;height:37px;padding:7px;background:transparent}
+.sheet td input:focus{outline:2px solid #2563eb;background:#eff6ff}
+.sheet .wide{min-width:220px}
+.btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}
+.primary{background:#2563eb;color:#fff}.secondary{background:#e2e8f0;color:#172033}.danger{background:#fee2e2;color:#991b1b}
+.note{background:#eff6ff;border-left:4px solid #2563eb;padding:12px;border-radius:6px;font-size:14px;line-height:1.5}
+.status{font-size:13px;color:#475569;margin-top:9px}
+.progress{height:9px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin-top:8px}
+.bar{height:100%;width:0;background:#2563eb;transition:.3s}
+.reflection textarea{min-height:80px;resize:vertical}
+@media(max-width:800px){.info{grid-template-columns:1fr 1fr}.container{padding:8px}.card{border-radius:10px}.sheet{font-size:12px}.sheet td input{font-size:12px}}
+@media print{body{background:#fff}.btns{display:none!important}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}header{background:#172554}.sheet td input{border:0}.task{break-inside:avoid}}
 </style>
 </head>
-
 <body>
+<header>
+  <h1>LKPD BAB 3 — Pertemuan 1</h1>
+  <p><b>Informatika • Fase D • Kelas VIII</b></p>
+  <p>Literasi Numerasi, Algoritma & Pengenalan Scratch</p>
+</header>
 
-<!-- =====================================================
-     START
-===================================================== -->
-
-<section id="startScreen" class="screen active">
-
-    <div class="start-card">
-
-        <div class="logo">
-            TARIK TAMBANG<br>
-            <span>IPA</span>
-        </div>
-
-        <div class="tagline">
-            🧪 DUEL SIMULTAN — JAWAB BENAR, TARIK LEBIH KUAT! 🪢
-        </div>
-
-        <div class="rope-demo"></div>
-
-        <button class="start-btn" onclick="showSetup()">
-            🎮 MULAI GAME
-        </button>
-
+<div class="container">
+  <div class="card">
+    <h2>IDENTITAS PESERTA DIDIK</h2>
+    <div class="content info">
+      <div><label>NAMA</label><input id="nama" placeholder="Nama lengkap"></div>
+      <div><label>KELAS</label><input id="kelas" placeholder="VIII..."></div>
+      <div><label>NO. ABSEN</label><input id="absen" placeholder="Nomor"></div>
+      <div><label>TANGGAL</label><input id="tanggal" type="date"></div>
     </div>
+  </div>
 
-</section>
-
-
-<!-- =====================================================
-     SETUP
-===================================================== -->
-
-<section id="setupScreen" class="screen">
-
-    <div class="setup">
-
-        <h1>⚔️ SIAPKAN DUA TIM</h1>
-
-        <div class="inputs">
-
-            <div class="team-input blue">
-
-                <h2>🔵 TIM A</h2>
-
-                <input
-                    id="teamAInput"
-                    value="TIM A"
-                    maxlength="20"
-                >
-
-            </div>
-
-            <div class="team-input red">
-
-                <h2>🔴 TIM B</h2>
-
-                <input
-                    id="teamBInput"
-                    value="TIM B"
-                    maxlength="20"
-                >
-
-            </div>
-
-        </div>
-
-        <div class="setup-actions">
-
-            <button
-                class="btn secondary"
-                onclick="backToStart()">
-                ← KEMBALI
-            </button>
-
-            <button
-                class="btn primary"
-                onclick="startGame()">
-                🚀 MULAI DUEL
-            </button>
-
-        </div>
-
+  <div class="card">
+    <h2>TUJUAN PEMBELAJARAN</h2>
+    <div class="content">
+      <div class="note">
+        Peserta didik memahami literasi numerasi, menyusun algoritma sederhana,
+        mengenal Scratch, serta menghubungkan urutan instruksi dengan program.
+        Peserta didik mengeksplorasi Stage, Sprite, Blocks, Script, Control,
+        Input, dan Variable serta melakukan debugging sederhana.
+      </div>
     </div>
+  </div>
 
-</section>
-
-
-<!-- =====================================================
-     GAME
-===================================================== -->
-
-<section id="gameScreen" class="screen">
-
-    <div class="top">
-
-        <div class="team-header blue">
-            🔵 <span id="nameA">TIM A</span>
-            <br>
-            <small>
-                Tarikan: <span id="scoreA">0</span>
-            </small>
-        </div>
-
-        <div class="round-info">
-            SOAL
-            <span id="roundNumber">1</span>
-            /
-            <span id="total">20</span>
-        </div>
-
-        <div class="team-header red">
-            <span id="nameB">TIM B</span> 🔴
-            <br>
-            <small>
-                Tarikan: <span id="scoreB">0</span>
-            </small>
-        </div>
-
+  <div class="card">
+    <h2>AKTIVITAS 1 — LITERASI NUMERASI & ALGORITMA</h2>
+    <div class="content">
+      <div class="task">
+        <strong>Situasi masalah</strong>
+        Tuliskan algoritma untuk aktivitas berikut: <b>“Membuat minuman sederhana”</b>.
+        Susun langkah dari awal sampai selesai secara berurutan.
+      </div>
+      <table class="sheet" id="algoritma">
+        <tr><th>No.</th><th class="wide">Langkah / Instruksi</th><th class="wide">Mengapa langkah ini diperlukan?</th></tr>
+      </table>
+      <div class="btns">
+        <button class="secondary" onclick="addRow('algoritma',8)">+ Tambah Baris</button>
+      </div>
     </div>
+  </div>
 
-
-    <div class="question-area">
-
-        <div class="question-card">
-
-            <div class="question-label">
-                🧪 PERNYATAAN IPA
-            </div>
-
-            <div
-                id="question"
-                class="question">
-            </div>
-
-        </div>
-
+  <div class="card">
+    <h2>AKTIVITAS 2 — URUTAN INSTRUKSI</h2>
+    <div class="content">
+      <div class="task">
+        Urutkan langkah berikut agar komputer dapat menjalankan sebuah aktivitas dengan benar.
+        Masukkan nomor urut dan jelaskan akibat jika urutannya salah.
+      </div>
+      <table class="sheet">
+        <tr><th>No.</th><th class="wide">Instruksi</th><th>Urutan</th><th class="wide">Akibat jika salah urutan</th></tr>
+        <tr><td>1</td><td>Masukkan bahan</td><td><input data-key="a2-1"></td><td><input data-key="a2-1b"></td></tr>
+        <tr><td>2</td><td>Siapkan wadah</td><td><input data-key="a2-2"></td><td><input data-key="a2-2b"></td></tr>
+        <tr><td>3</td><td>Aduk sampai tercampur</td><td><input data-key="a2-3"></td><td><input data-key="a2-3b"></td></tr>
+        <tr><td>4</td><td>Sajikan</td><td><input data-key="a2-4"></td><td><input data-key="a2-4b"></td></tr>
+      </table>
     </div>
+  </div>
 
-
-    <!-- ROPE -->
-
-    <div class="arena">
-
-        <div class="center-line"></div>
-
-        <div class="limit left"></div>
-        <div class="limit right"></div>
-
-        <div class="character left">
-            🧑‍🔬
-        </div>
-
-        <div class="character right">
-            🧑‍🔬
-        </div>
-
-        <div id="rope" class="rope">
-
-            <div class="knot">
-
-                <div class="flag">
-                    🚩
-                </div>
-
-            </div>
-
-        </div>
-
+  <div class="card">
+    <h2>AKTIVITAS 3 — MENGENAL SCRATCH</h2>
+    <div class="content">
+      <table class="sheet">
+        <tr><th>No.</th><th class="wide">Komponen</th><th class="wide">Fungsi / Penjelasan dengan kata-kata sendiri</th><th>Contoh</th></tr>
+        <tr><td>1</td><td>Stage</td><td><input data-key="s-stage"></td><td><input data-key="s-stage-ex"></td></tr>
+        <tr><td>2</td><td>Sprite</td><td><input data-key="s-sprite"></td><td><input data-key="s-sprite-ex"></td></tr>
+        <tr><td>3</td><td>Blocks</td><td><input data-key="s-blocks"></td><td><input data-key="s-blocks-ex"></td></tr>
+        <tr><td>4</td><td>Script</td><td><input data-key="s-script"></td><td><input data-key="s-script-ex"></td></tr>
+        <tr><td>5</td><td>Control</td><td><input data-key="s-control"></td><td><input data-key="s-control-ex"></td></tr>
+        <tr><td>6</td><td>Input</td><td><input data-key="s-input"></td><td><input data-key="s-input-ex"></td></tr>
+        <tr><td>7</td><td>Variable</td><td><input data-key="s-var"></td><td><input data-key="s-var-ex"></td></tr>
+      </table>
     </div>
+  </div>
 
-
-    <!-- TWO SIDES -->
-
-    <div class="duel">
-
-        <!-- TEAM A -->
-
-        <div class="player-panel blue">
-
-            <div class="player-title">
-                🔵 <span id="panelA">TIM A</span>
-            </div>
-
-            <div
-                id="statusA"
-                class="status">
-                Belum menjawab
-            </div>
-
-            <div class="answer-buttons">
-
-                <button
-                    id="aTrue"
-                    class="answer true"
-                    onclick="submitAnswer('A',true)">
-                    ✅ BENAR
-                </button>
-
-                <button
-                    id="aFalse"
-                    class="answer false"
-                    onclick="submitAnswer('A',false)">
-                    ❌ SALAH
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- TEAM B -->
-
-        <div class="player-panel red">
-
-            <div class="player-title">
-                <span id="panelB">TIM B</span> 🔴
-            </div>
-
-            <div
-                id="statusB"
-                class="status">
-                Belum menjawab
-            </div>
-
-            <div class="answer-buttons">
-
-                <button
-                    id="bTrue"
-                    class="answer true"
-                    onclick="submitAnswer('B',true)">
-                    BENAR ✅
-                </button>
-
-                <button
-                    id="bFalse"
-                    class="answer false"
-                    onclick="submitAnswer('B',false)">
-                    SALAH ❌
-                </button>
-
-            </div>
-
-        </div>
-
+  <div class="card">
+    <h2>AKTIVITAS 4 — DARI ALGORITMA MENJADI PROGRAM</h2>
+    <div class="content">
+      <div class="task">
+        Buat rancangan sederhana: <b>ketika tombol ditekan, Sprite melakukan gerakan tertentu</b>.
+        Tuliskan input, proses/urutan, dan outputnya.
+      </div>
+      <table class="sheet">
+        <tr><th>Input</th><th class="wide">Proses / Urutan Instruksi</th><th>Output</th></tr>
+        <tr><td><input data-key="ipo-input"></td><td><input data-key="ipo-process"></td><td><input data-key="ipo-output"></td></tr>
+      </table>
+      <div class="task">
+        <strong>Debugging</strong>
+        Bayangkan program tidak menghasilkan output yang diharapkan. Tuliskan kemungkinan kesalahan dan cara memperbaikinya.
+        <textarea data-key="debug" placeholder="Contoh: urutan blok salah, sehingga..."></textarea>
+      </div>
     </div>
+  </div>
 
-
-    <!-- ROUND RESULT -->
-
-    <div
-        id="resultOverlay"
-        class="overlay">
-
-        <div class="result-card">
-
-            <div
-                id="resultIcon"
-                class="result-icon">
-                ⚔️
-            </div>
-
-            <div
-                id="resultTitle"
-                class="result-title">
-                HASIL RONDE
-            </div>
-
-            <div
-                id="resultDetail"
-                class="result-detail">
-            </div>
-
-            <button
-                class="next"
-                onclick="nextRound()">
-                SOAL BERIKUTNYA ➜
-            </button>
-
-        </div>
-
+  <div class="card reflection">
+    <h2>REFLEKSI</h2>
+    <div class="content">
+      <div class="task">
+        <label>1. Apa yang saya pahami tentang algoritma?</label>
+        <textarea data-key="r1"></textarea>
+      </div>
+      <div class="task">
+        <label>2. Bagian Scratch apa yang paling saya pahami?</label>
+        <textarea data-key="r2"></textarea>
+      </div>
+      <div class="task">
+        <label>3. Kesulitan yang saya alami dan bagaimana saya mengatasinya?</label>
+        <textarea data-key="r3"></textarea>
+      </div>
+      <div class="task">
+        <label>4. Hal yang masih perlu saya pelajari?</label>
+        <textarea data-key="r4"></textarea>
+      </div>
     </div>
+  </div>
 
-</section>
-
-
-<!-- =====================================================
-     WIN
-===================================================== -->
-
-<section id="winScreen" class="screen">
-
-    <div id="confetti"></div>
-
-    <div class="win">
-
-        <div class="trophy">🏆</div>
-
-        <h1>PEMENANG!</h1>
-
-        <div
-            id="winner"
-            class="winner">
-        </div>
-
-        <div
-            id="finalScore"
-            class="final">
-        </div>
-
-        <button
-            class="btn primary"
-            onclick="restart()">
-            🔄 MAIN LAGI
-        </button>
-
-        <button
-            class="btn secondary"
-            onclick="backToStart()">
-            🏠 MENU
-        </button>
-
+  <div class="card">
+    <h2>STATUS PENGERJAAN</h2>
+    <div class="content">
+      <div>Isian tersimpan otomatis di browser perangkat ini.</div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="status" id="status">0% terisi</div>
+      <div class="btns">
+        <button class="primary" onclick="saveNow()">💾 Simpan Sekarang</button>
+        <button class="primary" onclick="downloadPDF()">📄 Download PDF</button>
+        <button class="secondary" onclick="window.print()">🖨️ Cetak</button>
+        <button class="danger" onclick="clearAll()">↺ Hapus Semua Jawaban</button>
+      </div>
     </div>
+  </div>
+</div>
 
-</section>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
+const KEY='lkpd_bab3_p1_v1';
+const fields=[...document.querySelectorAll('input,textarea')];
 
-/* =====================================================
-   CONFIG
-===================================================== */
+function saveNow(){
+  const data={};
+  fields.forEach((el,i)=>{
+    const key=el.dataset.key || el.id || ('field-'+i);
+    data[key]=el.value;
+  });
+  localStorage.setItem(KEY,JSON.stringify(data));
+  updateStatus();
+  document.getElementById('status').textContent += ' • Tersimpan ✓';
+}
+function loadData(){
+  const data=JSON.parse(localStorage.getItem(KEY)||'{}');
+  fields.forEach((el,i)=>{
+    const key=el.dataset.key || el.id || ('field-'+i);
+    if(data[key]!==undefined) el.value=data[key];
+    el.addEventListener('input',()=>{saveNowSilent()});
+  });
+  updateStatus();
+}
+function saveNowSilent(){
+  const data={};
+  fields.forEach((el,i)=>{
+    const key=el.dataset.key || el.id || ('field-'+i);
+    data[key]=el.value;
+  });
+  localStorage.setItem(KEY,JSON.stringify(data));
+  updateStatus();
+}
+function updateStatus(){
+  let filled=0,total=0;
+  fields.forEach(el=>{
+    if(el.type==='date' || el.type==='text' || el.tagName==='TEXTAREA'){
+      total++;
+      if(el.value.trim()) filled++;
+    }
+  });
+  const pct=total?Math.round(filled/total*100):0;
+  document.getElementById('bar').style.width=pct+'%';
+  document.getElementById('status').textContent=pct+'% terisi';
+}
+function addRow(id,count){
+  const table=document.getElementById(id);
+  const n=table.rows.length;
+  const tr=table.insertRow();
+  tr.innerHTML=`<td>${n}</td><td><input></td><td><input></td>`;
+  [...tr.querySelectorAll('input')].forEach(el=>el.addEventListener('input',saveNowSilent));
+}
+async function downloadPDF(){
+  saveNowSilent();
+  const nama=(document.getElementById('nama').value||'Siswa').trim().replace(/[^a-zA-Z0-9À-ÿ _-]/g,'').replace(/\s+/g,'_');
+  const kelas=(document.getElementById('kelas').value||'Kelas_VIII').trim().replace(/[^a-zA-Z0-9À-ÿ _-]/g,'').replace(/\s+/g,'_');
+  const filename=`LKPD_Bab_3_Pertemuan_1_${nama}_${kelas}.pdf`;
 
-const CONFIG = {
+  const element=document.querySelector('.container');
+  const buttons=document.querySelectorAll('.btns');
+  buttons.forEach(b=>b.style.visibility='hidden');
 
-    totalQuestions:20,
+  const opt={
+    margin:[8,8,8,8],
+    filename:filename,
+    image:{type:'jpeg',quality:0.98},
+    html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff',logging:false},
+    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},
+    pagebreak:{mode:['css','legacy']}
+  };
 
-    pullPerWin:1,
-
-    winningPosition:7
-
-};
-
-
-/* =====================================================
-   SOAL IPA
-===================================================== */
-
-const questionBank = [
-
-{
-    q:"Air membeku pada suhu sekitar 0°C dalam kondisi normal.",
-    a:true
-},
-
-{
-    q:"Matahari merupakan sumber energi utama bagi kehidupan di Bumi.",
-    a:true
-},
-
-{
-    q:"Bulan menghasilkan cahaya sendiri seperti Matahari.",
-    a:false
-},
-
-{
-    q:"Manusia bernapas menggunakan paru-paru.",
-    a:true
-},
-
-{
-    q:"Tumbuhan melakukan fotosintesis untuk menghasilkan makanan.",
-    a:true
-},
-
-{
-    q:"Suara dapat merambat di ruang hampa.",
-    a:false
-},
-
-{
-    q:"Jantung berfungsi memompa darah ke seluruh tubuh.",
-    a:true
-},
-
-{
-    q:"Air yang dipanaskan hingga mendidih dapat berubah menjadi uap.",
-    a:true
-},
-
-{
-    q:"Planet terbesar dalam tata surya adalah Jupiter.",
-    a:true
-},
-
-{
-    q:"Bumi merupakan pusat tata surya.",
-    a:false
-},
-
-{
-    q:"Magnet memiliki kutub utara dan kutub selatan.",
-    a:true
-},
-
-{
-    q:"Pelangi dapat terjadi karena penguraian cahaya.",
-    a:true
-},
-
-{
-    q:"Kelelawar termasuk kelompok burung karena dapat terbang.",
-    a:false
-},
-
-{
-    q:"Fotosintesis menghasilkan oksigen.",
-    a:true
-},
-
-{
-    q:"Penguapan adalah perubahan wujud dari cair menjadi gas.",
-    a:true
-},
-
-{
-    q:"Es yang mencair berubah dari padat menjadi cair.",
-    a:true
-},
-
-{
-    q:"Semua benda berat pasti tenggelam di dalam air.",
-    a:false
-},
-
-{
-    q:"Karbon dioksida digunakan tumbuhan dalam fotosintesis.",
-    a:true
-},
-
-{
-    q:"Cahaya dapat merambat tanpa medium.",
-    a:true
-},
-
-{
-    q:"Manusia tidak membutuhkan air selama mendapatkan makanan.",
-    a:false
-},
-
-{
-    q:"Rangka membantu menopang dan melindungi tubuh manusia.",
-    a:true
-},
-
-{
-    q:"Besi dapat ditarik oleh magnet.",
-    a:true
-},
-
-{
-    q:"Planet terdekat dengan Matahari adalah Merkurius.",
-    a:true
-},
-
-{
-    q:"Semua benda yang terlihat oleh mata menghasilkan cahaya sendiri.",
-    a:false
-},
-
-{
-    q:"Suhu menunjukkan tingkat panas atau dinginnya suatu benda.",
-    a:true
-},
-
-{
-    q:"Air laut tidak mengandung garam.",
-    a:false
-},
-
-{
-    q:"Energi listrik dapat berubah menjadi energi cahaya.",
-    a:true
-},
-
-{
-    q:"Gravitasi menyebabkan benda jatuh menuju permukaan Bumi.",
-    a:true
-},
-
-{
-    q:"Oksigen diperlukan manusia untuk bernapas.",
-    a:true
-},
-
-{
-    q:"Tumbuhan tidak memerlukan air untuk tumbuh.",
-    a:false
+  try{
+    if(typeof html2pdf==='undefined'){
+      alert('Fitur PDF belum termuat. Gunakan tombol Cetak lalu pilih "Save as PDF".');
+      window.print();
+      return;
+    }
+    await html2pdf().set(opt).from(element).save();
+  }catch(err){
+    console.error(err);
+    alert('Download PDF gagal. Gunakan tombol Cetak lalu pilih "Save as PDF".');
+    window.print();
+  }finally{
+    buttons.forEach(b=>b.style.visibility='visible');
+  }
 }
 
-];
-
-
-/* =====================================================
-   STATE
-===================================================== */
-
-let questions=[];
-
-let current=0;
-
-let teamA="TIM A";
-let teamB="TIM B";
-
-let scoreA=0;
-let scoreB=0;
-
-let ropePosition=0;
-
-let answerA=null;
-let answerB=null;
-
-
-/* =====================================================
-   ELEMENT
-===================================================== */
-
-const $ = id =>
-    document.getElementById(id);
-
-
-/* =====================================================
-   SCREEN
-===================================================== */
-
-function hideScreens(){
-
-    document
-        .querySelectorAll(".screen")
-        .forEach(s =>
-            s.classList.remove("active")
-        );
-
+function clearAll(){
+  if(confirm('Hapus seluruh jawaban LKPD pada perangkat ini?')){
+    localStorage.removeItem(KEY);
+    fields.forEach(el=>el.value='');
+    location.reload();
+  }
 }
-
-
-function showSetup(){
-
-    hideScreens();
-
-    $("setupScreen")
-        .classList.add("active");
-
-}
-
-
-function backToStart(){
-
-    hideScreens();
-
-    $("startScreen")
-        .classList.add("active");
-
-}
-
-
-/* =====================================================
-   START
-===================================================== */
-
-function startGame(){
-
-    teamA =
-        $("teamAInput")
-        .value.trim() || "TIM A";
-
-    teamB =
-        $("teamBInput")
-        .value.trim() || "TIM B";
-
-
-    questions =
-        [...questionBank]
-        .sort(() => Math.random()-.5)
-        .slice(0,CONFIG.totalQuestions);
-
-
-    current=0;
-
-    scoreA=0;
-
-    scoreB=0;
-
-    ropePosition=0;
-
-
-    $("nameA").textContent=teamA;
-    $("nameB").textContent=teamB;
-
-    $("panelA").textContent=teamA;
-    $("panelB").textContent=teamB;
-
-    $("scoreA").textContent=0;
-    $("scoreB").textContent=0;
-
-    $("total").textContent=questions.length;
-
-
-    hideScreens();
-
-    $("gameScreen")
-        .classList.add("active");
-
-
-    loadRound();
-
-}
-
-
-/* =====================================================
-   LOAD ROUND
-===================================================== */
-
-function loadRound(){
-
-    answerA=null;
-
-    answerB=null;
-
-
-    $("roundNumber")
-        .textContent=current+1;
-
-
-    $("question")
-        .textContent=questions[current].q;
-
-
-    $("statusA")
-        .textContent="Belum menjawab";
-
-    $("statusB")
-        .textContent="Belum menjawab";
-
-
-    resetButtons();
-
-
-}
-
-
-/* =====================================================
-   ANSWER
-===================================================== */
-
-function submitAnswer(team,value){
-
-    if(team==="A"){
-
-        if(answerA!==null) return;
-
-        answerA=value;
-
-        markSelected("A",value);
-
-        $("statusA").textContent=
-            "✅ Sudah menjawab";
-
-    }
-
-
-    if(team==="B"){
-
-        if(answerB!==null) return;
-
-        answerB=value;
-
-        markSelected("B",value);
-
-        $("statusB").textContent=
-            "✅ Sudah menjawab";
-
-    }
-
-
-    /*
-       SANGAT PENTING:
-
-       Kita tidak langsung menentukan
-       hasil ketika satu tim menjawab.
-
-       Game menunggu kedua tim.
-    */
-
-    if(
-        answerA!==null &&
-        answerB!==null
-    ){
-
-        setTimeout(
-            evaluateRound,
-            500
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   MARK BUTTON
-===================================================== */
-
-function markSelected(team,value){
-
-    let trueButton =
-        $(team==="A" ? "aTrue" : "bTrue");
-
-    let falseButton =
-        $(team==="A" ? "aFalse" : "bFalse");
-
-
-    trueButton.disabled=true;
-    falseButton.disabled=true;
-
-
-    if(value===true){
-
-        trueButton.classList.add("selected");
-
-    }else{
-
-        falseButton.classList.add("selected");
-
-    }
-
-}
-
-
-/* =====================================================
-   RESET BUTTON
-===================================================== */
-
-function resetButtons(){
-
-    [
-        "aTrue",
-        "aFalse",
-        "bTrue",
-        "bFalse"
-    ].forEach(id=>{
-
-        $(id).disabled=false;
-
-        $(id).classList.remove(
-            "selected"
-        );
-
-    });
-
-}
-
-
-/* =====================================================
-   EVALUATE
-===================================================== */
-
-function evaluateRound(){
-
-    const correct =
-        questions[current].a;
-
-
-    const correctA =
-        answerA===correct;
-
-    const correctB =
-        answerB===correct;
-
-
-    /*
-       CASE 1:
-       A benar, B salah
-    */
-
-    if(correctA && !correctB){
-
-        scoreA++;
-
-        ropePosition +=
-            CONFIG.pullPerWin;
-
-        showResult(
-            "🔵",
-            teamA+" MENARIK!",
-            `
-            ${teamA} menjawab <b>BENAR</b> ✅<br>
-            ${teamB} menjawab <b>SALAH</b> ❌<br><br>
-            🪢 Tali bergerak ke arah ${teamA}.
-            `
-        );
-
-    }
-
-
-    /*
-       CASE 2:
-       B benar, A salah
-    */
-
-    else if(!correctA && correctB){
-
-        scoreB++;
-
-        ropePosition -=
-            CONFIG.pullPerWin;
-
-        showResult(
-            "🔴",
-            teamB+" MENARIK!",
-            `
-            ${teamB} menjawab <b>BENAR</b> ✅<br>
-            ${teamA} menjawab <b>SALAH</b> ❌<br><br>
-            🪢 Tali bergerak ke arah ${teamB}.
-            `
-        );
-
-    }
-
-
-    /*
-       CASE 3:
-       Keduanya benar
-    */
-
-    else if(correctA && correctB){
-
-        showResult(
-            "🤝",
-            "DUA-DUANYA BENAR!",
-            `
-            🔵 ${teamA}: BENAR ✅<br>
-            🔴 ${teamB}: BENAR ✅<br><br>
-            🪢 Tidak ada tim yang menarik.
-            `
-        );
-
-    }
-
-
-    /*
-       CASE 4:
-       Keduanya salah
-    */
-
-    else{
-
-        showResult(
-            "😵",
-            "DUA-DUANYA SALAH!",
-            `
-            🔵 ${teamA}: SALAH ❌<br>
-            🔴 ${teamB}: SALAH ❌<br><br>
-            🪢 Tali tetap di tempat.
-            `
-        );
-
-    }
-
-
-    updateScores();
-
-    updateRope();
-
-
-    /*
-       Jika mencapai batas,
-       pertandingan selesai.
-    */
-
-    if(
-        Math.abs(ropePosition)
-        >=CONFIG.winningPosition
-    ){
-
-        setTimeout(
-            finishGame,
-            1000
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   RESULT
-===================================================== */
-
-function showResult(
-    icon,
-    title,
-    detail
-){
-
-    $("resultIcon")
-        .textContent=icon;
-
-    $("resultTitle")
-        .textContent=title;
-
-    $("resultDetail")
-        .innerHTML=detail;
-
-    $("resultOverlay")
-        .classList.add("show");
-
-}
-
-
-/* =====================================================
-   NEXT
-===================================================== */
-
-function nextRound(){
-
-    $("resultOverlay")
-        .classList.remove("show");
-
-
-    if(
-        Math.abs(ropePosition)
-        >=CONFIG.winningPosition
-    ){
-
-        finishGame();
-
-        return;
-
-    }
-
-
-    current++;
-
-
-    if(
-        current>=questions.length
-    ){
-
-        finishGame();
-
-        return;
-
-    }
-
-
-    loadRound();
-
-}
-
-
-/* =====================================================
-   SCORE
-===================================================== */
-
-function updateScores(){
-
-    $("scoreA")
-        .textContent=scoreA;
-
-    $("scoreB")
-        .textContent=scoreB;
-
-}
-
-
-/* =====================================================
-   ROPE
-===================================================== */
-
-function updateRope(){
-
-    const position =
-        Math.max(
-            -CONFIG.winningPosition,
-            Math.min(
-                CONFIG.winningPosition,
-                ropePosition
-            )
-        );
-
-
-    /*
-       + = A
-       - = B
-    */
-
-    const percentage =
-        position*5.5;
-
-
-    $("rope").style.transform=
-        `translateX(${percentage}%)`;
-
-
-    /*
-       Gerakan karakter
-    */
-
-    document
-        .querySelector(".character.left")
-        .style.transform=
-        `translateX(${percentage*3}px)`;
-
-
-    document
-        .querySelector(".character.right")
-        .style.transform=
-        `translateX(${percentage*3}px)`;
-
-}
-
-
-/* =====================================================
-   FINISH
-===================================================== */
-
-function finishGame(){
-
-    hideScreens();
-
-    $("winScreen")
-        .classList.add("active");
-
-
-    let winner;
-
-
-    if(ropePosition>0){
-
-        winner=teamA;
-
-    }
-
-    else if(ropePosition<0){
-
-        winner=teamB;
-
-    }
-
-    else if(scoreA>scoreB){
-
-        winner=teamA;
-
-    }
-
-    else if(scoreB>scoreA){
-
-        winner=teamB;
-
-    }
-
-    else{
-
-        winner="SERI!";
-
-    }
-
-
-    $("winner")
-        .textContent=winner;
-
-
-    $("finalScore")
-        .innerHTML=
-        `
-        🔵 ${teamA}: ${scoreA} tarikan
-        &nbsp;&nbsp; | &nbsp;&nbsp;
-        🔴 ${teamB}: ${scoreB} tarikan
-        `;
-
-
-    if(winner!=="SERI!"){
-
-        createConfetti();
-
-    }
-
-}
-
-
-/* =====================================================
-   RESTART
-===================================================== */
-
-function restart(){
-
-    $("confetti")
-        .innerHTML="";
-
-    startGame();
-
-}
-
-
-/* =====================================================
-   CONFETTI
-===================================================== */
-
-function createConfetti(){
-
-    const container=
-        $("confetti");
-
-    const icons=[
-        "🎉",
-        "🎊",
-        "⭐",
-        "✨",
-        "🏆"
-    ];
-
-
-    for(
-        let i=0;
-        i<100;
-        i++
-    ){
-
-        const item=
-            document.createElement("div");
-
-
-        item.className="confetti";
-
-
-        item.textContent=
-            icons[
-                Math.floor(
-                    Math.random()*icons.length
-                )
-            ];
-
-
-        item.style.left=
-            Math.random()*100+"%";
-
-
-        item.style.fontSize=
-            15+Math.random()*25+"px";
-
-
-        item.style.animationDuration=
-            2+Math.random()*4+"s";
-
-
-        container.appendChild(item);
-
-    }
-
-}
-
+loadData();
 </script>
-
 </body>
 </html>
