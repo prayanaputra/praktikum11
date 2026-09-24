@@ -2,273 +2,5352 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LKPD Bab 3 Pertemuan 1 - Web Spreadsheet</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SKOR — LCC KKA Kelas 9</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#eef2f7;color:#172033}
-header{background:linear-gradient(135deg,#172554,#1e3a8a);color:#fff;padding:24px 28px}
-header h1{margin:0 0 6px;font-size:26px}
-header p{margin:3px 0;opacity:.9}
-.container{max-width:1250px;margin:22px auto;padding:0 16px}
-.card{background:#fff;border-radius:14px;box-shadow:0 5px 18px #00000012;margin-bottom:18px;overflow:hidden}
-.card h2{font-size:18px;margin:0;padding:15px 18px;background:#f8fafc;border-bottom:1px solid #e5e7eb}
-.content{padding:18px}
-.info{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.info input,.content input,.content textarea,select{width:100%;border:1px solid #cbd5e1;border-radius:7px;padding:9px;font-size:14px}
-label{font-size:12px;color:#64748b;display:block;margin-bottom:5px;font-weight:700}
-.task{border:1px solid #dbe3ef;border-radius:10px;padding:14px;margin:12px 0;background:#fbfdff}
-.task strong{display:block;margin-bottom:7px}
-table.sheet{width:100%;border-collapse:collapse;table-layout:fixed}
-.sheet th,.sheet td{border:1px solid #cbd5e1;min-width:105px;height:38px;padding:0}
-.sheet th{background:#e2e8f0;font-size:12px;text-align:center;width:42px}
-.sheet td input{border:0;border-radius:0;width:100%;height:37px;padding:7px;background:transparent}
-.sheet td input:focus{outline:2px solid #2563eb;background:#eff6ff}
-.sheet .wide{min-width:220px}
-.btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
-button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}
-.primary{background:#2563eb;color:#fff}.secondary{background:#e2e8f0;color:#172033}.danger{background:#fee2e2;color:#991b1b}
-.note{background:#eff6ff;border-left:4px solid #2563eb;padding:12px;border-radius:6px;font-size:14px;line-height:1.5}
-.status{font-size:13px;color:#475569;margin-top:9px}
-.progress{height:9px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin-top:8px}
-.bar{height:100%;width:0;background:#2563eb;transition:.3s}
-.reflection textarea{min-height:80px;resize:vertical}
-@media(max-width:800px){.info{grid-template-columns:1fr 1fr}.container{padding:8px}.card{border-radius:10px}.sheet{font-size:12px}.sheet td input{font-size:12px}}
-@media print{body{background:#fff}.btns{display:none!important}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}header{background:#172554}.sheet td input{border:0}.task{break-inside:avoid}}
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root{
+    --bg:#070817;
+    --bg2:#0d1026;
+
+    --cyan:#21d4fd;
+    --blue:#3b82f6;
+    --purple:#8b5cf6;
+    --pink:#ec4899;
+    --orange:#fb923c;
+    --yellow:#facc15;
+    --green:#22c55e;
+    --red:#ef4444;
+
+    --white:#ffffff;
+    --muted:#aab4ca;
+
+    --panel:rgba(18,25,51,.93);
+    --panel2:rgba(25,34,67,.92);
+
+    --border:rgba(255,255,255,.10);
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+}
+
+body{
+    overflow:hidden;
+
+    color:white;
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 15%,
+            rgba(33,212,253,.18),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(236,72,153,.16),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(139,92,246,.16),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #050611,
+            #0b0e20 50%,
+            #08091a
+        );
+}
+
+
+/* =========================================================
+   BACKGROUND SILHOUETTES
+========================================================= */
+
+.background-art{
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:0;
+}
+
+.orb{
+    position:absolute;
+
+    border-radius:50%;
+
+    filter:blur(3px);
+
+    opacity:.28;
+
+    animation:
+        orbFloat 7s ease-in-out infinite;
+}
+
+.orb1{
+    width:220px;
+    height:220px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--cyan),
+            transparent
+        );
+
+    left:-80px;
+    top:120px;
+}
+
+.orb2{
+    width:260px;
+    height:260px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--pink),
+            transparent
+        );
+
+    right:-100px;
+    top:60px;
+
+    animation-delay:1s;
+}
+
+.orb3{
+    width:300px;
+    height:300px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            transparent
+        );
+
+    bottom:-160px;
+    left:40%;
+
+    animation-delay:2s;
+}
+
+@keyframes orbFloat{
+
+    0%,100%{
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+    50%{
+        transform:
+            translateY(-18px)
+            scale(1.05);
+    }
+}
+
+
+/* =========================================================
+   GEOMETRIC SILHOUETTE
+========================================================= */
+
+.shape{
+    position:absolute;
+
+    opacity:.08;
+
+    border:2px solid white;
+
+    transform:rotate(25deg);
+}
+
+.shape1{
+    width:150px;
+    height:150px;
+
+    left:8%;
+    bottom:8%;
+}
+
+.shape2{
+    width:90px;
+    height:90px;
+
+    right:25%;
+    top:15%;
+
+    border-radius:50%;
+}
+
+.shape3{
+    width:120px;
+    height:120px;
+
+    right:4%;
+    bottom:8%;
+
+    transform:
+        rotate(45deg);
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+    position:relative;
+
+    z-index:2;
+
+    width:100vw;
+    height:100vh;
+
+    display:grid;
+
+    grid-template-rows:
+        72px
+        1fr;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+        0 22px;
+
+    background:
+        rgba(5,7,20,.92);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.10);
+
+    backdrop-filter:
+        blur(15px);
+
+    box-shadow:
+        0 5px 30px
+        rgba(0,0,0,.25);
+}
+
+.logo{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.logo-icon{
+    width:45px;
+    height:45px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--cyan),
+            var(--purple),
+            var(--pink)
+        );
+
+    box-shadow:
+        0 0 25px
+        rgba(33,212,253,.35);
+
+    animation:
+        logoAnimation 2s infinite;
+}
+
+@keyframes logoAnimation{
+
+    0%,100%{
+        transform:
+            rotate(0deg)
+            scale(1);
+    }
+
+    50%{
+        transform:
+            rotate(5deg)
+            scale(1.08);
+    }
+}
+
+.logo-title{
+    font-size:23px;
+
+    font-weight:1000;
+
+    letter-spacing:4px;
+}
+
+.logo-subtitle{
+    color:var(--muted);
+
+    font-size:8px;
+
+    letter-spacing:1.7px;
+
+    font-weight:900;
+}
+
+.header-actions{
+    display:flex;
+
+    gap:8px;
+}
+
+.header-btn{
+    padding:
+        9px 13px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    color:white;
+
+    font-size:10px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.header-btn:hover{
+    background:
+        rgba(255,255,255,.12);
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+    min-height:0;
+
+    display:grid;
+
+    grid-template-columns:
+        7fr
+        3fr;
+
+    gap:12px;
+
+    padding:12px;
+}
+
+
+/* =========================================================
+   LEFT
+========================================================= */
+
+.left{
+    min-width:0;
+    min-height:0;
+
+    display:grid;
+
+    grid-template-rows:
+        68px
+        minmax(0,1fr)
+        62px;
+
+    gap:10px;
+}
+
+
+/* =========================================================
+   TIMER BAR
+========================================================= */
+
+.timer-bar{
+    display:grid;
+
+    grid-template-columns:
+        1fr
+        190px
+        1fr;
+
+    align-items:center;
+
+    padding:
+        6px 16px;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            100deg,
+            rgba(15,25,55,.96),
+            rgba(20,22,50,.96)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    box-shadow:
+        0 10px 35px
+        rgba(0,0,0,.20);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.timer-bar::before{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(33,212,253,.05),
+            transparent
+        );
+
+    transform:
+        translateX(-100%);
+
+    animation:
+        shine 5s linear infinite;
+}
+
+@keyframes shine{
+
+    to{
+        transform:
+            translateX(100%);
+    }
+}
+
+.timer-left{
+    display:flex;
+
+    align-items:center;
+}
+
+.timer-label{
+    font-size:8px;
+
+    color:var(--muted);
+
+    font-weight:900;
+
+    letter-spacing:1.5px;
+}
+
+.timer-team{
+    color:var(--cyan);
+
+    font-size:17px;
+
+    font-weight:1000;
+}
+
+.timer-center{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+}
+
+.timer-circle{
+    width:52px;
+    height:52px;
+
+    position:relative;
+}
+
+.timer-svg{
+    width:52px;
+    height:52px;
+
+    transform:
+        rotate(-90deg);
+}
+
+.timer-bg{
+    fill:none;
+
+    stroke:
+        rgba(255,255,255,.12);
+
+    stroke-width:6;
+}
+
+.timer-progress{
+    fill:none;
+
+    stroke:var(--cyan);
+
+    stroke-width:6;
+
+    stroke-linecap:round;
+
+    stroke-dasharray:
+        138;
+
+    stroke-dashoffset:0;
+
+    transition:
+        stroke-dashoffset .15s linear,
+        stroke .2s;
+
+    filter:
+        drop-shadow(
+            0 0 7px
+            rgba(33,212,253,.7)
+        );
+}
+
+.timer-value{
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:14px;
+
+    font-weight:1000;
+}
+
+.timer-state{
+    font-size:8px;
+
+    color:var(--muted);
+
+    font-weight:1000;
+
+    letter-spacing:1px;
+}
+
+.timer-right{
+    display:flex;
+
+    justify-content:flex-end;
+}
+
+.timer-message{
+    padding:
+        7px 12px;
+
+    border-radius:999px;
+
+    background:
+        rgba(33,212,253,.07);
+
+    border:
+        1px solid
+        rgba(33,212,253,.16);
+
+    color:var(--cyan);
+
+    font-size:9px;
+
+    font-weight:1000;
+
+    letter-spacing:.7px;
+}
+
+.timer-warning .timer-progress{
+    stroke:var(--yellow);
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(250,204,21,.8)
+        );
+}
+
+.timer-danger .timer-progress{
+    stroke:var(--red);
+
+    filter:
+        drop-shadow(
+            0 0 10px
+            rgba(239,68,68,.9)
+        );
+}
+
+.timer-pulse{
+    animation:
+        timerPulse .4s infinite alternate;
+}
+
+@keyframes timerPulse{
+
+    from{
+        transform:scale(1);
+    }
+
+    to{
+        transform:scale(1.12);
+    }
+}
+
+
+/* =========================================================
+   QUESTION CARD
+========================================================= */
+
+.question-card{
+    min-height:0;
+
+    position:relative;
+
+    display:grid;
+
+    grid-template-rows:
+        auto
+        auto
+        minmax(0,1fr);
+
+    padding:
+        20px 23px;
+
+    border-radius:21px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(19,27,56,.96),
+            rgba(10,15,31,.96)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    overflow:hidden;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.25);
+}
+
+.question-card::before{
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+    height:350px;
+
+    right:-200px;
+    bottom:-210px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(139,92,246,.20),
+            transparent 70%
+        );
+}
+
+.question-card::after{
+    content:"";
+
+    position:absolute;
+
+    width:220px;
+    height:220px;
+
+    left:-130px;
+    bottom:-130px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(33,212,253,.13),
+            transparent 70%
+        );
+}
+
+.question-meta{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:7px;
+}
+
+.question-number{
+    color:var(--cyan);
+
+    font-size:13px;
+
+    font-weight:1000;
+
+    letter-spacing:2px;
+}
+
+.difficulty{
+    padding:
+        6px 11px;
+
+    border-radius:999px;
+
+    font-size:9px;
+
+    font-weight:1000;
+}
+
+.easy{
+    color:#4ade80;
+    background:
+        rgba(34,197,94,.11);
+}
+
+.medium{
+    color:#facc15;
+    background:
+        rgba(250,204,21,.11);
+}
+
+.hard{
+    color:#fb923c;
+    background:
+        rgba(249,115,22,.11);
+}
+
+.hots{
+    color:#f87171;
+    background:
+        rgba(239,68,68,.11);
+}
+
+.category{
+    color:var(--muted);
+
+    font-size:9px;
+
+    font-weight:900;
+
+    letter-spacing:1.4px;
+
+    margin-bottom:10px;
+}
+
+.question{
+    position:relative;
+
+    z-index:2;
+
+    max-width:1050px;
+
+    margin-bottom:14px;
+
+    font-size:
+        clamp(
+            22px,
+            2.45vw,
+            38px
+        );
+
+    line-height:1.22;
+
+    font-weight:900;
+}
+
+
+/* =========================================================
+   OPTIONS
+========================================================= */
+
+.options{
+    min-height:0;
+
+    position:relative;
+
+    z-index:3;
+
+    display:grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap:11px;
+
+    align-content:center;
+}
+
+.option{
+    min-height:75px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:
+        11px 15px;
+
+    border-radius:14px;
+
+    border:
+        2px solid
+        rgba(255,255,255,.08);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(28,40,69,.96),
+            rgba(20,29,51,.96)
+        );
+
+    color:white;
+
+    text-align:left;
+
+    font-size:15px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:
+        transform .2s,
+        border .2s,
+        box-shadow .2s,
+        background .2s;
+}
+
+.option:hover:not(:disabled){
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        var(--cyan);
+
+    box-shadow:
+        0 10px 30px
+        rgba(33,212,253,.12);
+}
+
+.option-letter{
+    width:39px;
+    height:39px;
+
+    flex:none;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2b3957,
+            #202d47
+        );
+
+    font-weight:1000;
+}
+
+.option.correct{
+    border-color:
+        var(--green);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34,197,94,.23),
+            rgba(34,197,94,.08)
+        );
+
+    animation:
+        correctAnimation .6s;
+}
+
+.option.correct .option-letter{
+    background:
+        var(--green);
+
+    color:#052e16;
+}
+
+.option.wrong{
+    border-color:
+        var(--red);
+
+    background:
+        rgba(239,68,68,.16);
+
+    animation:
+        wrongAnimation .45s;
+}
+
+.option.wrong .option-letter{
+    background:
+        var(--red);
+
+    color:white;
+}
+
+@keyframes correctAnimation{
+
+    0%{
+        transform:
+            scale(.94);
+    }
+
+    50%{
+        transform:
+            scale(1.025);
+    }
+
+    100%{
+        transform:
+            scale(1);
+    }
+}
+
+@keyframes wrongAnimation{
+
+    0%,100%{
+        transform:
+            translateX(0);
+    }
+
+    25%{
+        transform:
+            translateX(-7px);
+    }
+
+    75%{
+        transform:
+            translateX(7px);
+    }
+}
+
+
+/* =========================================================
+   BOTTOM
+========================================================= */
+
+.bottom{
+    display:grid;
+
+    grid-template-columns:
+        1fr
+        150px;
+
+    gap:10px;
+}
+
+.active-team{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:
+        8px 15px;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(33,212,253,.10),
+            rgba(139,92,246,.08),
+            rgba(236,72,153,.06)
+        );
+
+    border:
+        1px solid
+        rgba(33,212,253,.20);
+}
+
+.active-icon{
+    font-size:27px;
+
+    animation:
+        activeBounce 1s infinite;
+}
+
+@keyframes activeBounce{
+
+    0%,100%{
+        transform:
+            translateY(0);
+    }
+
+    50%{
+        transform:
+            translateY(-4px)
+            rotate(5deg);
+    }
+}
+
+.active-label{
+    color:var(--muted);
+
+    font-size:8px;
+
+    font-weight:900;
+
+    letter-spacing:1.5px;
+}
+
+.active-name{
+    color:var(--cyan);
+
+    font-size:17px;
+
+    font-weight:1000;
+}
+
+.progress{
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:
+        rgba(18,25,51,.9);
+
+    border:
+        1px solid
+        var(--border);
+
+    font-size:12px;
+
+    font-weight:1000;
+}
+
+
+/* =========================================================
+   SCOREBOARD
+========================================================= */
+
+.scoreboard{
+    min-height:0;
+
+    display:grid;
+
+    grid-template-rows:
+        auto
+        auto
+        minmax(0,1fr)
+        auto;
+
+    gap:9px;
+
+    padding:14px;
+
+    border-radius:20px;
+
+    background:
+        rgba(10,15,31,.94);
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.25);
+
+    overflow:hidden;
+}
+
+.score-header{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+.score-title{
+    font-size:16px;
+
+    font-weight:1000;
+
+    letter-spacing:1px;
+}
+
+.live{
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    color:#4ade80;
+
+    font-size:8px;
+
+    font-weight:1000;
+}
+
+.live-dot{
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#4ade80;
+
+    box-shadow:
+        0 0 10px
+        #4ade80;
+
+    animation:
+        liveAnimation 1s infinite;
+}
+
+@keyframes liveAnimation{
+
+    50%{
+        transform:
+            scale(.65);
+
+        opacity:.4;
+    }
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.controls{
+    padding:10px;
+
+    border-radius:13px;
+
+    background:
+        rgba(25,34,67,.80);
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+.control-label{
+    color:var(--muted);
+
+    font-size:8px;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    margin-bottom:5px;
+}
+
+.control-row{
+    display:grid;
+
+    grid-template-columns:
+        1fr
+        auto;
+
+    gap:6px;
+
+    margin-bottom:7px;
+}
+
+select{
+    width:100%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    border-radius:8px;
+
+    background:#090f20;
+
+    color:white;
+
+    padding:
+        9px;
+
+    font-size:10px;
+
+    font-weight:800;
+
+    outline:none;
+}
+
+.control-btn{
+    border:0;
+
+    border-radius:8px;
+
+    padding:
+        9px 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--cyan),
+            var(--blue)
+        );
+
+    color:#00141b;
+
+    font-size:9px;
+
+    font-weight:1000;
+
+    cursor:pointer;
+}
+
+.timer-select{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:6px;
+}
+
+.manual-btn{
+    width:100%;
+
+    margin-top:6px;
+
+    padding:7px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius:8px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    color:white;
+
+    font-size:9px;
+
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   TEAM LIST
+========================================================= */
+
+.team-list{
+    min-height:0;
+
+    overflow-y:auto;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:5px;
+
+    padding-right:3px;
+}
+
+.team-list::-webkit-scrollbar{
+    width:4px;
+}
+
+.team-list::-webkit-scrollbar-thumb{
+    background:
+        #36435e;
+
+    border-radius:20px;
+}
+
+.team{
+    min-height:48px;
+
+    display:grid;
+
+    grid-template-columns:
+        29px
+        34px
+        1fr
+        auto;
+
+    align-items:center;
+
+    gap:7px;
+
+    padding:
+        6px 9px;
+
+    border-radius:11px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(25,35,59,.95),
+            rgba(20,28,49,.95)
+        );
+
+    border:
+        1px solid
+        transparent;
+
+    transition:
+        transform .45s,
+        background .25s,
+        border .25s;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.team::after{
+    content:"";
+
+    position:absolute;
+
+    width:100px;
+    height:100px;
+
+    right:-70px;
+    top:-50px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.03);
+}
+
+.team-icon{
+    width:31px;
+    height:31px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2b3855,
+            #1e2b47
+        );
+
+    font-size:17px;
+
+    animation:
+        teamFloat 2s ease-in-out infinite;
+}
+
+@keyframes teamFloat{
+
+    0%,100%{
+        transform:
+            translateY(0)
+            rotate(0);
+    }
+
+    50%{
+        transform:
+            translateY(-2px)
+            rotate(4deg);
+    }
+}
+
+.team:nth-child(2)
+.team-icon{
+    animation-delay:.1s;
+}
+
+.team:nth-child(3)
+.team-icon{
+    animation-delay:.2s;
+}
+
+.team:nth-child(4)
+.team-icon{
+    animation-delay:.3s;
+}
+
+.team:nth-child(5)
+.team-icon{
+    animation-delay:.4s;
+}
+
+.team:nth-child(6)
+.team-icon{
+    animation-delay:.5s;
+}
+
+.team:nth-child(7)
+.team-icon{
+    animation-delay:.6s;
+}
+
+.team:nth-child(8)
+.team-icon{
+    animation-delay:.7s;
+}
+
+.team:nth-child(9)
+.team-icon{
+    animation-delay:.8s;
+}
+
+.team:nth-child(10)
+.team-icon{
+    animation-delay:.9s;
+}
+
+.rank-number{
+    width:27px;
+    height:27px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:8px;
+
+    background:#26344f;
+
+    font-size:10px;
+
+    font-weight:1000;
+}
+
+.team-name{
+    font-size:11px;
+
+    font-weight:1000;
+}
+
+.team-score{
+    min-width:48px;
+
+    text-align:right;
+
+    font-size:17px;
+
+    font-weight:1000;
+
+    color:var(--cyan);
+}
+
+.team.active{
+    border-color:
+        var(--cyan);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(33,212,253,.13),
+            rgba(139,92,246,.07)
+        );
+
+    box-shadow:
+        inset 3px 0
+        var(--cyan),
+        0 0 16px
+        rgba(33,212,253,.07);
+}
+
+.team.first{
+    border-color:
+        rgba(250,204,21,.35);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(250,204,21,.16),
+            rgba(250,204,21,.04)
+        );
+}
+
+.team.first .rank-number{
+    background:
+        var(--yellow);
+
+    color:
+        #422006;
+
+    box-shadow:
+        0 0 12px
+        rgba(250,204,21,.35);
+}
+
+.team.first .team-icon{
+    background:
+        rgba(250,204,21,.18);
+
+    animation:
+        champion 1s infinite alternate;
+}
+
+@keyframes champion{
+
+    from{
+        transform:
+            rotate(-4deg)
+            scale(1);
+    }
+
+    to{
+        transform:
+            rotate(4deg)
+            scale(1.1);
+    }
+}
+
+
+/* =========================================================
+   RANK ANIMATION
+========================================================= */
+
+.team.rank-up{
+    animation:
+        rankUp .8s ease;
+}
+
+.team.rank-down{
+    animation:
+        rankDown .8s ease;
+}
+
+@keyframes rankUp{
+
+    0%{
+        transform:
+            translateY(18px)
+            scale(.96);
+
+        opacity:.4;
+    }
+
+    45%{
+        transform:
+            translateY(-5px)
+            scale(1.035);
+    }
+
+    70%{
+        transform:
+            translateY(2px);
+    }
+
+    100%{
+        transform:
+            translateY(0)
+            scale(1);
+
+        opacity:1;
+    }
+}
+
+@keyframes rankDown{
+
+    0%{
+        transform:
+            translateY(-15px)
+            scale(1.02);
+    }
+
+    50%{
+        transform:
+            translateY(5px)
+            scale(.98);
+
+        opacity:.65;
+    }
+
+    100%{
+        transform:
+            translateY(0)
+            scale(1);
+
+        opacity:1;
+    }
+}
+
+
+/* =========================================================
+   SCORE ANIMATION
+========================================================= */
+
+.team.score-up{
+    animation:
+        scoreUp .65s;
+}
+
+.team.score-down{
+    animation:
+        scoreDown .65s;
+}
+
+@keyframes scoreUp{
+
+    0%{
+        transform:
+            scale(1);
+    }
+
+    35%{
+        transform:
+            scale(1.05)
+            rotate(-1deg);
+
+        background:
+            rgba(34,197,94,.22);
+    }
+
+    100%{
+        transform:
+            scale(1);
+    }
+}
+
+@keyframes scoreDown{
+
+    0%{
+        transform:
+            translateX(0);
+    }
+
+    25%{
+        transform:
+            translateX(-6px);
+
+        background:
+            rgba(239,68,68,.24);
+    }
+
+    50%{
+        transform:
+            translateX(6px);
+    }
+
+    75%{
+        transform:
+            translateX(-3px);
+    }
+
+    100%{
+        transform:
+            translateX(0);
+    }
+}
+
+
+/* =========================================================
+   REBUTAN
+========================================================= */
+
+.rebutan{
+    display:none;
+
+    padding:10px;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(251,146,60,.17),
+            rgba(239,68,68,.10)
+        );
+
+    border:
+        1px solid
+        rgba(251,146,60,.35);
+
+    animation:
+        rebutIn .3s;
+}
+
+.rebutan.show{
+    display:block;
+}
+
+@keyframes rebutIn{
+
+    from{
+        opacity:0;
+
+        transform:
+            translateY(10px);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+.rebut-title{
+    color:var(--orange);
+
+    font-size:11px;
+
+    font-weight:1000;
+
+    margin-bottom:5px;
+}
+
+.rebut-info{
+    color:#d4d9e5;
+
+    font-size:9px;
+
+    line-height:1.4;
+
+    margin-bottom:6px;
+}
+
+.rebut-btn{
+    width:100%;
+
+    margin-top:6px;
+
+    padding:9px;
+
+    border:0;
+
+    border-radius:8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--orange),
+            var(--red)
+        );
+
+    color:white;
+
+    font-size:10px;
+
+    font-weight:1000;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.overlay{
+    position:fixed;
+
+    inset:0;
+
+    z-index:100;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    background:
+        rgba(0,0,0,.78);
+
+    backdrop-filter:
+        blur(9px);
+}
+
+.overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:
+        min(620px,90vw);
+
+    padding:
+        28px;
+
+    border-radius:23px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151d38,
+            #0d1428
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    box-shadow:
+        0 35px 100px
+        rgba(0,0,0,.65);
+
+    text-align:center;
+
+    animation:
+        modalIn .25s;
+}
+
+@keyframes modalIn{
+
+    from{
+        opacity:0;
+
+        transform:
+            scale(.88)
+            translateY(10px);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+            scale(1)
+            translateY(0);
+    }
+}
+
+.modal-icon{
+    font-size:53px;
+
+    margin-bottom:8px;
+
+    animation:
+        modalFloat 1.2s infinite;
+}
+
+@keyframes modalFloat{
+
+    0%,100%{
+        transform:
+            translateY(0);
+    }
+
+    50%{
+        transform:
+            translateY(-5px)
+            rotate(4deg);
+    }
+}
+
+.modal h2{
+    font-size:29px;
+
+    font-weight:1000;
+
+    margin-bottom:8px;
+}
+
+.modal p{
+    color:#d3d8e5;
+
+    font-size:14px;
+
+    line-height:1.55;
+
+    margin-bottom:13px;
+}
+
+.modal-points{
+    color:var(--cyan);
+
+    font-size:29px;
+
+    font-weight:1000;
+
+    margin:
+        12px 0
+        18px;
+}
+
+.modal-actions{
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+}
+
+.modal-btn{
+    border:0;
+
+    border-radius:10px;
+
+    padding:
+        11px 18px;
+
+    font-size:11px;
+
+    font-weight:1000;
+
+    cursor:pointer;
+}
+
+.modal-primary{
+    background:
+        linear-gradient(
+            135deg,
+            var(--cyan),
+            var(--blue)
+        );
+
+    color:#02141d;
+}
+
+.modal-danger{
+    background:
+        linear-gradient(
+            135deg,
+            var(--red),
+            #be123c
+        );
+
+    color:white;
+}
+
+.modal-neutral{
+    background:
+        #2a3753;
+
+    color:white;
+}
+
+
+/* =========================================================
+   FINAL PODIUM
+========================================================= */
+
+.final-modal{
+    width:
+        min(800px,92vw);
+}
+
+.podium{
+    display:grid;
+
+    grid-template-columns:
+        1fr
+        1.2fr
+        1fr;
+
+    align-items:end;
+
+    gap:10px;
+
+    margin:
+        22px 0;
+}
+
+.podium-item{
+    padding:
+        17px 8px;
+
+    border-radius:
+        15px
+        15px
+        7px
+        7px;
+
+    background:
+        #18233d;
+}
+
+.podium-item.first{
+    padding-top:30px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(250,204,21,.20),
+            #18233d
+        );
+
+    border:
+        1px solid
+        rgba(250,204,21,.30);
+}
+
+.podium-medal{
+    font-size:36px;
+}
+
+.podium-team{
+    margin-top:6px;
+
+    font-size:12px;
+
+    font-weight:1000;
+}
+
+.podium-score{
+    margin-top:5px;
+
+    color:var(--cyan);
+
+    font-size:22px;
+
+    font-weight:1000;
+}
+
+.final-note{
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   FLASH
+========================================================= */
+
+.flash{
+    position:fixed;
+
+    inset:0;
+
+    z-index:90;
+
+    pointer-events:none;
+
+    opacity:0;
+}
+
+.flash.green{
+    animation:
+        flashGreen .6s;
+}
+
+.flash.red{
+    animation:
+        flashRed .6s;
+}
+
+@keyframes flashGreen{
+
+    0%{
+        opacity:.25;
+
+        background:
+            rgba(34,197,94,.30);
+    }
+
+    100%{
+        opacity:0;
+    }
+}
+
+@keyframes flashRed{
+
+    0%{
+        opacity:.25;
+
+        background:
+            rgba(239,68,68,.30);
+    }
+
+    100%{
+        opacity:0;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    body{
+        overflow:auto;
+    }
+
+    .app{
+        height:auto;
+    }
+
+    .main{
+        grid-template-columns:1fr;
+    }
+
+    .scoreboard{
+        min-height:600px;
+    }
+}
+
+@media(max-width:650px){
+
+    .timer-bar{
+        grid-template-columns:
+            1fr
+            140px;
+    }
+
+    .timer-right{
+        display:none;
+    }
+
+    .options{
+        grid-template-columns:1fr;
+    }
+
+    .question{
+        font-size:22px;
+    }
+
+}
+
 </style>
 </head>
+
+
 <body>
-<header>
-  <h1>LKPD BAB 3 — Pertemuan 1</h1>
-  <p><b>Informatika • Fase D • Kelas VIII</b></p>
-  <p>Literasi Numerasi, Algoritma & Pengenalan Scratch</p>
-</header>
 
-<div class="container">
-  <div class="card">
-    <h2>IDENTITAS PESERTA DIDIK</h2>
-    <div class="content info">
-      <div><label>NAMA</label><input id="nama" placeholder="Nama lengkap"></div>
-      <div><label>KELAS</label><input id="kelas" placeholder="VIII..."></div>
-      <div><label>NO. ABSEN</label><input id="absen" placeholder="Nomor"></div>
-      <div><label>TANGGAL</label><input id="tanggal" type="date"></div>
-    </div>
-  </div>
 
-  <div class="card">
-    <h2>TUJUAN PEMBELAJARAN</h2>
-    <div class="content">
-      <div class="note">
-        Peserta didik memahami literasi numerasi, menyusun algoritma sederhana,
-        mengenal Scratch, serta menghubungkan urutan instruksi dengan program.
-        Peserta didik mengeksplorasi Stage, Sprite, Blocks, Script, Control,
-        Input, dan Variable serta melakukan debugging sederhana.
-      </div>
-    </div>
-  </div>
+<!-- =====================================================
+     BACKGROUND ART
+===================================================== -->
 
-  <div class="card">
-    <h2>AKTIVITAS 1 — LITERASI NUMERASI & ALGORITMA</h2>
-    <div class="content">
-      <div class="task">
-        <strong>Situasi masalah</strong>
-        Tuliskan algoritma untuk aktivitas berikut: <b>“Membuat minuman sederhana”</b>.
-        Susun langkah dari awal sampai selesai secara berurutan.
-      </div>
-      <table class="sheet" id="algoritma">
-        <tr><th>No.</th><th class="wide">Langkah / Instruksi</th><th class="wide">Mengapa langkah ini diperlukan?</th></tr>
-      </table>
-      <div class="btns">
-        <button class="secondary" onclick="addRow('algoritma',8)">+ Tambah Baris</button>
-      </div>
-    </div>
-  </div>
+<div class="background-art">
 
-  <div class="card">
-    <h2>AKTIVITAS 2 — URUTAN INSTRUKSI</h2>
-    <div class="content">
-      <div class="task">
-        Urutkan langkah berikut agar komputer dapat menjalankan sebuah aktivitas dengan benar.
-        Masukkan nomor urut dan jelaskan akibat jika urutannya salah.
-      </div>
-      <table class="sheet">
-        <tr><th>No.</th><th class="wide">Instruksi</th><th>Urutan</th><th class="wide">Akibat jika salah urutan</th></tr>
-        <tr><td>1</td><td>Masukkan bahan</td><td><input data-key="a2-1"></td><td><input data-key="a2-1b"></td></tr>
-        <tr><td>2</td><td>Siapkan wadah</td><td><input data-key="a2-2"></td><td><input data-key="a2-2b"></td></tr>
-        <tr><td>3</td><td>Aduk sampai tercampur</td><td><input data-key="a2-3"></td><td><input data-key="a2-3b"></td></tr>
-        <tr><td>4</td><td>Sajikan</td><td><input data-key="a2-4"></td><td><input data-key="a2-4b"></td></tr>
-      </table>
-    </div>
-  </div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
 
-  <div class="card">
-    <h2>AKTIVITAS 3 — MENGENAL SCRATCH</h2>
-    <div class="content">
-      <table class="sheet">
-        <tr><th>No.</th><th class="wide">Komponen</th><th class="wide">Fungsi / Penjelasan dengan kata-kata sendiri</th><th>Contoh</th></tr>
-        <tr><td>1</td><td>Stage</td><td><input data-key="s-stage"></td><td><input data-key="s-stage-ex"></td></tr>
-        <tr><td>2</td><td>Sprite</td><td><input data-key="s-sprite"></td><td><input data-key="s-sprite-ex"></td></tr>
-        <tr><td>3</td><td>Blocks</td><td><input data-key="s-blocks"></td><td><input data-key="s-blocks-ex"></td></tr>
-        <tr><td>4</td><td>Script</td><td><input data-key="s-script"></td><td><input data-key="s-script-ex"></td></tr>
-        <tr><td>5</td><td>Control</td><td><input data-key="s-control"></td><td><input data-key="s-control-ex"></td></tr>
-        <tr><td>6</td><td>Input</td><td><input data-key="s-input"></td><td><input data-key="s-input-ex"></td></tr>
-        <tr><td>7</td><td>Variable</td><td><input data-key="s-var"></td><td><input data-key="s-var-ex"></td></tr>
-      </table>
-    </div>
-  </div>
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
 
-  <div class="card">
-    <h2>AKTIVITAS 4 — DARI ALGORITMA MENJADI PROGRAM</h2>
-    <div class="content">
-      <div class="task">
-        Buat rancangan sederhana: <b>ketika tombol ditekan, Sprite melakukan gerakan tertentu</b>.
-        Tuliskan input, proses/urutan, dan outputnya.
-      </div>
-      <table class="sheet">
-        <tr><th>Input</th><th class="wide">Proses / Urutan Instruksi</th><th>Output</th></tr>
-        <tr><td><input data-key="ipo-input"></td><td><input data-key="ipo-process"></td><td><input data-key="ipo-output"></td></tr>
-      </table>
-      <div class="task">
-        <strong>Debugging</strong>
-        Bayangkan program tidak menghasilkan output yang diharapkan. Tuliskan kemungkinan kesalahan dan cara memperbaikinya.
-        <textarea data-key="debug" placeholder="Contoh: urutan blok salah, sehingga..."></textarea>
-      </div>
-    </div>
-  </div>
-
-  <div class="card reflection">
-    <h2>REFLEKSI</h2>
-    <div class="content">
-      <div class="task">
-        <label>1. Apa yang saya pahami tentang algoritma?</label>
-        <textarea data-key="r1"></textarea>
-      </div>
-      <div class="task">
-        <label>2. Bagian Scratch apa yang paling saya pahami?</label>
-        <textarea data-key="r2"></textarea>
-      </div>
-      <div class="task">
-        <label>3. Kesulitan yang saya alami dan bagaimana saya mengatasinya?</label>
-        <textarea data-key="r3"></textarea>
-      </div>
-      <div class="task">
-        <label>4. Hal yang masih perlu saya pelajari?</label>
-        <textarea data-key="r4"></textarea>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>STATUS PENGERJAAN</h2>
-    <div class="content">
-      <div>Isian tersimpan otomatis di browser perangkat ini.</div>
-      <div class="progress"><div class="bar" id="bar"></div></div>
-      <div class="status" id="status">0% terisi</div>
-      <div class="btns">
-        <button class="primary" onclick="saveNow()">💾 Simpan Sekarang</button>
-        <button class="primary" onclick="downloadPDF()">📄 Download PDF</button>
-        <button class="secondary" onclick="window.print()">🖨️ Cetak</button>
-        <button class="danger" onclick="clearAll()">↺ Hapus Semua Jawaban</button>
-      </div>
-    </div>
-  </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<div class="app">
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            ⚡
+        </div>
+
+        <div>
+
+            <div class="logo-title">
+                SKOR
+            </div>
+
+            <div class="logo-subtitle">
+                LOMBA CERDAS CERMAT • KKA KELAS 9
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <button
+            class="header-btn"
+            onclick="toggleFullscreen()">
+
+            ⛶ FULLSCREEN
+
+        </button>
+
+        <button
+            class="header-btn"
+            onclick="resetGame()">
+
+            ↻ RESET
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+<!-- =====================================================
+     LEFT
+===================================================== -->
+
+<section class="left">
+
+
+<!-- =====================================================
+     TIMER
+===================================================== -->
+
+<div class="timer-bar">
+
+    <div class="timer-left">
+
+        <div>
+
+            <div class="timer-label">
+                KELOMPOK AKTIF
+            </div>
+
+            <div
+                id="timerTeam"
+                class="timer-team">
+
+                BELUM AKTIF
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="timer-center">
+
+        <div
+            id="timerCircle"
+            class="timer-circle">
+
+            <svg
+                class="timer-svg"
+                viewBox="0 0 60 60">
+
+                <circle
+                    class="timer-bg"
+                    cx="30"
+                    cy="30"
+                    r="22">
+                </circle>
+
+                <circle
+                    id="timerProgress"
+                    class="timer-progress"
+                    cx="30"
+                    cy="30"
+                    r="22">
+                </circle>
+
+            </svg>
+
+            <div
+                id="timerValue"
+                class="timer-value">
+
+                --
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <div
+                id="timerState"
+                class="timer-state">
+
+                READY
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="timer-right">
+
+        <div
+            id="timerMessage"
+            class="timer-message">
+
+            PILIH KELOMPOK UNTUK MEMULAI
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     QUESTION
+===================================================== -->
+
+<div class="question-card">
+
+
+    <div class="question-meta">
+
+        <div
+            id="questionNumber"
+            class="question-number">
+
+            SOAL 01 / 35
+
+        </div>
+
+
+        <div
+            id="difficultyBadge"
+            class="difficulty easy">
+
+            MUDAH • 10 POIN
+
+        </div>
+
+    </div>
+
+
+    <div>
+
+        <div
+            id="category"
+            class="category">
+
+            BERPIKIR KOMPUTASIONAL
+
+        </div>
+
+
+        <div
+            id="questionText"
+            class="question">
+
+            Memuat soal...
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="options"
+        class="options">
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     BOTTOM
+===================================================== -->
+
+<div class="bottom">
+
+
+    <div class="active-team">
+
+        <div
+            id="activeIcon"
+            class="active-icon">
+
+            🎯
+
+        </div>
+
+
+        <div>
+
+            <div class="active-label">
+                KELOMPOK AKTIF
+            </div>
+
+            <div
+                id="activeTeamName"
+                class="active-name">
+
+                BELUM ADA
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="progress">
+
+        <span id="progressText">
+            0 / 35
+        </span>
+
+    </div>
+
+</div>
+
+
+</section>
+
+
+<!-- =====================================================
+     SCOREBOARD
+===================================================== -->
+
+<aside class="scoreboard">
+
+
+    <div class="score-header">
+
+        <div class="score-title">
+            🏆 SCOREBOARD
+        </div>
+
+        <div class="live">
+
+            <span class="live-dot"></span>
+
+            LIVE
+
+        </div>
+
+    </div>
+
+
+<!-- =====================================================
+     CONTROLS
+===================================================== -->
+
+<div class="controls">
+
+
+    <div class="control-label">
+        KELOMPOK YANG MENJAWAB
+    </div>
+
+
+    <div class="control-row">
+
+        <select id="teamSelect">
+
+            <option value="0">
+                KELOMPOK 1
+            </option>
+
+            <option value="1">
+                KELOMPOK 2
+            </option>
+
+            <option value="2">
+                KELOMPOK 3
+            </option>
+
+            <option value="3">
+                KELOMPOK 4
+            </option>
+
+            <option value="4">
+                KELOMPOK 5
+            </option>
+
+            <option value="5">
+                KELOMPOK 6
+            </option>
+
+            <option value="6">
+                KELOMPOK 7
+            </option>
+
+            <option value="7">
+                KELOMPOK 8
+            </option>
+
+            <option value="8">
+                KELOMPOK 9
+            </option>
+
+            <option value="9">
+                KELOMPOK 10
+            </option>
+
+        </select>
+
+
+        <button
+            class="control-btn"
+            onclick="activateTeam()">
+
+            AKTIFKAN
+
+        </button>
+
+    </div>
+
+
+    <div class="control-label">
+        WAKTU JAWABAN UTAMA
+    </div>
+
+
+    <div class="timer-select">
+
+        <select id="timerSelect">
+
+            <option value="10">
+                10 DETIK
+            </option>
+
+            <option
+                value="15"
+                selected>
+
+                15 DETIK
+
+            </option>
+
+            <option value="20">
+                20 DETIK
+            </option>
+
+            <option value="30">
+                30 DETIK
+            </option>
+
+            <option value="45">
+                45 DETIK
+            </option>
+
+            <option value="60">
+                60 DETIK
+            </option>
+
+        </select>
+
+
+        <button
+            class="control-btn"
+            onclick="restartMainTimer()">
+
+            ▶ MULAI
+
+        </button>
+
+    </div>
+
+
+    <button
+        class="manual-btn"
+        onclick="stopTimer()">
+
+        ⏸ STOP TIMER
+
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     TEAMS
+===================================================== -->
+
+<div
+    id="teamList"
+    class="team-list">
+</div>
+
+
+<!-- =====================================================
+     REBUTAN
+===================================================== -->
+
+<div
+    id="rebutan"
+    class="rebutan">
+
+    <div class="rebut-title">
+        ⚡ MODE REBUTAN — 15 DETIK
+    </div>
+
+    <div class="rebut-info">
+
+        Pilih kelompok yang berhasil
+        menekan buzzer/rebut soal.
+
+        <br>
+
+        Jawaban benar belum ditampilkan.
+
+    </div>
+
+
+    <select id="stealTeamSelect">
+
+        <option value="0">
+            KELOMPOK 1
+        </option>
+
+        <option value="1">
+            KELOMPOK 2
+        </option>
+
+        <option value="2">
+            KELOMPOK 3
+        </option>
+
+        <option value="3">
+            KELOMPOK 4
+        </option>
+
+        <option value="4">
+            KELOMPOK 5
+        </option>
+
+        <option value="5">
+            KELOMPOK 6
+        </option>
+
+        <option value="6">
+            KELOMPOK 7
+        </option>
+
+        <option value="7">
+            KELOMPOK 8
+        </option>
+
+        <option value="8">
+            KELOMPOK 9
+        </option>
+
+        <option value="9">
+            KELOMPOK 10
+        </option>
+
+    </select>
+
+
+    <button
+        class="rebut-btn"
+        onclick="selectStealTeam()">
+
+        ⚡ KELOMPOK INI REBUT
+
+    </button>
+
+</div>
+
+
+</aside>
+
+</main>
+
+</div>
+
+
+<!-- =====================================================
+     FLASH
+===================================================== -->
+
+<div
+    id="flash"
+    class="flash">
+</div>
+
+
+<!-- =====================================================
+     MODAL
+===================================================== -->
+
+<div
+    id="overlay"
+    class="overlay">
+
+    <div
+        id="modal"
+        class="modal">
+
+        <div
+            id="modalIcon"
+            class="modal-icon">
+
+            ⚡
+
+        </div>
+
+
+        <h2 id="modalTitle">
+            PERHATIAN
+        </h2>
+
+
+        <p id="modalText"></p>
+
+
+        <div
+            id="modalPoints"
+            class="modal-points">
+        </div>
+
+
+        <div
+            id="modalActions"
+            class="modal-actions">
+        </div>
+
+    </div>
+
+</div>
+
+
 <script>
-const KEY='lkpd_bab3_p1_v1';
-const fields=[...document.querySelectorAll('input,textarea')];
 
-function saveNow(){
-  const data={};
-  fields.forEach((el,i)=>{
-    const key=el.dataset.key || el.id || ('field-'+i);
-    data[key]=el.value;
-  });
-  localStorage.setItem(KEY,JSON.stringify(data));
-  updateStatus();
-  document.getElementById('status').textContent += ' • Tersimpan ✓';
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+const questions = [
+
+/* 1 */
+{
+category:"BERPIKIR KOMPUTASIONAL",
+difficulty:"easy",
+points:10,
+q:"Dalam berpikir komputasional, memecah sebuah masalah besar menjadi beberapa masalah kecil disebut...",
+options:[
+"Dekomposisi",
+"Abstraksi",
+"Algoritma",
+"Evaluasi"
+],
+answer:0
+},
+
+/* 2 */
+{
+category:"BERPIKIR KOMPUTASIONAL",
+difficulty:"easy",
+points:10,
+q:"Urutan langkah-langkah sistematis untuk menyelesaikan suatu masalah disebut...",
+options:[
+"Algoritma",
+"Variabel",
+"Database",
+"Compiler"
+],
+answer:0
+},
+
+/* 3 */
+{
+category:"BERPIKIR KOMPUTASIONAL",
+difficulty:"medium",
+points:20,
+q:"Mencari kesamaan atau pola yang muncul dari beberapa masalah disebut...",
+options:[
+"Pattern Recognition",
+"Dekomposisi",
+"Abstraksi",
+"Simulasi"
+],
+answer:0
+},
+
+/* 4 */
+{
+category:"BERPIKIR KOMPUTASIONAL",
+difficulty:"medium",
+points:20,
+q:"Menghilangkan informasi yang tidak diperlukan dan hanya mengambil informasi penting disebut...",
+options:[
+"Abstraksi",
+"Dekomposisi",
+"Perulangan",
+"Debugging"
+],
+answer:0
+},
+
+/* 5 */
+{
+category:"BERPIKIR KOMPUTASIONAL",
+difficulty:"hard",
+points:30,
+q:"Jika nilai siswa ≥ 80 dinyatakan LULUS, sedangkan nilai < 80 dinyatakan TIDAK LULUS. Konsep algoritma yang digunakan adalah...",
+options:[
+"Percabangan",
+"Perulangan",
+"Dekomposisi",
+"Sorting"
+],
+answer:0
+},
+
+/* 6 */
+{
+category:"BERPIKIR KOMPUTASIONAL",
+difficulty:"hots",
+points:40,
+q:"Diketahui data nilai: 75, 90, 82, 68, 95, 88. Jika algoritma mencari nilai terbesar, nilai yang dihasilkan adalah...",
+options:[
+"75",
+"88",
+"90",
+"95"
+],
+answer:3
+},
+
+/* 7 */
+{
+category:"BERPIKIR KOMPUTASIONAL",
+difficulty:"hots",
+points:40,
+q:"Sebuah algoritma memiliki pola: 2, 4, 8, 16, 32, ... Jika pola dilanjutkan, angka berikutnya adalah...",
+options:[
+"34",
+"48",
+"64",
+"72"
+],
+answer:2
+},
+
+/* 8 */
+{
+category:"BAHASA PEMROGRAMAN",
+difficulty:"easy",
+points:10,
+q:"Bahasa yang digunakan untuk memberikan instruksi kepada komputer agar menjalankan suatu tugas disebut...",
+options:[
+"Bahasa pemrograman",
+"Bahasa manusia",
+"Bahasa gambar",
+"Bahasa desain"
+],
+answer:0
+},
+
+/* 9 */
+{
+category:"BAHASA PEMROGRAMAN",
+difficulty:"easy",
+points:10,
+q:"Tempat untuk menyimpan sebuah nilai dalam program disebut...",
+options:[
+"Variabel",
+"Operator",
+"Loop",
+"Komentar"
+],
+answer:0
+},
+
+/* 10 */
+{
+category:"BAHASA PEMROGRAMAN",
+difficulty:"medium",
+points:20,
+q:"Jika x = 10 dan y = 7, maka hasil dari kondisi x > y adalah...",
+options:[
+"True",
+"False",
+"10",
+"7"
+],
+answer:0
+},
+
+/* 11 */
+{
+category:"BAHASA PEMROGRAMAN",
+difficulty:"medium",
+points:20,
+q:"Operator yang digunakan untuk membandingkan apakah dua nilai sama dalam banyak bahasa pemrograman adalah...",
+options:[
+"=",
+"==",
+"+=",
+"!="
+],
+answer:1
+},
+
+/* 12 */
+{
+category:"BAHASA PEMROGRAMAN",
+difficulty:"hard",
+points:30,
+q:"Jika x = 3 dan y = 4, berapakah hasil x + y × 2?",
+options:[
+"14",
+"11",
+"10",
+"8"
+],
+answer:1
+},
+
+/* 13 */
+{
+category:"BAHASA PEMROGRAMAN",
+difficulty:"hard",
+points:30,
+q:"Struktur program yang digunakan untuk menjalankan instruksi secara berulang disebut...",
+options:[
+"Percabangan",
+"Perulangan",
+"Variabel",
+"Input"
+],
+answer:1
+},
+
+/* 14 */
+{
+category:"BAHASA PEMROGRAMAN",
+difficulty:"hots",
+points:40,
+q:"Jika kondisi nilai >= 80 digunakan untuk menentukan kelulusan dan nilai siswa adalah 75, maka hasil kondisi tersebut adalah...",
+options:[
+"True",
+"False",
+"80",
+"75"
+],
+answer:1
+},
+
+/* 15 */
+{
+category:"C++",
+difficulty:"easy",
+points:10,
+q:"Ekstensi file sumber program C++ pada umumnya adalah...",
+options:[
+".html",
+".css",
+".cpp",
+".java"
+],
+answer:2
+},
+
+/* 16 */
+{
+category:"C++",
+difficulty:"easy",
+points:10,
+q:"Perintah C++ yang umum digunakan untuk menampilkan output ke layar adalah...",
+options:[
+"cin",
+"cout",
+"print",
+"output"
+],
+answer:1
+},
+
+/* 17 */
+{
+category:"C++",
+difficulty:"easy",
+points:10,
+q:"Perintah C++ yang digunakan untuk menerima input dari pengguna adalah...",
+options:[
+"cout",
+"cin",
+"input",
+"read"
+],
+answer:1
+},
+
+/* 18 */
+{
+category:"C++",
+difficulty:"medium",
+points:20,
+q:"Tipe data C++ yang digunakan untuk menyimpan bilangan bulat adalah...",
+options:[
+"float",
+"char",
+"int",
+"string"
+],
+answer:2
+},
+
+/* 19 */
+{
+category:"C++",
+difficulty:"medium",
+points:20,
+q:"Berapakah hasil dari operasi C++ berikut: 5 + 2?",
+options:[
+"3",
+"7",
+"10",
+"52"
+],
+answer:1
+},
+
+/* 20 */
+{
+category:"C++",
+difficulty:"medium",
+points:20,
+q:"Simbol // pada C++ digunakan untuk...",
+options:[
+"Perulangan",
+"Komentar satu baris",
+"Input",
+"Membuat variabel"
+],
+answer:1
+},
+
+/* 21 */
+{
+category:"C++",
+difficulty:"hard",
+points:30,
+q:"Perhatikan kode: if (nilai >= 80) cout << \"Lulus\"; Jika nilai = 85, outputnya adalah...",
+options:[
+"Tidak Lulus",
+"85",
+"Lulus",
+"Error"
+],
+answer:2
+},
+
+/* 22 */
+{
+category:"C++",
+difficulty:"hard",
+points:30,
+q:"Jika kode berikut dijalankan: int x = 10; x = x + 5; maka nilai x setelah program dijalankan adalah...",
+options:[
+"5",
+"10",
+"15",
+"50"
+],
+answer:2
+},
+
+/* 23 */
+{
+category:"C++",
+difficulty:"hots",
+points:40,
+q:"Diberikan kondisi 80 <= nilai && nilai <= 100. Nilai manakah yang memenuhi kondisi tersebut?",
+options:[
+"75",
+"79",
+"85",
+"105"
+],
+answer:2
+},
+
+/* 24 */
+{
+category:"C++",
+difficulty:"hots",
+points:40,
+q:"Jika jumlah pengulangan sudah diketahui sejak awal, struktur perulangan C++ yang paling sesuai digunakan adalah...",
+options:[
+"if",
+"switch",
+"for",
+"else"
+],
+answer:2
+},
+
+/* 25 */
+{
+category:"SCRATCH",
+difficulty:"easy",
+points:10,
+q:"Scratch menggunakan pemrograman berbasis...",
+options:[
+"Blok",
+"Teks saja",
+"Terminal",
+"Database"
+],
+answer:0
+},
+
+/* 26 */
+{
+category:"SCRATCH",
+difficulty:"easy",
+points:10,
+q:"Objek atau karakter yang dapat diberi program dalam Scratch disebut...",
+options:[
+"Stage",
+"Sprite",
+"Script",
+"Backdrop"
+],
+answer:1
+},
+
+/* 27 */
+{
+category:"SCRATCH",
+difficulty:"easy",
+points:10,
+q:"Area tempat Sprite bergerak dan menampilkan hasil program pada Scratch disebut...",
+options:[
+"Stage",
+"Code",
+"Sprite List",
+"Variable"
+],
+answer:0
+},
+
+/* 28 */
+{
+category:"SCRATCH",
+difficulty:"medium",
+points:20,
+q:"Blok repeat 10 digunakan untuk...",
+options:[
+"Menjalankan perintah sebanyak 10 kali",
+"Menunggu 10 detik",
+"Menghapus 10 Sprite",
+"Membuat 10 variabel"
+],
+answer:0
+},
+
+/* 29 */
+{
+category:"SCRATCH",
+difficulty:"medium",
+points:20,
+q:"Blok if then pada Scratch digunakan untuk...",
+options:[
+"Membuat percabangan berdasarkan kondisi",
+"Mengulang tanpa batas",
+"Menghapus Sprite",
+"Mengubah backdrop"
+],
+answer:0
+},
+
+/* 30 */
+{
+category:"SCRATCH",
+difficulty:"medium",
+points:20,
+q:"Untuk menyimpan nilai yang dapat berubah selama program berjalan, Scratch menggunakan...",
+options:[
+"Sprite",
+"Variable",
+"Backdrop",
+"Sound"
+],
+answer:1
+},
+
+/* 31 */
+{
+category:"SCRATCH",
+difficulty:"hard",
+points:30,
+q:"Jika nilai score awal 0 dan blok change score by 1 dijalankan sebanyak 5 kali, maka score menjadi...",
+options:[
+"1",
+"4",
+"5",
+"6"
+],
+answer:2
+},
+
+/* 32 */
+{
+category:"SCRATCH",
+difficulty:"hard",
+points:30,
+q:"Tombol yang biasanya digunakan untuk memulai program Scratch adalah...",
+options:[
+"Red Stop",
+"Green Flag",
+"Space",
+"Start Menu"
+],
+answer:1
+},
+
+/* 33 */
+{
+category:"SCRATCH",
+difficulty:"hots",
+points:40,
+q:"Sebuah Sprite menjalankan blok move 10 steps sebanyak 6 kali. Jika tidak ada perubahan arah, total jarak yang ditempuh adalah...",
+options:[
+"16 langkah",
+"50 langkah",
+"60 langkah",
+"100 langkah"
+],
+answer:2
+},
+
+/* 34 */
+{
+category:"SCRATCH",
+difficulty:"hots",
+points:40,
+q:"Jika score awal adalah 50 lalu blok change score by -10 dijalankan sebanyak 3 kali, score akhirnya adalah...",
+options:[
+"20",
+"30",
+"40",
+"80"
+],
+answer:1
+},
+
+/* 35 */
+{
+category:"BERPIKIR KOMPUTASIONAL",
+difficulty:"hots",
+points:40,
+q:"Dalam konsep Input → Proses → Output, jika INPUT adalah nilai siswa dan PROSES adalah perhitungan rata-rata, maka OUTPUT yang paling tepat adalah...",
+options:[
+"Nama siswa",
+"Nilai rata-rata",
+"Keyboard",
+"Data mentah"
+],
+answer:1
 }
-function loadData(){
-  const data=JSON.parse(localStorage.getItem(KEY)||'{}');
-  fields.forEach((el,i)=>{
-    const key=el.dataset.key || el.id || ('field-'+i);
-    if(data[key]!==undefined) el.value=data[key];
-    el.addEventListener('input',()=>{saveNowSilent()});
-  });
-  updateStatus();
+
+];
+
+
+/* =========================================================
+   TEAMS
+========================================================= */
+
+const icons = [
+    "🚀",
+    "🦊",
+    "🐼",
+    "🦁",
+    "🐯",
+    "🐸",
+    "🐙",
+    "🦄",
+    "🤖",
+    "👽"
+];
+
+const teams =
+    icons.map(
+        (icon,index)=>({
+
+            id:index,
+
+            name:
+                `KELOMPOK ${index+1}`,
+
+            icon:icon,
+
+            score:0
+
+        })
+    );
+
+
+/* =========================================================
+   GAME STATE
+========================================================= */
+
+let currentQuestion = 0;
+
+let activeTeam = null;
+
+let originalWrongTeam = null;
+
+let stealTeam = null;
+
+let pendingPoints = 0;
+
+let answeredCount = 0;
+
+let gamePhase = "waiting";
+
+let questionLocked = false;
+
+let mainTimer = null;
+
+let stealTimer = null;
+
+let previousOrder =
+    teams.map(
+        team=>team.id
+    );
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const questionNumber =
+    document.getElementById(
+        "questionNumber"
+    );
+
+const questionText =
+    document.getElementById(
+        "questionText"
+    );
+
+const category =
+    document.getElementById(
+        "category"
+    );
+
+const difficultyBadge =
+    document.getElementById(
+        "difficultyBadge"
+    );
+
+const options =
+    document.getElementById(
+        "options"
+    );
+
+const timerProgress =
+    document.getElementById(
+        "timerProgress"
+    );
+
+const timerValue =
+    document.getElementById(
+        "timerValue"
+    );
+
+const timerState =
+    document.getElementById(
+        "timerState"
+    );
+
+const timerTeam =
+    document.getElementById(
+        "timerTeam"
+    );
+
+const timerMessage =
+    document.getElementById(
+        "timerMessage"
+    );
+
+const activeTeamName =
+    document.getElementById(
+        "activeTeamName"
+    );
+
+const activeIcon =
+    document.getElementById(
+        "activeIcon"
+    );
+
+const progressText =
+    document.getElementById(
+        "progressText"
+    );
+
+const teamList =
+    document.getElementById(
+        "teamList"
+    );
+
+const rebutan =
+    document.getElementById(
+        "rebutan"
+    );
+
+const overlay =
+    document.getElementById(
+        "overlay"
+    );
+
+const modal =
+    document.getElementById(
+        "modal"
+    );
+
+const modalIcon =
+    document.getElementById(
+        "modalIcon"
+    );
+
+const modalTitle =
+    document.getElementById(
+        "modalTitle"
+    );
+
+const modalText =
+    document.getElementById(
+        "modalText"
+    );
+
+const modalPoints =
+    document.getElementById(
+        "modalPoints"
+    );
+
+const modalActions =
+    document.getElementById(
+        "modalActions"
+    );
+
+const flash =
+    document.getElementById(
+        "flash"
+    );
+
+
+/* =========================================================
+   DIFFICULTY
+========================================================= */
+
+function difficultyName(
+    level
+){
+
+    return {
+
+        easy:"MUDAH",
+
+        medium:"SEDANG",
+
+        hard:"SULIT",
+
+        hots:"HOTS"
+
+    }[level];
+
 }
-function saveNowSilent(){
-  const data={};
-  fields.forEach((el,i)=>{
-    const key=el.dataset.key || el.id || ('field-'+i);
-    data[key]=el.value;
-  });
-  localStorage.setItem(KEY,JSON.stringify(data));
-  updateStatus();
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+function init(){
+
+    renderScores();
+
+    showQuestion();
+
 }
-function updateStatus(){
-  let filled=0,total=0;
-  fields.forEach(el=>{
-    if(el.type==='date' || el.type==='text' || el.tagName==='TEXTAREA'){
-      total++;
-      if(el.value.trim()) filled++;
+
+
+/* =========================================================
+   SHOW QUESTION
+========================================================= */
+
+function showQuestion(){
+
+    clearTimers();
+
+    gamePhase =
+        "waiting";
+
+    questionLocked =
+        false;
+
+    activeTeam =
+        null;
+
+    originalWrongTeam =
+        null;
+
+    stealTeam =
+        null;
+
+    pendingPoints =
+        0;
+
+    rebutan.classList.remove(
+        "show"
+    );
+
+    const q =
+        questions[
+            currentQuestion
+        ];
+
+    questionNumber.textContent =
+        `SOAL ${String(
+            currentQuestion+1
+        ).padStart(2,"0")} / ${questions.length}`;
+
+    category.textContent =
+        q.category;
+
+    questionText.textContent =
+        q.q;
+
+    difficultyBadge.textContent =
+        `${difficultyName(
+            q.difficulty
+        )} • ${q.points} POIN`;
+
+    difficultyBadge.className =
+        `difficulty ${q.difficulty}`;
+
+    options.innerHTML =
+        "";
+
+    q.options.forEach(
+        (text,index)=>{
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.className =
+                "option";
+
+            button.innerHTML = `
+
+                <span class="option-letter">
+                    ${String.fromCharCode(
+                        65+index
+                    )}
+                </span>
+
+                <span>
+                    ${text}
+                </span>
+
+            `;
+
+            button.onclick =
+                () =>
+                    answerQuestion(
+                        index,
+                        button
+                    );
+
+            options.appendChild(
+                button
+            );
+
+        }
+    );
+
+    activeTeamName.textContent =
+        "BELUM ADA";
+
+    activeIcon.textContent =
+        "🎯";
+
+    timerTeam.textContent =
+        "BELUM AKTIF";
+
+    timerMessage.textContent =
+        "PILIH KELOMPOK UNTUK MEMULAI";
+
+    progressText.textContent =
+        `${answeredCount} / ${questions.length}`;
+
+    setReadyTimer();
+
+    renderScores();
+
+}
+
+
+/* =========================================================
+   ACTIVATE TEAM
+========================================================= */
+
+function activateTeam(){
+
+    if(
+        gamePhase !==
+        "waiting"
+    ){
+
+        simpleModal(
+            "⚠️",
+            "SOAL MASIH BERJALAN",
+            "Selesaikan soal ini terlebih dahulu.",
+            "OK"
+        );
+
+        return;
+
     }
-  });
-  const pct=total?Math.round(filled/total*100):0;
-  document.getElementById('bar').style.width=pct+'%';
-  document.getElementById('status').textContent=pct+'% terisi';
+
+    const index =
+        parseInt(
+            document.getElementById(
+                "teamSelect"
+            ).value
+        );
+
+    activeTeam =
+        index;
+
+    gamePhase =
+        "main";
+
+    activeTeamName.textContent =
+        teams[index].name;
+
+    activeIcon.textContent =
+        teams[index].icon;
+
+    timerTeam.textContent =
+        teams[index].name;
+
+    timerMessage.textContent =
+        "WAKTU MENJAWAB AKTIF";
+
+    renderScores();
+
+    startMainTimer();
+
 }
-function addRow(id,count){
-  const table=document.getElementById(id);
-  const n=table.rows.length;
-  const tr=table.insertRow();
-  tr.innerHTML=`<td>${n}</td><td><input></td><td><input></td>`;
-  [...tr.querySelectorAll('input')].forEach(el=>el.addEventListener('input',saveNowSilent));
+
+
+/* =========================================================
+   MAIN TIMER
+========================================================= */
+
+function startMainTimer(){
+
+    clearMainTimer();
+
+    const seconds =
+        parseInt(
+            document.getElementById(
+                "timerSelect"
+            ).value
+        );
+
+    let time =
+        seconds;
+
+    updateTimer(
+        time,
+        seconds,
+        "JAWAB"
+    );
+
+    mainTimer =
+        setInterval(
+            ()=>{
+
+                time--;
+
+                updateTimer(
+                    time,
+                    seconds,
+                    "JAWAB"
+                );
+
+                if(time <= 0){
+
+                    clearMainTimer();
+
+                    mainTimeExpired();
+
+                }
+
+            },
+            1000
+        );
+
 }
-async function downloadPDF(){
-  saveNowSilent();
-  const nama=(document.getElementById('nama').value||'Siswa').trim().replace(/[^a-zA-Z0-9À-ÿ _-]/g,'').replace(/\s+/g,'_');
-  const kelas=(document.getElementById('kelas').value||'Kelas_VIII').trim().replace(/[^a-zA-Z0-9À-ÿ _-]/g,'').replace(/\s+/g,'_');
-  const filename=`LKPD_Bab_3_Pertemuan_1_${nama}_${kelas}.pdf`;
 
-  const element=document.querySelector('.container');
-  const buttons=document.querySelectorAll('.btns');
-  buttons.forEach(b=>b.style.visibility='hidden');
 
-  const opt={
-    margin:[8,8,8,8],
-    filename:filename,
-    image:{type:'jpeg',quality:0.98},
-    html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff',logging:false},
-    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},
-    pagebreak:{mode:['css','legacy']}
-  };
+/* =========================================================
+   RESTART TIMER
+========================================================= */
 
-  try{
-    if(typeof html2pdf==='undefined'){
-      alert('Fitur PDF belum termuat. Gunakan tombol Cetak lalu pilih "Save as PDF".');
-      window.print();
-      return;
+function restartMainTimer(){
+
+    if(
+        gamePhase ===
+        "waiting"
+    ){
+
+        activateTeam();
+
+        return;
+
     }
-    await html2pdf().set(opt).from(element).save();
-  }catch(err){
-    console.error(err);
-    alert('Download PDF gagal. Gunakan tombol Cetak lalu pilih "Save as PDF".');
-    window.print();
-  }finally{
-    buttons.forEach(b=>b.style.visibility='visible');
-  }
+
+    if(
+        gamePhase !==
+        "main"
+    ){
+
+        return;
+
+    }
+
+    startMainTimer();
+
 }
 
-function clearAll(){
-  if(confirm('Hapus seluruh jawaban LKPD pada perangkat ini?')){
-    localStorage.removeItem(KEY);
-    fields.forEach(el=>el.value='');
-    location.reload();
-  }
+
+/* =========================================================
+   MAIN TIMEOUT
+========================================================= */
+
+function mainTimeExpired(){
+
+    if(questionLocked)
+        return;
+
+    questionLocked =
+        true;
+
+    originalWrongTeam =
+        activeTeam;
+
+    pendingPoints =
+        questions[
+            currentQuestion
+        ].points;
+
+    /*
+       WAKTU HABIS = TIDAK DIANGGAP BENAR.
+       Kelompok utama tidak mendapat bonus.
+       Masuk rebutan.
+    */
+
+    gamePhase =
+        "steal";
+
+    showStealNotification(
+        true
+    );
+
 }
-loadData();
+
+
+/* =========================================================
+   ANSWER QUESTION
+========================================================= */
+
+function answerQuestion(
+    selected,
+    button
+){
+
+    if(questionLocked)
+        return;
+
+    if(
+        gamePhase !==
+        "main"
+    )
+        return;
+
+    questionLocked =
+        true;
+
+    clearTimers();
+
+    const q =
+        questions[
+            currentQuestion
+        ];
+
+    const allOptions =
+        document.querySelectorAll(
+            ".option"
+        );
+
+
+    /* =====================================================
+       BENAR
+    ===================================================== */
+
+    if(
+        selected ===
+        q.answer
+    ){
+
+        button.classList.add(
+            "correct"
+        );
+
+        allOptions.forEach(
+            btn=>{
+                btn.disabled =
+                    true;
+            }
+        );
+
+        changeScore(
+            activeTeam,
+            q.points
+        );
+
+        answeredCount++;
+
+        progressText.textContent =
+            `${answeredCount} / ${questions.length}`;
+
+        flashScreen(
+            "green"
+        );
+
+        showMainCorrect();
+
+    }
+
+
+    /* =====================================================
+       SALAH
+    ===================================================== */
+
+    else{
+
+        button.classList.add(
+            "wrong"
+        );
+
+        allOptions.forEach(
+            btn=>{
+                btn.disabled =
+                    true;
+            }
+        );
+
+
+        /*
+           PENTING:
+
+           Kelompok utama yang salah
+           langsung kehilangan nilai
+           sebesar nilai soal.
+
+           Contoh:
+           skor 20
+           soal 40
+           salah
+           hasil = -20
+        */
+
+        changeScore(
+            activeTeam,
+            -q.points
+        );
+
+        answeredCount++;
+
+        progressText.textContent =
+            `${answeredCount} / ${questions.length}`;
+
+        originalWrongTeam =
+            activeTeam;
+
+        pendingPoints =
+            q.points;
+
+        gamePhase =
+            "steal";
+
+        flashScreen(
+            "red"
+        );
+
+        showStealNotification(
+            false
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MAIN CORRECT
+========================================================= */
+
+function showMainCorrect(){
+
+    const q =
+        questions[
+            currentQuestion
+        ];
+
+    modalIcon.textContent =
+        "🎉";
+
+    modalTitle.textContent =
+        "JAWABAN BENAR!";
+
+    modalText.innerHTML = `
+
+        <strong>
+            ${teams[
+                activeTeam
+            ].icon}
+
+            ${teams[
+                activeTeam
+            ].name}
+        </strong>
+
+        berhasil menjawab
+        dengan benar.
+
+    `;
+
+    modalPoints.textContent =
+        `+${q.points} POIN`;
+
+    modalActions.innerHTML = `
+
+        <button
+            class="modal-btn modal-primary"
+            onclick="nextQuestion()">
+
+            ➜ SOAL BERIKUTNYA
+
+        </button>
+
+    `;
+
+    overlay.classList.add(
+        "show"
+    );
+
+    gamePhase =
+        "result";
+
+}
+
+
+/* =========================================================
+   STEAL NOTIFICATION
+========================================================= */
+
+function showStealNotification(
+    timeout
+){
+
+    modalIcon.textContent =
+        "⚡";
+
+    modalTitle.textContent =
+        timeout
+        ? "WAKTU HABIS!"
+        : "JAWABAN SALAH!";
+
+    modalText.innerHTML =
+
+        timeout
+
+        ?
+
+        `
+
+            Waktu
+            <strong>
+                ${teams[
+                    originalWrongTeam
+                ].name}
+            </strong>
+
+            telah habis.
+
+            <br><br>
+
+            <strong>
+                SILAKAN REBUT SOAL INI!
+            </strong>
+
+        `
+
+        :
+
+        `
+
+            <strong>
+                ${teams[
+                    originalWrongTeam
+                ].name}
+            </strong>
+
+            SALAH MENJAWAB!
+
+            <br><br>
+
+            Kelompok tersebut mendapat
+            <strong>
+                -${pendingPoints}
+            </strong>
+            poin.
+
+            <br><br>
+
+            <strong>
+                SILAKAN REBUT SOAL INI!
+            </strong>
+
+        `;
+
+
+    modalPoints.textContent =
+        `⚡ REBUTAN • 15 DETIK`;
+
+    modalActions.innerHTML = `
+
+        <button
+            class="modal-btn modal-danger"
+            onclick="startStealTimer()">
+
+            ⚡ MULAI REBUTAN 15 DETIK
+
+        </button>
+
+    `;
+
+    overlay.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   START STEAL
+========================================================= */
+
+function startStealTimer(){
+
+    overlay.classList.remove(
+        "show"
+    );
+
+    rebutan.classList.add(
+        "show"
+    );
+
+    gamePhase =
+        "steal";
+
+    let time =
+        15;
+
+    timerTeam.textContent =
+        "SEMUA KELOMPOK";
+
+    timerMessage.textContent =
+        "⚡ REBUTAN — 15 DETIK";
+
+    updateTimer(
+        time,
+        15,
+        "REBUTAN"
+    );
+
+    document
+        .getElementById(
+            "timerCircle"
+        )
+        .classList.add(
+            "timer-pulse"
+        );
+
+    stealTimer =
+        setInterval(
+            ()=>{
+
+                time--;
+
+                updateTimer(
+                    time,
+                    15,
+                    "REBUTAN"
+                );
+
+                if(
+                    time <= 0
+                ){
+
+                    clearStealTimer();
+
+                    stealExpired();
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+/* =========================================================
+   STEAL EXPIRED
+========================================================= */
+
+function stealExpired(){
+
+    if(
+        gamePhase !==
+        "steal"
+    )
+        return;
+
+    questionLocked =
+        true;
+
+    clearTimers();
+
+
+    /*
+       TIDAK ADA YANG REBUT
+
+       Semua kelompok -5.
+
+       SKOR BOLEH MINUS.
+    */
+
+    teams.forEach(
+        (team,index)=>{
+
+            changeScore(
+                index,
+                -5,
+                false
+            );
+
+        }
+    );
+
+    renderScores();
+
+    revealAnswer();
+
+    showNoStealResult();
+
+}
+
+
+/* =========================================================
+   SELECT STEAL TEAM
+========================================================= */
+
+function selectStealTeam(){
+
+    if(
+        gamePhase !==
+        "steal"
+    )
+        return;
+
+    clearStealTimer();
+
+    const selected =
+        parseInt(
+            document.getElementById(
+                "stealTeamSelect"
+            ).value
+        );
+
+    stealTeam =
+        selected;
+
+    activeTeam =
+        selected;
+
+    activeTeamName.textContent =
+        `${teams[
+            selected
+        ].name} — REBUTAN`;
+
+    activeIcon.textContent =
+        teams[
+            selected
+        ].icon;
+
+    timerTeam.textContent =
+        teams[
+            selected
+        ].name;
+
+    timerMessage.textContent =
+        "REBUTAN DIKUASAI KELOMPOK INI";
+
+    rebutan.classList.remove(
+        "show"
+    );
+
+    renderScores();
+
+    showStealAnswer();
+
+}
+
+
+/* =========================================================
+   STEAL ANSWER
+========================================================= */
+
+function showStealAnswer(){
+
+    const q =
+        questions[
+            currentQuestion
+        ];
+
+    modalIcon.textContent =
+        teams[
+            stealTeam
+        ].icon;
+
+    modalTitle.textContent =
+        `${teams[
+            stealTeam
+        ].name}`;
+
+    modalText.innerHTML = `
+
+        Kelompok ini berhasil
+        <strong>
+            merebut soal
+        </strong>.
+
+        <br><br>
+
+        Guru menentukan hasil
+        jawaban rebutan.
+
+    `;
+
+    modalPoints.textContent =
+        `NILAI SOAL: ${q.points} POIN`;
+
+    modalActions.innerHTML = `
+
+        <button
+            class="modal-btn modal-primary"
+            onclick="stealCorrect()">
+
+            ✅ BENAR +${q.points}
+
+        </button>
+
+        <button
+            class="modal-btn modal-danger"
+            onclick="stealWrong()">
+
+            ❌ SALAH +0
+
+        </button>
+
+    `;
+
+    overlay.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   STEAL CORRECT
+========================================================= */
+
+function stealCorrect(){
+
+    const q =
+        questions[
+            currentQuestion
+        ];
+
+    changeScore(
+        stealTeam,
+        q.points
+    );
+
+    revealAnswer();
+
+    flashScreen(
+        "green"
+    );
+
+    modalIcon.textContent =
+        "🏆";
+
+    modalTitle.textContent =
+        "REBUTAN BENAR!";
+
+    modalText.innerHTML = `
+
+        <strong>
+            ${teams[
+                stealTeam
+            ].icon}
+
+            ${teams[
+                stealTeam
+            ].name}
+        </strong>
+
+        berhasil menjawab
+        soal rebutan dengan benar.
+
+        <br><br>
+
+        Jawaban benar telah
+        ditampilkan.
+
+    `;
+
+    modalPoints.textContent =
+        `+${q.points} POIN`;
+
+    modalActions.innerHTML = `
+
+        <button
+            class="modal-btn modal-primary"
+            onclick="nextQuestion()">
+
+            ➜ SOAL BERIKUTNYA
+
+        </button>
+
+    `;
+
+    gamePhase =
+        "result";
+
+}
+
+
+/* =========================================================
+   STEAL WRONG
+========================================================= */
+
+function stealWrong(){
+
+    revealAnswer();
+
+    flashScreen(
+        "red"
+    );
+
+    modalIcon.textContent =
+        "❌";
+
+    modalTitle.textContent =
+        "REBUTAN SALAH!";
+
+    modalText.innerHTML = `
+
+        <strong>
+            ${teams[
+                stealTeam
+            ].icon}
+
+            ${teams[
+                stealTeam
+            ].name}
+        </strong>
+
+        belum berhasil menjawab
+        soal rebutan.
+
+        <br><br>
+
+        Tidak mendapatkan
+        tambahan poin.
+
+        <br><br>
+
+        Jawaban benar telah
+        ditampilkan.
+
+    `;
+
+    modalPoints.textContent =
+        "+0 POIN";
+
+    modalActions.innerHTML = `
+
+        <button
+            class="modal-btn modal-primary"
+            onclick="nextQuestion()">
+
+            ➜ SOAL BERIKUTNYA
+
+        </button>
+
+    `;
+
+    gamePhase =
+        "result";
+
+}
+
+
+/* =========================================================
+   NO STEAL
+========================================================= */
+
+function showNoStealResult(){
+
+    modalIcon.textContent =
+        "⏱️";
+
+    modalTitle.textContent =
+        "TIDAK ADA YANG REBUT!";
+
+    modalText.innerHTML = `
+
+        Waktu rebutan
+        <strong>
+            15 detik
+        </strong>
+        telah habis.
+
+        <br><br>
+
+        Semua kelompok mendapat
+        pengurangan
+        <strong>
+            -5 poin
+        </strong>.
+
+        <br><br>
+
+        Jawaban benar telah
+        ditampilkan.
+
+    `;
+
+    modalPoints.textContent =
+        "-5 SEMUA KELOMPOK";
+
+    modalActions.innerHTML = `
+
+        <button
+            class="modal-btn modal-primary"
+            onclick="nextQuestion()">
+
+            ➜ SOAL BERIKUTNYA
+
+        </button>
+
+    `;
+
+    overlay.classList.add(
+        "show"
+    );
+
+    gamePhase =
+        "result";
+
+}
+
+
+/* =========================================================
+   REVEAL ANSWER
+========================================================= */
+
+function revealAnswer(){
+
+    const q =
+        questions[
+            currentQuestion
+        ];
+
+    const all =
+        document.querySelectorAll(
+            ".option"
+        );
+
+    all.forEach(
+        (button,index)=>{
+
+            button.disabled =
+                true;
+
+            if(
+                index ===
+                q.answer
+            ){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CHANGE SCORE
+========================================================= */
+
+function changeScore(
+    teamIndex,
+    amount,
+    render=true
+){
+
+    teams[
+        teamIndex
+    ].score += amount;
+
+    if(render){
+
+        renderScores();
+
+    }
+
+}
+
+
+/* =========================================================
+   SCOREBOARD
+========================================================= */
+
+function renderScores(){
+
+    const sorted =
+        [...teams].sort(
+            (a,b)=>{
+
+                if(
+                    b.score !==
+                    a.score
+                ){
+
+                    return b.score -
+                           a.score;
+
+                }
+
+                return a.id -
+                       b.id;
+
+            }
+        );
+
+
+    const newOrder =
+        sorted.map(
+            team=>team.id
+        );
+
+
+    teamList.innerHTML =
+        "";
+
+
+    sorted.forEach(
+        (team,index)=>{
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+            div.className =
+                "team";
+
+
+            if(
+                team.id ===
+                activeTeam
+            ){
+
+                div.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            if(
+                index === 0
+            ){
+
+                div.classList.add(
+                    "first"
+                );
+
+            }
+
+
+            const oldRank =
+                previousOrder.indexOf(
+                    team.id
+                ) + 1;
+
+            const newRank =
+                index + 1;
+
+
+            /*
+               Ranking naik
+            */
+
+            if(
+                oldRank >
+                newRank
+            ){
+
+                div.classList.add(
+                    "rank-up"
+                );
+
+            }
+
+
+            /*
+               Ranking turun
+            */
+
+            if(
+                oldRank <
+                newRank
+            ){
+
+                div.classList.add(
+                    "rank-down"
+                );
+
+            }
+
+
+            div.innerHTML = `
+
+                <div class="rank-number">
+                    ${newRank}
+                </div>
+
+                <div class="team-icon">
+                    ${team.icon}
+                </div>
+
+                <div class="team-name">
+                    ${team.name}
+                </div>
+
+                <div class="team-score">
+                    ${team.score}
+                </div>
+
+            `;
+
+
+            teamList.appendChild(
+                div
+            );
+
+        }
+    );
+
+
+    previousOrder =
+        newOrder;
+
+}
+
+
+/* =========================================================
+   TIMER UI
+========================================================= */
+
+const CIRC =
+    2 *
+    Math.PI *
+    22;
+
+
+function updateTimer(
+    time,
+    total,
+    state
+){
+
+    timerValue.textContent =
+        Math.max(
+            0,
+            time
+        );
+
+    timerState.textContent =
+        state;
+
+    const ratio =
+        Math.max(
+            0,
+            time
+        ) /
+        total;
+
+    timerProgress.style.strokeDashoffset =
+        CIRC *
+        (1-ratio);
+
+
+    const bar =
+        document.querySelector(
+            ".timer-bar"
+        );
+
+    bar.classList.remove(
+        "timer-warning",
+        "timer-danger"
+    );
+
+
+    if(
+        state ===
+        "REBUTAN"
+    ){
+
+        if(
+            time <= 4
+        ){
+
+            bar.classList.add(
+                "timer-danger"
+            );
+
+        }else if(
+            time <= 7
+        ){
+
+            bar.classList.add(
+                "timer-warning"
+            );
+
+        }
+
+    }else{
+
+        if(
+            time <= 5
+        ){
+
+            bar.classList.add(
+                "timer-danger"
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   READY
+========================================================= */
+
+function setReadyTimer(){
+
+    timerValue.textContent =
+        "--";
+
+    timerState.textContent =
+        "READY";
+
+    timerProgress.style.strokeDashoffset =
+        0;
+
+    document
+        .querySelector(
+            ".timer-bar"
+        )
+        .classList.remove(
+            "timer-warning",
+            "timer-danger"
+        );
+
+}
+
+
+/* =========================================================
+   CLEAR TIMERS
+========================================================= */
+
+function clearMainTimer(){
+
+    if(mainTimer){
+
+        clearInterval(
+            mainTimer
+        );
+
+        mainTimer =
+            null;
+
+    }
+
+}
+
+
+function clearStealTimer(){
+
+    if(stealTimer){
+
+        clearInterval(
+            stealTimer
+        );
+
+        stealTimer =
+            null;
+
+    }
+
+    document
+        .getElementById(
+            "timerCircle"
+        )
+        .classList.remove(
+            "timer-pulse"
+        );
+
+}
+
+
+function clearTimers(){
+
+    clearMainTimer();
+
+    clearStealTimer();
+
+}
+
+
+/* =========================================================
+   STOP TIMER
+========================================================= */
+
+function stopTimer(){
+
+    clearTimers();
+
+    timerState.textContent =
+        "STOP";
+
+    timerMessage.textContent =
+        "TIMER DIHENTIKAN";
+
+}
+
+
+/* =========================================================
+   NEXT QUESTION
+========================================================= */
+
+function nextQuestion(){
+
+    overlay.classList.remove(
+        "show"
+    );
+
+    clearTimers();
+
+    currentQuestion++;
+
+    if(
+        currentQuestion >=
+        questions.length
+    ){
+
+        showFinal();
+
+        return;
+
+    }
+
+    showQuestion();
+
+}
+
+
+/* =========================================================
+   FINAL
+========================================================= */
+
+function showFinal(){
+
+    clearTimers();
+
+    gamePhase =
+        "final";
+
+    const ranking =
+        [...teams].sort(
+            (a,b)=>
+                b.score -
+                a.score
+        );
+
+    const first =
+        ranking[0];
+
+    const second =
+        ranking[1];
+
+    const third =
+        ranking[2];
+
+
+    modal.classList.add(
+        "final-modal"
+    );
+
+    modalIcon.textContent =
+        "🏆";
+
+    modalTitle.textContent =
+        "LCC SKOR SELESAI!";
+
+    modalText.textContent =
+        "Pertandingan telah berakhir.";
+
+
+    modalActions.innerHTML = `
+
+        <div class="podium">
+
+
+            <div class="podium-item">
+
+                <div class="podium-medal">
+                    🥈
+                </div>
+
+                <div class="podium-team">
+
+                    ${second.icon}
+
+                    ${second.name}
+
+                </div>
+
+                <div class="podium-score">
+
+                    ${second.score}
+
+                </div>
+
+            </div>
+
+
+            <div class="podium-item first">
+
+                <div class="podium-medal">
+                    🏆
+                </div>
+
+                <div class="podium-team">
+
+                    ${first.icon}
+
+                    ${first.name}
+
+                </div>
+
+                <div class="podium-score">
+
+                    ${first.score}
+
+                </div>
+
+            </div>
+
+
+            <div class="podium-item">
+
+                <div class="podium-medal">
+                    🥉
+                </div>
+
+                <div class="podium-team">
+
+                    ${third.icon}
+
+                    ${third.name}
+
+                </div>
+
+                <div class="podium-score">
+
+                    ${third.score}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            style="
+                color:#aab4ca;
+                font-size:10px;
+            ">
+
+            TERIMA KASIH TELAH MENGIKUTI
+            LCC KKA KELAS 9
+
+        </div>
+
+
+        <br>
+
+
+        <button
+            class="modal-btn modal-primary"
+            onclick="resetGame()">
+
+            ↻ MAIN LAGI
+
+        </button>
+
+    `;
+
+
+    overlay.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetGame(){
+
+    clearTimers();
+
+    currentQuestion =
+        0;
+
+    activeTeam =
+        null;
+
+    originalWrongTeam =
+        null;
+
+    stealTeam =
+        null;
+
+    pendingPoints =
+        0;
+
+    answeredCount =
+        0;
+
+    gamePhase =
+        "waiting";
+
+    questionLocked =
+        false;
+
+
+    teams.forEach(
+        team=>{
+
+            team.score =
+                0;
+
+        }
+    );
+
+
+    previousOrder =
+        teams.map(
+            team=>team.id
+        );
+
+
+    modal.classList.remove(
+        "final-modal"
+    );
+
+    overlay.classList.remove(
+        "show"
+    );
+
+
+    showQuestion();
+
+}
+
+
+/* =========================================================
+   SIMPLE MODAL
+========================================================= */
+
+function simpleModal(
+    icon,
+    title,
+    text,
+    button
+){
+
+    modalIcon.textContent =
+        icon;
+
+    modalTitle.textContent =
+        title;
+
+    modalText.innerHTML =
+        text;
+
+    modalPoints.textContent =
+        "";
+
+    modalActions.innerHTML = `
+
+        <button
+            class="modal-btn modal-primary"
+            onclick="
+                overlay.classList.remove(
+                    'show'
+                )
+            ">
+
+            ${button}
+
+        </button>
+
+    `;
+
+    overlay.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   FLASH
+========================================================= */
+
+function flashScreen(
+    type
+){
+
+    flash.className =
+        "flash";
+
+    void flash.offsetWidth;
+
+    flash.classList.add(
+        type
+    );
+
+}
+
+
+/* =========================================================
+   FULLSCREEN
+========================================================= */
+
+function toggleFullscreen(){
+
+    if(
+        !document.fullscreenElement
+    ){
+
+        document
+            .documentElement
+            .requestFullscreen();
+
+    }else{
+
+        document.exitFullscreen();
+
+    }
+
+}
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event=>{
+
+        if(
+            event.key.toLowerCase()
+            === "f"
+        ){
+
+            toggleFullscreen();
+
+        }
+
+        if(
+            event.key === "Escape"
+        ){
+
+            if(
+                gamePhase ===
+                    "result"
+                ||
+                gamePhase ===
+                    "final"
+            ){
+
+                overlay.classList.remove(
+                    "show"
+                );
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+init();
+
 </script>
+
 </body>
 </html>
