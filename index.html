@@ -1,1983 +1,833 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TARIK TAMBANG IPA</title>
+<meta name="theme-color" content="#10392f">
+<title>EXVISTA EXCLUSIVE 7.1 | Grand Reveal</title>
+
 <style>
-/* =========================================================
-   TARIK TAMBANG IPA
-   Media Pembelajaran Digital
-   Optimized for Interactive Digital Board 16:9
-========================================================= */
+:root {
+  --green: #10392f;
+  --green2: #1d5b47;
+  --gold: #e8bd58;
+  --cream: #fff8e8;
+  --white: #ffffff;
+}
+
 * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
-html,
+
 body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #020617;
-    user-select: none;
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--white);
+  background:
+    radial-gradient(circle at top, #28674e, transparent 45%),
+    linear-gradient(145deg, #071f19, #123f35 60%, #071b16);
+  overflow-x: hidden;
 }
-button,
-input {
-    font-family: inherit;
+
+button, select {
+  font: inherit;
 }
-/* =========================================================
-   SCREEN
-========================================================= */
-.screen {
-    position: absolute;
-    inset: 0;
-    display: none;
-    width: 100%;
-    height: 100%;
+
+button {
+  cursor: pointer;
+  border: 0;
+  transition: transform .2s, filter .2s;
 }
-.screen.active {
-    display: flex;
+
+button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
 }
-/* =========================================================
-   START SCREEN
-========================================================= */
-#startScreen {
-    align-items: center;
-    justify-content: center;
-    background:
-        radial-gradient(
-            circle at 15% 20%,
-            rgba(37,99,235,.55),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 85% 80%,
-            rgba(239,68,68,.55),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
-            #020617,
-            #172554,
-            #450a0a
-        );
+
+button:disabled {
+  cursor: wait;
+  opacity: .65;
+  transform: none;
 }
-.start-card {
-    width: min(1000px, 92vw);
-    padding: 55px;
-    text-align: center;
-    background: rgba(15,23,42,.94);
-    border:
-        2px solid
-        rgba(255,255,255,.12);
-    border-radius: 40px;
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.55);
+
+.page {
+  width: min(100% - 24px, 1000px);
+  margin: 0 auto;
+  padding: 24px 0 35px;
 }
-.logo {
-    color: white;
-    font-size: clamp(48px, 7vw, 100px);
-    line-height: .9;
-    font-weight: 1000;
-    text-shadow:
-        0 8px 0 #1e3a8a,
-        0 15px 30px rgba(0,0,0,.5);
+
+.hero {
+  text-align: center;
+  padding: 38px 18px 28px;
+  border: 1px solid #e8bd5840;
+  border-radius: 24px 24px 0 0;
+  background: linear-gradient(135deg, #174b3a, #0b2b22);
+  position: relative;
+  overflow: hidden;
 }
-.logo span {
-    color: #facc15;
+
+.hero::before,
+.hero::after {
+  content: "✦";
+  position: absolute;
+  color: #e8bd5860;
+  font-size: 90px;
 }
+
+.hero::before {
+  top: -24px;
+  left: 12px;
+}
+
+.hero::after {
+  bottom: -35px;
+  right: 12px;
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  position: relative;
+}
+
+h1 {
+  margin: 18px 0 10px;
+  font-size: clamp(34px, 7vw, 65px);
+  line-height: 1.02;
+  font-weight: 1000;
+  letter-spacing: -1px;
+  text-shadow: 0 4px 0 #061c15;
+  position: relative;
+}
+
+.hero p {
+  color: #dcece1;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 .tagline {
-    margin-top: 28px;
-    color: #cbd5e1;
-    font-size:
-        clamp(20px, 2.5vw, 32px);
-    font-weight: 900;
+  display: inline-block;
+  padding: 11px 17px;
+  margin-top: 10px;
+  border: 1px solid #e8bd58;
+  border-radius: 30px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 900;
+  background: #ffffff08;
 }
-.rope-demo {
-    position: relative;
-    width: 75%;
-    height: 20px;
-    margin: 55px auto;
-    border-radius: 20px;
-    background:
-        repeating-linear-gradient(
-            45deg,
-            #92400e 0 12px,
-            #f59e0b 12px 24px
-        );
-    box-shadow:
-        0 8px 20px rgba(0,0,0,.35);
+
+.main {
+  background: #f8fbf6;
+  color: #20352e;
+  border-radius: 0 0 24px 24px;
+  overflow: hidden;
 }
-.rope-demo::before {
-    content: "🔵";
-    position: absolute;
-    left: -55px;
-    top: -30px;
-    font-size: 45px;
+
+.controls {
+  padding: 22px;
+  display: grid;
+  gap: 12px;
 }
-.rope-demo::after {
-    content: "🔴";
-    position: absolute;
-    right: -55px;
-    top: -30px;
-    font-size: 45px;
+
+label {
+  display: block;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-bottom: 7px;
 }
-.start-btn {
-    border: 0;
-    padding:
-        22px 75px;
-    border-radius: 20px;
-    background: #facc15;
-    color: #111827;
-    font-size: 28px;
-    font-weight: 1000;
-    cursor: pointer;
-    box-shadow:
-        0 8px 0 #ca8a04;
-    transition: .15s;
+
+select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #cbdccf;
+  border-radius: 12px;
+  background: white;
+  color: #20352e;
+  outline-color: var(--gold);
 }
-.start-btn:active {
-    transform: translateY(7px);
-    box-shadow:
-        0 1px 0 #ca8a04;
-}
-/* =========================================================
-   SETUP SCREEN
-========================================================= */
-#setupScreen {
-    align-items: center;
-    justify-content: center;
-    background:
-        radial-gradient(
-            circle at top left,
-            #1d4ed8,
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at bottom right,
-            #dc2626,
-            transparent 35%
-        ),
-        #020617;
-}
-.setup-card {
-    width: min(1100px, 94vw);
-    padding: 40px;
-    border-radius: 35px;
-    background:
-        rgba(15,23,42,.96);
-    box-shadow:
-        0 30px 90px rgba(0,0,0,.5);
-}
-.setup-title {
-    text-align: center;
-    color: white;
-    font-size:
-        clamp(32px, 4vw, 55px);
-    font-weight: 1000;
-    margin-bottom: 35px;
-}
-.team-inputs {
-    display: grid;
-    grid-template-columns:
-        1fr 1fr;
-    gap: 30px;
-}
-.team-input {
-    padding: 30px;
-    border-radius: 28px;
-}
-.team-input.blue {
-    background:
-        linear-gradient(
-            135deg,
-            #2563eb,
-            #1e3a8a
-        );
-}
-.team-input.red {
-    background:
-        linear-gradient(
-            135deg,
-            #ef4444,
-            #991b1b
-        );
-}
-.team-input h2 {
-    margin-top: 0;
-    color: white;
-    text-align: center;
-    font-size: 30px;
-}
-.team-input input {
-    width: 100%;
-    padding: 20px;
-    border: 0;
-    border-radius: 15px;
-    outline: none;
-    text-align: center;
-    font-size: 24px;
-    font-weight: 900;
-}
-.setup-options {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    margin-top: 30px;
-    flex-wrap: wrap;
-}
-.question-setting {
-    color: white;
-    font-size: 20px;
-    font-weight: 800;
-}
-.question-setting select {
-    margin-left: 10px;
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: 800;
-}
-.setup-actions {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 35px;
-}
+
 .btn {
-    border: 0;
-    border-radius: 16px;
-    padding: 18px 35px;
-    font-size: 21px;
-    font-weight: 1000;
-    cursor: pointer;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 13px;
 }
-.btn-primary {
-    background: #facc15;
-    color: #111827;
+
+.btn-gold {
+  color: #193329;
+  background: linear-gradient(135deg, #f7d77d, #d9a834);
+  box-shadow: 0 4px 0 #a97a20;
 }
-.btn-secondary {
-    background: #334155;
-    color: white;
+
+.btn-green {
+  color: white;
+  background: var(--green);
 }
-/* =========================================================
-   GAME SCREEN
-========================================================= */
-#gameScreen {
-    flex-direction: column;
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(51,65,85,.35),
-            transparent 45%
-        ),
-        #020617;
+
+.btn-light {
+  color: var(--green);
+  background: #e5efe4;
+  border: 1px solid #d3e2d2;
 }
-/* =========================================================
-   TOP BAR
-========================================================= */
-.topbar {
-    height: 11%;
-    min-height: 75px;
-    display: grid;
-    grid-template-columns:
-        1fr 1.4fr 1fr;
-    gap: 20px;
-    align-items: center;
-    padding:
-        10px 25px;
+
+.stage {
+  margin: 0 16px 18px;
+  min-height: 370px;
+  padding: 30px 16px 25px;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 0%, #2d7959, transparent 55%),
+    linear-gradient(145deg, #123f35, #061e17);
+  border: 1px solid #e8bd5850;
 }
-.team-header {
-    padding: 12px 20px;
-    border-radius: 18px;
-    color: white;
-    font-size:
-        clamp(17px, 2vw, 27px);
-    font-weight: 1000;
+
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: .35;
+  background-image:
+    radial-gradient(#f8e5a0 1px, transparent 1.5px);
+  background-size: 25px 25px;
 }
-.team-header.blue {
-    background:
-        linear-gradient(
-            135deg,
-            #2563eb,
-            #1e3a8a
-        );
+
+.stage-eyebrow {
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 3px;
 }
-.team-header.red {
-    text-align: right;
-    background:
-        linear-gradient(
-            135deg,
-            #ef4444,
-            #991b1b
-        );
+
+.stage-title {
+  margin: 22px 0 12px;
+  font-size: clamp(27px, 5vw, 46px);
+  line-height: 1.1;
+  font-weight: 1000;
+  text-shadow: 0 4px 0 #061b15, 0 0 20px #e8bd5840;
 }
-.round-info {
-    text-align: center;
-    color: white;
-    font-size:
-        clamp(18px, 2vw, 27px);
-    font-weight: 1000;
+
+.stage-subtitle {
+  color: #d9e9df;
+  font-size: 14px;
+  line-height: 1.6;
 }
-/* =========================================================
-   QUESTION
-========================================================= */
-.question-area {
-    height: 27%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding:
-        10px 7%;
+
+.stage-symbol {
+  font-size: 28px;
+  color: var(--gold);
+  letter-spacing: 12px;
+  animation: sparkle 1.2s infinite alternate;
 }
-.question-card {
-    width: min(1250px, 90vw);
-    padding:
-        22px 45px;
-    background: white;
-    border-radius: 28px;
-    text-align: center;
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.5);
+
+.names {
+  max-width: 700px;
+  margin: 26px auto 20px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
-.question-label {
-    color: #64748b;
-    font-size: 18px;
-    font-weight: 1000;
-    margin-bottom: 8px;
+
+.name-card {
+  padding: 17px 12px;
+  border: 1px solid #e8bd5860;
+  border-radius: 13px;
+  background: #ffffff0d;
+  overflow-wrap: anywhere;
+  animation: nameReveal .7s both;
 }
-.question-text {
-    color: #0f172a;
-    font-size:
-        clamp(24px, 3vw, 46px);
-    line-height: 1.15;
-    font-weight: 1000;
+
+.name-card small {
+  display: block;
+  color: var(--gold);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-bottom: 9px;
 }
-/* =========================================================
-   ROPE ARENA
-========================================================= */
-.rope-area {
-    height: 24%;
-    position: relative;
-    margin:
-        0 5%;
+
+.name-card strong {
+  font-size: clamp(14px, 2.5vw, 18px);
+  line-height: 1.4;
 }
-.center-line {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    background:
-        rgba(255,255,255,.22);
-    transform:
-        translateX(-50%);
+
+.waiting {
+  grid-column: 1 / -1;
+  padding: 28px 12px;
+  border: 1px dashed #e8bd5870;
+  border-radius: 14px;
+  color: var(--gold);
+  font-weight: 900;
+  line-height: 1.8;
 }
-.win-line {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 7px;
-    border-radius: 10px;
+
+.motto-bottom {
+  margin-top: 24px;
+  color: #cce0d1;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
 }
-.win-line.left {
-    left: 8%;
-    background: #60a5fa;
-    box-shadow:
-        0 0 15px #60a5fa;
+
+.confetti-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
 }
-.win-line.right {
-    right: 8%;
-    background: #f87171;
-    box-shadow:
-        0 0 15px #f87171;
-}
-.character {
-    position: absolute;
-    top: 25%;
-    font-size:
-        clamp(42px, 5.5vw, 80px);
-    z-index: 5;
-    transition:
-        transform .7s
-        cubic-bezier(.2,.8,.2,1);
-}
-.character.left {
-    left: 0;
-}
-.character.right {
-    right: 0;
-}
-.rope {
-    position: absolute;
-    left: 8%;
-    width: 84%;
-    top: 50%;
-    height: 19px;
-    border-radius: 20px;
-    background:
-        repeating-linear-gradient(
-            45deg,
-            #92400e 0 10px,
-            #f59e0b 10px 20px
-        );
-    box-shadow:
-        0 6px 12px rgba(0,0,0,.5);
-    transition:
-        transform .8s
-        cubic-bezier(.2,.8,.2,1);
-}
-.rope.kick {
-    animation:
-        ropeShake .5s ease;
-}
-@keyframes ropeShake {
-    0%   { transform: translateX(0); }
-    20%  { transform: translateX(-12px); }
-    40%  { transform: translateX(12px); }
-    60%  { transform: translateX(-8px); }
-    80%  { transform: translateX(8px); }
-    100% { transform: translateX(0); }
-}
-.rope-knot {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 60px;
-    height: 60px;
-    transform:
-        translate(-50%,-50%);
-    border-radius: 50%;
-    background: #facc15;
-    border:
-        7px solid #92400e;
-    z-index: 10;
-}
-.flag {
-    position: absolute;
-    left: 50%;
-    top: -45px;
-    transform:
-        translateX(-50%);
-    font-size: 30px;
-}
-/* =========================================================
-   DUEL PANELS
-========================================================= */
-.duel-area {
-    height: 38%;
-    display: grid;
-    grid-template-columns:
-        1fr 1fr;
-    gap: 20px;
-    padding:
-        8px 25px 25px;
-}
-.team-panel {
-    position: relative;
-    padding: 15px;
-    border-radius: 25px;
-    overflow: hidden;
-}
-.team-panel.blue {
-    background:
-        linear-gradient(
-            145deg,
-            #1d4ed8,
-            #172554
-        );
-}
-.team-panel.red {
-    background:
-        linear-gradient(
-            145deg,
-            #dc2626,
-            #450a0a
-        );
-}
-.panel-title {
-    text-align: center;
-    color: white;
-    font-size:
-        clamp(19px, 2.4vw, 32px);
-    font-weight: 1000;
-}
-.panel-status {
-    height: 28px;
-    margin-top: 3px;
-    text-align: center;
-    color:
-        rgba(255,255,255,.75);
-    font-size: 16px;
-    font-weight: 900;
-}
-.answer-grid {
-    display: grid;
-    grid-template-columns:
-        1fr 1fr;
-    gap: 15px;
-    height:
-        calc(100% - 62px);
-}
-.answer-btn {
-    border: 0;
-    border-radius: 22px;
-    color: white;
-    font-size:
-        clamp(21px, 2.8vw, 40px);
-    font-weight: 1000;
-    cursor: pointer;
-    box-shadow:
-        0 8px 0 rgba(0,0,0,.35);
-    transition:
-        transform .15s,
-        opacity .2s;
-}
-.answer-btn.true {
-    background:
-        linear-gradient(
-            135deg,
-            #22c55e,
-            #15803d
-        );
-}
-.answer-btn.false {
-    background:
-        linear-gradient(
-            135deg,
-            #ef4444,
-            #991b1b
-        );
-}
-.answer-btn:active {
-    transform:
-        translateY(6px);
-    box-shadow:
-        0 2px 0 rgba(0,0,0,.35);
-}
-.answer-btn.selected {
-    outline:
-        6px solid #facc15;
-    transform:
-        scale(.97);
-    box-shadow:
-        0 0 30px #facc15;
-}
-.answer-btn:disabled {
-    opacity: .4;
-    cursor: default;
-}
-/* =========================================================
-   WAITING BADGE
-========================================================= */
-.waiting-badge {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform:
-        translate(-50%,-50%);
-    z-index: 30;
-    display: none;
-    padding:
-        15px 25px;
-    border-radius: 50px;
-    color: white;
-    background:
-        rgba(15,23,42,.9);
-    border:
-        2px solid #facc15;
-    font-size: 20px;
-    font-weight: 1000;
-}
-.waiting-badge.show {
-    display: block;
-}
-/* =========================================================
-   RESULT OVERLAY
-========================================================= */
-.result-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 100;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background:
-        rgba(2,6,23,.78);
-    backdrop-filter:
-        blur(8px);
-}
-.result-overlay.show {
-    display: flex;
-}
-.result-card {
-    width: min(800px, 88vw);
-    padding: 40px;
-    border-radius: 30px;
-    background: white;
-    text-align: center;
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.5);
-    animation:
-        resultPop .35s ease;
-}
-@keyframes resultPop {
-    from {
-        transform:
-            scale(.65)
-            rotate(-2deg);
-        opacity: 0;
-    }
-    to {
-        transform:
-            scale(1)
-            rotate(0);
-        opacity: 1;
-    }
-}
-.result-icon {
-    font-size: 80px;
-}
-.result-title {
-    margin-top: 10px;
-    color: #0f172a;
-    font-size:
-        clamp(34px, 5vw, 60px);
-    font-weight: 1000;
-}
-.result-detail {
-    margin-top: 15px;
-    color: #475569;
-    font-size: 22px;
-    line-height: 1.6;
-    font-weight: 800;
-}
-.next-btn {
-    margin-top: 25px;
-    border: 0;
-    padding:
-        17px 50px;
-    border-radius: 15px;
-    background: #2563eb;
-    color: white;
-    font-size: 22px;
-    font-weight: 1000;
-}
-/* =========================================================
-   WIN SCREEN
-========================================================= */
-#winScreen {
-    align-items: center;
-    justify-content: center;
-    background:
-        radial-gradient(
-            circle at center,
-            #1e3a8a,
-            #020617 65%
-        );
-}
-.win-card {
-    width: min(900px, 90vw);
-    padding: 50px;
-    border-radius: 35px;
-    text-align: center;
-    color: white;
-    background:
-        rgba(15,23,42,.95);
-    border:
-        2px solid
-        rgba(255,255,255,.1);
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.6);
-}
-.trophy {
-    font-size: 115px;
-    animation:
-        trophy .8s
-        infinite alternate;
-}
-@keyframes trophy {
-    from {
-        transform:
-            rotate(-5deg)
-            scale(1);
-    }
-    to {
-        transform:
-            rotate(5deg)
-            scale(1.08);
-    }
-}
-.win-title {
-    color: #facc15;
-    font-size:
-        clamp(40px, 6vw, 80px);
-    font-weight: 1000;
-}
-.winner-name {
-    margin-top: 10px;
-    font-size:
-        clamp(30px, 4vw, 58px);
-    font-weight: 1000;
-}
-.final-score {
-    margin:
-        20px 0 30px;
-    color: #cbd5e1;
-    font-size: 23px;
-    font-weight: 800;
-}
-.win-actions {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-/* =========================================================
-   CONFETTI
-========================================================= */
+
 .confetti {
-    position: fixed;
-    top: -40px;
-    z-index: 200;
-    animation:
-        confettiFall
-        linear
-        forwards;
+  position: absolute;
+  top: -20px;
+  width: 8px;
+  height: 13px;
+  animation: fall 2.8s ease-in forwards;
 }
-@keyframes confettiFall {
-    to {
-        transform:
-            translateY(110vh)
-            rotate(720deg);
-    }
+
+.list-button {
+  display: none;
+  margin: 0 auto 18px;
 }
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-@media(max-width: 850px) {
-    .team-inputs {
-        grid-template-columns: 1fr;
-    }
-    .topbar {
-        grid-template-columns:
-            1fr 1fr;
-    }
-    .round-info {
-        display: none;
-    }
-    .duel-area {
-        gap: 7px;
-        padding:
-            5px;
-    }
-    .team-panel {
-        padding: 8px;
-    }
-    .answer-grid {
-        gap: 7px;
-    }
+
+.full-list {
+  display: none;
+  padding: 20px;
+  border-top: 1px solid #dce8dc;
+}
+
+.full-list h2 {
+  color: var(--green);
+}
+
+.full-list details {
+  margin: 10px 0;
+  border: 1px solid #dce8dc;
+  border-radius: 10px;
+  background: white;
+}
+
+.full-list summary {
+  padding: 13px;
+  cursor: pointer;
+  font-weight: 800;
+  color: var(--green);
+}
+
+.full-list ul {
+  padding: 0 20px 12px 35px;
+  overflow-wrap: anywhere;
+}
+
+.full-list li {
+  padding: 4px 0;
+  line-height: 1.4;
+}
+
+footer {
+  text-align: center;
+  color: #cce0d1;
+  padding: 25px 10px 0;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+footer strong {
+  color: var(--gold);
+}
+
+@keyframes sparkle {
+  from { opacity: .45; transform: scale(.95); }
+  to { opacity: 1; transform: scale(1.08); }
+}
+
+@keyframes nameReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(.88);
+    filter: blur(6px);
+  }
+  70% { transform: translateY(-3px) scale(1.02); }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(500px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .page { width: min(100% - 14px, 1000px); padding-top: 8px; }
+  .hero { padding: 30px 12px 24px; }
+  .controls { padding: 15px; }
+  .stage { margin: 0 9px 12px; padding: 25px 10px; min-height: 340px; }
+  .names { grid-template-columns: 1fr; }
+  .name-card { padding: 15px 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body { background: white; color: black; }
+  .controls, .list-button { display: none !important; }
+  .page { width: 100%; }
+  .hero, .stage { print-color-adjust: exact; }
 }
 </style>
 </head>
+
 <body>
-<!-- =====================================================
-     START SCREEN
-===================================================== -->
-<section
-    id="startScreen"
-    class="screen active">
-    <div class="start-card">
-        <div class="logo">
-            TARIK TAMBANG<br>
-            <span>IPA</span>
-        </div>
-        <div class="tagline">
-            🧪 JAWAB BENAR, TARIK LEBIH KUAT! 🪢
-        </div>
-        <div class="rope-demo"></div>
-        <button
-            class="start-btn"
-            onclick="showSetup()">
-            🎮 MULAI GAME
-        </button>
+<div class="page">
+
+  <header class="hero">
+    <div class="eyebrow">EXVISTA EXCLUSIVE 7.1 PRESENTS</div>
+    <h1>GRAND<br>REVEAL! 💥</h1>
+    <p>
+      Siapakah yang akan mewakili<br>
+      EXVISTA EXCLUSIVE 7.1?
+    </p>
+    <div class="tagline">
+      Satu Hati, Satu Tujuan, Pasti Bisa!
     </div>
-</section>
-<!-- =====================================================
-     SETUP SCREEN
-===================================================== -->
-<section
-    id="setupScreen"
-    class="screen">
-    <div class="setup-card">
-        <div class="setup-title">
-            ⚔️ SIAPKAN PERTANDINGAN
+  </header>
+
+  <main class="main">
+
+    <section class="controls">
+      <div>
+        <label for="eventSelect">PILIH CABANG LOMBA</label>
+        <select id="eventSelect">
+          <option value="all">🎬 Semua cabang lomba</option>
+          <option value="puisi">Cipta Puisi 1 Perempuan</option>
+          <option value="bali">Baca Puisi Bali</option>
+          <option value="aksara">Nyurat Aksara Bali</option>
+          <option value="cerdas">Cerdas Cermat 3 Bahasa</option>
+          <option value="blind">Leading The Blind — Fun Games</option>
+          <option value="balon">Balon Rush — Fun Games</option>
+          <option value="gebogan">Lomba Gebogan</option>
+          <option value="canang">Lomba Canang Sari dan Kwangen</option>
+          <option value="nyuun">Nyuun Gebogan</option>
+        </select>
+      </div>
+
+      <button class="btn btn-gold" id="startButton">
+        💥 MULAI PENGUMUMAN!
+      </button>
+
+      <button class="btn btn-light" id="resetButton">
+        ↺ Ulangi dari Awal
+      </button>
+    </section>
+
+    <section class="stage" aria-live="polite">
+      <div class="stage-symbol">✦ ✧ ✦</div>
+      <div class="stage-eyebrow" id="stageEyebrow">
+        EXVISTA EXCLUSIVE 7.1
+      </div>
+      <div class="stage-title" id="stageTitle">
+        GET READY…
+      </div>
+      <div class="stage-subtitle" id="stageSubtitle">
+        Nama-nama masih dirahasiakan. 🤫
+      </div>
+
+      <div class="names" id="names">
+        <div class="waiting">
+          🔒 RAHASIA DULU!<br>
+          Tekan tombol mulai untuk membuka pengumuman.
         </div>
-        <div class="team-inputs">
-            <div class="team-input blue">
-                <h2>
-                    🔵 TIM A
-                </h2>
-                <input
-                    id="teamAInput"
-                    value="TIM A"
-                    maxlength="20"
-                    placeholder="Nama Tim A">
-            </div>
-            <div class="team-input red">
-                <h2>
-                    🔴 TIM B
-                </h2>
-                <input
-                    id="teamBInput"
-                    value="TIM B"
-                    maxlength="20"
-                    placeholder="Nama Tim B">
-            </div>
-        </div>
-        <div class="setup-options">
-            <div class="question-setting">
-                Jumlah Soal:
-                <select id="questionCount">
-                    <option value="10">
-                        10 Soal
-                    </option>
-                    <option value="15">
-                        15 Soal
-                    </option>
-                    <option value="20" selected>
-                        20 Soal
-                    </option>
-                    <option value="25">
-                        25 Soal
-                    </option>
-                    <option value="30">
-                        30 Soal
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="setup-actions">
-            <button
-                class="btn btn-secondary"
-                onclick="backToStart()">
-                ← KEMBALI
-            </button>
-            <button
-                class="btn btn-primary"
-                onclick="startGame()">
-                🚀 MULAI DUEL
-            </button>
-        </div>
-    </div>
-</section>
-<!-- =====================================================
-     GAME SCREEN
-===================================================== -->
-<section
-    id="gameScreen"
-    class="screen">
-    <!-- TOP BAR -->
-    <div class="topbar">
-        <div
-            class="team-header blue">
-            🔵
-            <span id="teamAName">
-                TIM A
-            </span>
-            <br>
-            <small>
-                Tarikan:
-                <span id="scoreA">
-                    0
-                </span>
-            </small>
-        </div>
-        <div class="round-info">
-            SOAL
-            <span id="currentNumber">
-                1
-            </span>
-            /
-            <span id="totalQuestions">
-                20
-            </span>
-        </div>
-        <div
-            class="team-header red">
-            <span id="teamBName">
-                TIM B
-            </span>
-            🔴
-            <br>
-            <small>
-                Tarikan:
-                <span id="scoreB">
-                    0
-                </span>
-            </small>
-        </div>
-    </div>
-    <!-- QUESTION -->
-    <div class="question-area">
-        <div class="question-card">
-            <div class="question-label">
-                🧪 PERNYATAAN IPA
-            </div>
-            <div
-                id="questionText"
-                class="question-text">
-            </div>
-        </div>
-    </div>
-    <!-- ROPE -->
-    <div class="rope-area">
-        <div class="center-line"></div>
-        <div class="win-line left"></div>
-        <div class="win-line right"></div>
-        <div
-            class="character left"
-            id="characterA">
-            🧑‍🔬
-        </div>
-        <div
-            class="character right"
-            id="characterB">
-            🧑‍🔬
-        </div>
-        <div
-            class="rope"
-            id="rope">
-            <div class="rope-knot">
-                <div class="flag">
-                    🚩
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- DUEL -->
-    <div class="duel-area">
-        <!-- TEAM A -->
-        <div
-            class="team-panel blue">
-            <div class="panel-title">
-                🔵
-                <span id="panelAName">
-                    TIM A
-                </span>
-            </div>
-            <div
-                class="panel-status"
-                id="statusA">
-                ⏳ Belum menjawab
-            </div>
-            <div class="answer-grid">
-                <button
-                    class="answer-btn true"
-                    id="aTrue"
-                    onclick="submitAnswer('A', true)">
-                    ✅ BENAR
-                </button>
-                <button
-                    class="answer-btn false"
-                    id="aFalse"
-                    onclick="submitAnswer('A', false)">
-                    ❌ SALAH
-                </button>
-            </div>
-        </div>
-        <!-- TEAM B -->
-        <div
-            class="team-panel red">
-            <div class="panel-title">
-                <span id="panelBName">
-                    TIM B
-                </span>
-                🔴
-            </div>
-            <div
-                class="panel-status"
-                id="statusB">
-                ⏳ Belum menjawab
-            </div>
-            <div class="answer-grid">
-                <button
-                    class="answer-btn true"
-                    id="bTrue"
-                    onclick="submitAnswer('B', true)">
-                    BENAR ✅
-                </button>
-                <button
-                    class="answer-btn false"
-                    id="bFalse"
-                    onclick="submitAnswer('B', false)">
-                    SALAH ❌
-                </button>
-            </div>
-        </div>
-    </div>
-    <!-- RESULT -->
-    <div
-        id="resultOverlay"
-        class="result-overlay">
-        <div class="result-card">
-            <div
-                id="resultIcon"
-                class="result-icon">
-                ⚔️
-            </div>
-            <div
-                id="resultTitle"
-                class="result-title">
-                HASIL RONDE
-            </div>
-            <div
-                id="resultDetail"
-                class="result-detail">
-            </div>
-            <button
-                class="next-btn"
-                onclick="nextRound()">
-                SOAL BERIKUTNYA ➜
-            </button>
-        </div>
-    </div>
-</section>
-<!-- =====================================================
-     WIN SCREEN
-===================================================== -->
-<section
-    id="winScreen"
-    class="screen">
-    <div id="confetti"></div>
-    <div class="win-card">
-        <div class="trophy">
-            🏆
-        </div>
-        <div class="win-title">
-            PEMENANG!
-        </div>
-        <div
-            id="winnerName"
-            class="winner-name">
-        </div>
-        <div
-            id="finalScore"
-            class="final-score">
-        </div>
-        <div class="win-actions">
-            <button
-                class="btn btn-primary"
-                onclick="restartGame()">
-                🔄 MAIN LAGI
-            </button>
-            <button
-                class="btn btn-secondary"
-                onclick="backToStart()">
-                🏠 MENU UTAMA
-            </button>
-        </div>
-    </div>
-</section>
+      </div>
+
+      <div class="motto-bottom" id="mottoBottom">
+        SATU HATI • SATU TUJUAN • PASTI BISA!
+      </div>
+
+      <div class="confetti-layer" id="confettiLayer"></div>
+    </section>
+
+    <button class="btn btn-green list-button" id="listButton">
+      📋 Lihat Daftar Peserta
+    </button>
+
+    <section class="full-list" id="fullList">
+      <h2>📋 Daftar Peserta Lengkap</h2>
+      <p>Nama sesuai pembagian cabang lomba.</p>
+      <div id="listContent"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <strong>EXVISTA EXCLUSIVE 7.1</strong><br>
+    Satu Hati, Satu Tujuan, Pasti Bisa!<br>
+    🌟 Berani mencoba, kompak, dan berikan yang terbaik! 🌟
+  </footer>
+
+</div>
+
 <script>
-/* =========================================================
-   KONFIGURASI UTAMA
-========================================================= */
-const CONFIG = {
-    /*
-       Jumlah soal default.
-       Dapat diganti melalui menu.
-    */
-    totalQuestions: 20,
-    /*
-       Setiap kemenangan satu ronde
-       menggerakkan tali satu langkah.
-    */
-    pullPerWin: 1,
-    /*
-       Tali mencapai batas kemenangan
-       setelah 7 langkah.
-    */
-    winningPosition: 7
+const students = {
+  angeline: "Angeline Epihifani Dewi",
+  ardafa: "Ardafa Kadek Saqi Maulana",
+  aruna: "Aruna Adi Candra",
+  dimas: "Dimas Ascha Pratama",
+  evelyn: "Evelyn Kangge Indrawan",
+  juna: "I Gede Juna Wahyu Radithya Darma Putra",
+  kinsey: "I Gusti Agung Kinsey Naranya Dianra",
+  permana: "Ida Bagus Komang Permana Iswara Saputra",
+  marcello: "Marcello Kenzhin Huanggara",
+  naysa: "Naysa Putri Setiawan",
+  frita: "Ni Kadek Frita Yuna Wulandari",
+  laksita: "Ni Kadek Tania Laksita Idelia",
+  wasistha: "Ni Putu Arya Wasistha Nareswari",
+  linda: "Ni Putu Linda Kirana Maheswari",
+  nagitha: "Ni Wayan Nagitha Gayatri",
+  novita: "Pignatelly Novita Ija",
+  azka: "Putu Azka Aldric Dinatha",
+  rangga: "Putu Bagus Rangga Deva Prawira",
+  ganenra: "Putu Ganenra Antara",
+  radit: "Putu Raditya Pratama",
+  rebecca: "Rebecca Evangelia Ho",
+  citra: "Sang Ayu Ketut Citra Lestari"
 };
-/* =========================================================
-   BANK SOAL IPA
-========================================================= */
-const questionBank = [
-    {
-        question:
-        "Air membeku pada suhu sekitar 0°C dalam kondisi normal.",
-        answer: true,
-        explanation:
-        "Pada tekanan normal, air membeku pada suhu sekitar 0°C."
-    },
-    {
-        question:
-        "Matahari merupakan sumber energi utama bagi kehidupan di Bumi.",
-        answer: true,
-        explanation:
-        "Energi Matahari sangat penting bagi berbagai proses kehidupan di Bumi."
-    },
-    {
-        question:
-        "Bulan menghasilkan cahaya sendiri seperti Matahari.",
-        answer: false,
-        explanation:
-        "Bulan tampak bercahaya karena memantulkan cahaya Matahari."
-    },
-    {
-        question:
-        "Manusia bernapas menggunakan paru-paru.",
-        answer: true,
-        explanation:
-        "Paru-paru merupakan organ utama dalam sistem pernapasan manusia."
-    },
-    {
-        question:
-        "Tumbuhan melakukan fotosintesis untuk menghasilkan makanan.",
-        answer: true,
-        explanation:
-        "Fotosintesis memungkinkan tumbuhan membuat makanan menggunakan energi cahaya."
-    },
-    {
-        question:
-        "Suara dapat merambat di ruang hampa.",
-        answer: false,
-        explanation:
-        "Bunyi membutuhkan medium seperti udara, air, atau benda padat untuk merambat."
-    },
-    {
-        question:
-        "Jantung berfungsi memompa darah ke seluruh tubuh.",
-        answer: true,
-        explanation:
-        "Jantung memompa darah melalui sistem peredaran darah."
-    },
-    {
-        question:
-        "Air yang dipanaskan hingga mendidih dapat berubah menjadi uap.",
-        answer: true,
-        explanation:
-        "Ketika menerima energi panas yang cukup, air berubah dari cair menjadi gas."
-    },
-    {
-        question:
-        "Planet terbesar dalam tata surya adalah Jupiter.",
-        answer: true,
-        explanation:
-        "Jupiter merupakan planet terbesar dalam tata surya."
-    },
-    {
-        question:
-        "Bumi merupakan pusat tata surya.",
-        answer: false,
-        explanation:
-        "Dalam model heliosentris, planet-planet termasuk Bumi mengorbit Matahari."
-    },
-    {
-        question:
-        "Magnet memiliki kutub utara dan kutub selatan.",
-        answer: true,
-        explanation:
-        "Magnet memiliki dua kutub utama, yaitu utara dan selatan."
-    },
-    {
-        question:
-        "Pelangi dapat terbentuk karena penguraian cahaya.",
-        answer: true,
-        explanation:
-        "Cahaya Matahari dapat mengalami pembiasan, pemantulan internal, dan dispersi pada tetes air."
-    },
-    {
-        question:
-        "Kelelawar termasuk kelompok burung karena dapat terbang.",
-        answer: false,
-        explanation:
-        "Kelelawar adalah mamalia, bukan burung."
-    },
-    {
-        question:
-        "Fotosintesis menghasilkan oksigen.",
-        answer: true,
-        explanation:
-        "Oksigen dilepaskan sebagai salah satu hasil fotosintesis."
-    },
-    {
-        question:
-        "Penguapan adalah perubahan wujud dari cair menjadi gas.",
-        answer: true,
-        explanation:
-        "Penguapan merupakan perubahan zat dari fase cair menuju fase gas."
-    },
-    {
-        question:
-        "Es yang mencair berubah dari padat menjadi cair.",
-        answer: true,
-        explanation:
-        "Mencair adalah perubahan wujud zat dari padat menjadi cair."
-    },
-    {
-        question:
-        "Semua benda yang berat pasti tenggelam di dalam air.",
-        answer: false,
-        explanation:
-        "Kemampuan benda untuk terapung atau tenggelam dipengaruhi antara lain oleh massa jenis."
-    },
-    {
-        question:
-        "Karbon dioksida digunakan tumbuhan dalam fotosintesis.",
-        answer: true,
-        explanation:
-        "Karbon dioksida merupakan salah satu bahan yang digunakan dalam fotosintesis."
-    },
-    {
-        question:
-        "Cahaya dapat merambat tanpa medium.",
-        answer: true,
-        explanation:
-        "Cahaya dapat merambat melalui ruang hampa."
-    },
-    {
-        question:
-        "Manusia tidak membutuhkan air selama mendapatkan makanan.",
-        answer: false,
-        explanation:
-        "Air sangat penting bagi berbagai proses fisiologis tubuh."
-    },
-    {
-        question:
-        "Rangka membantu menopang dan melindungi tubuh manusia.",
-        answer: true,
-        explanation:
-        "Rangka memberikan bentuk, menopang tubuh, dan melindungi organ tertentu."
-    },
-    {
-        question:
-        "Besi dapat ditarik oleh magnet.",
-        answer: true,
-        explanation:
-        "Besi merupakan salah satu bahan feromagnetik yang dapat ditarik magnet."
-    },
-    {
-        question:
-        "Planet terdekat dengan Matahari adalah Merkurius.",
-        answer: true,
-        explanation:
-        "Merkurius merupakan planet terdekat dengan Matahari."
-    },
-    {
-        question:
-        "Semua benda yang terlihat oleh mata menghasilkan cahaya sendiri.",
-        answer: false,
-        explanation:
-        "Sebagian benda terlihat karena memantulkan cahaya dari sumber lain."
-    },
-    {
-        question:
-        "Suhu menunjukkan tingkat panas atau dinginnya suatu benda.",
-        answer: true,
-        explanation:
-        "Suhu digunakan untuk menyatakan tingkat panas atau dingin suatu benda."
-    },
-    {
-        question:
-        "Air laut tidak mengandung garam.",
-        answer: false,
-        explanation:
-        "Air laut mengandung berbagai garam terlarut."
-    },
-    {
-        question:
-        "Energi listrik dapat berubah menjadi energi cahaya.",
-        answer: true,
-        explanation:
-        "Lampu merupakan contoh alat yang mengubah energi listrik menjadi cahaya."
-    },
-    {
-        question:
-        "Gravitasi menyebabkan benda jatuh menuju permukaan Bumi.",
-        answer: true,
-        explanation:
-        "Gaya gravitasi Bumi menarik benda menuju pusat Bumi."
-    },
-    {
-        question:
-        "Oksigen diperlukan manusia untuk bernapas.",
-        answer: true,
-        explanation:
-        "Oksigen digunakan dalam proses respirasi sel untuk memperoleh energi."
-    },
-    {
-        question:
-        "Tumbuhan tidak memerlukan air untuk tumbuh.",
-        answer: false,
-        explanation:
-        "Air dibutuhkan tumbuhan untuk berbagai proses kehidupan dan pertumbuhan."
-    }
+
+const events = [
+  {
+    id: "puisi",
+    title: "Cipta Puisi 1 Perempuan",
+    names: ["nagitha"]
+  },
+  {
+    id: "bali",
+    title: "Baca Puisi Bali",
+    names: ["azka"]
+  },
+  {
+    id: "aksara",
+    title: "Nyurat Aksara Bali",
+    names: ["linda"]
+  },
+  {
+    id: "cerdas",
+    title: "Cerdas Cermat 3 Bahasa",
+    names: ["rebecca", "radit", "wasistha"]
+  },
+  {
+    id: "blind",
+    title: "Leading The Blind — Fun Games",
+    names: ["nagitha", "citra", "novita", "frita", "laksita"]
+  },
+  {
+    id: "balon",
+    title: "Balon Rush — Fun Games",
+    names: [
+      "juna", "kinsey", "marcello", "rangga",
+      "aruna", "ganenra", "ardafa"
+    ]
+  },
+  {
+    id: "gebogan",
+    title: "Lomba Gebogan",
+    names: ["wasistha", "citra", "nagitha", "frita", "juna"]
+  },
+  {
+    id: "canang",
+    title: "Lomba Canang Sari dan Kwangen",
+    names: ["linda", "nagitha"]
+  },
+  {
+    id: "nyuun",
+    title: "Nyuun Gebogan",
+    names: ["citra", "kinsey", "radit"]
+  }
 ];
-/* =========================================================
-   GAME STATE
-========================================================= */
-let questions = [];
-let currentQuestion = 0;
-let teamA = "TIM A";
-let teamB = "TIM B";
-let scoreA = 0;
-let scoreB = 0;
-/*
-   Posisi tali:
-   positif = menuju Tim A
-   negatif = menuju Tim B
-*/
-let ropePosition = 0;
-/*
-   Jawaban sementara masing-masing tim.
-   null = belum menjawab.
-*/
-let answerA = null;
-let answerB = null;
-let roundLocked = false;
-/* =========================================================
-   HELPER
-========================================================= */
-const $ = id =>
-    document.getElementById(id);
-/* =========================================================
-   SCREEN CONTROL
-========================================================= */
-function hideScreens() {
-    document
-        .querySelectorAll(".screen")
-        .forEach(screen => {
-            screen.classList.remove("active");
-        });
+
+const eventSelect = document.getElementById("eventSelect");
+const startButton = document.getElementById("startButton");
+const resetButton = document.getElementById("resetButton");
+const stageTitle = document.getElementById("stageTitle");
+const stageSubtitle = document.getElementById("stageSubtitle");
+const stageEyebrow = document.getElementById("stageEyebrow");
+const namesContainer = document.getElementById("names");
+const mottoBottom = document.getElementById("mottoBottom");
+const confettiLayer = document.getElementById("confettiLayer");
+const listButton = document.getElementById("listButton");
+const fullList = document.getElementById("fullList");
+const listContent = document.getElementById("listContent");
+
+let running = false;
+let runToken = 0;
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
-function showSetup() {
-    hideScreens();
-    $("setupScreen")
-        .classList.add("active");
+
+function shuffle(array) {
+  const result = [...array];
+
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
+  return result;
 }
-function backToStart() {
-    hideScreens();
-    $("startScreen")
-        .classList.add("active");
+
+function selectedEvents() {
+  const selected = eventSelect.value;
+
+  if (selected === "all") {
+    return events;
+  }
+
+  return events.filter(event => event.id === selected);
 }
-/* =========================================================
-   START GAME
-========================================================= */
-function startGame() {
-    teamA =
-        $("teamAInput")
-        .value
-        .trim() || "TIM A";
-    teamB =
-        $("teamBInput")
-        .value
-        .trim() || "TIM B";
-    const requestedCount =
-        Number(
-            $("questionCount").value
-        );
-    CONFIG.totalQuestions =
-        requestedCount;
-    /*
-       Acak bank soal.
-    */
-    questions =
-        [...questionBank]
-        .sort(
-            () =>
-                Math.random() - 0.5
-        )
-        .slice(
-            0,
-            Math.min(
-                requestedCount,
-                questionBank.length
-            )
-        );
-    currentQuestion = 0;
-    scoreA = 0;
-    scoreB = 0;
-    ropePosition = 0;
-    answerA = null;
-    answerB = null;
-    roundLocked = false;
-    $("teamAName")
-        .textContent = teamA;
-    $("teamBName")
-        .textContent = teamB;
-    $("panelAName")
-        .textContent = teamA;
-    $("panelBName")
-        .textContent = teamB;
-    $("scoreA")
-        .textContent = "0";
-    $("scoreB")
-        .textContent = "0";
-    $("totalQuestions")
-        .textContent =
-        questions.length;
-    $("confetti")
-        .innerHTML = "";
-    hideScreens();
-    $("gameScreen")
-        .classList.add("active");
-    updateRope();
-    loadQuestion();
+
+function showWaiting(message) {
+  namesContainer.replaceChildren();
+
+  const waiting = document.createElement("div");
+  waiting.className = "waiting";
+  waiting.textContent = message;
+
+  namesContainer.appendChild(waiting);
 }
-/* =========================================================
-   LOAD QUESTION
-========================================================= */
-function loadQuestion() {
-    if (
-        currentQuestion >=
-        questions.length
-    ) {
-        finishGame();
-        return;
-    }
-    answerA = null;
-    answerB = null;
-    roundLocked = false;
-    $("currentNumber")
-        .textContent =
-        currentQuestion + 1;
-    const current =
-        questions[currentQuestion];
-    $("questionText")
-        .textContent =
-        current.question;
-    $("statusA")
-        .textContent =
-        "⏳ Belum menjawab";
-    $("statusB")
-        .textContent =
-        "⏳ Belum menjawab";
-    resetAnswerButtons();
+
+function showNames(event, token) {
+  namesContainer.replaceChildren();
+
+  event.names.forEach((key, index) => {
+    if (token !== runToken) return;
+
+    const card = document.createElement("div");
+    card.className = "name-card";
+    card.style.animationDelay = `${index * 0.16}s`;
+
+    const label = document.createElement("small");
+    label.textContent =
+      `PERWAKILAN 7.1 • ${String(index + 1).padStart(2, "0")}`;
+
+    const name = document.createElement("strong");
+    name.textContent = students[key];
+
+    card.append(label, name);
+    namesContainer.appendChild(card);
+  });
 }
-/* =========================================================
-   ANSWER
-========================================================= */
-function submitAnswer(
-    team,
-    value
-) {
-    if (roundLocked) {
-        return;
-    }
-    if (team === "A") {
-        /*
-           Cegah Tim A menjawab dua kali.
-        */
-        if (answerA !== null) {
-            return;
-        }
-        answerA = value;
-        markTeamAnswered(
-            "A",
-            value
-        );
-    }
-    if (team === "B") {
-        /*
-           Cegah Tim B menjawab dua kali.
-        */
-        if (answerB !== null) {
-            return;
-        }
-        answerB = value;
-        markTeamAnswered(
-            "B",
-            value
-        );
-    }
-    /*
-       Jangan evaluasi sampai
-       kedua tim selesai.
-    */
-    if (
-        answerA !== null &&
-        answerB !== null
-    ) {
-        roundLocked = true;
-        setTimeout(
-            evaluateRound,
-            600
-        );
-    }
+
+function launchConfetti() {
+  confettiLayer.replaceChildren();
+
+  const colors = [
+    "#e8bd58",
+    "#fff2c6",
+    "#80b99a",
+    "#d98252",
+    "#ffffff"
+  ];
+
+  for (let i = 0; i < 65; i++) {
+    const piece = document.createElement("i");
+    piece.className = "confetti";
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.animationDelay = `${Math.random() * 0.9}s`;
+    piece.style.background = colors[i % colors.length];
+    piece.style.transform = `rotate(${Math.random() * 180}deg)`;
+
+    confettiLayer.appendChild(piece);
+  }
+
+  setTimeout(() => confettiLayer.replaceChildren(), 3500);
 }
-/* =========================================================
-   MARK TEAM
-========================================================= */
-function markTeamAnswered(
-    team,
-    value
-) {
-    let trueButton;
-    let falseButton;
-    let status;
-    if (team === "A") {
-        trueButton =
-            $("aTrue");
-        falseButton =
-            $("aFalse");
-        status =
-            $("statusA");
-    } else {
-        trueButton =
-            $("bTrue");
-        falseButton =
-            $("bFalse");
-        status =
-            $("statusB");
+
+async function announce() {
+  if (running) return;
+
+  running = true;
+  const token = ++runToken;
+  const selected = selectedEvents();
+
+  startButton.disabled = true;
+  resetButton.disabled = true;
+  eventSelect.disabled = true;
+  listButton.style.display = "none";
+  fullList.style.display = "none";
+
+  try {
+    stageEyebrow.textContent = "EXVISTA EXCLUSIVE 7.1";
+    stageTitle.textContent = "PENGUMUMAN DIMULAI…";
+    stageSubtitle.textContent = "Tarik napas… ini saatnya!";
+    showWaiting("🔒 Semua nama masih dirahasiakan…");
+
+    await sleep(900);
+
+    for (const count of ["5", "4", "3", "2", "1"]) {
+      if (token !== runToken) return;
+
+      stageTitle.textContent = `${count}…`;
+      stageSubtitle.textContent =
+        "Siapakah yang akan mewakili kelas kita?";
+
+      await sleep(650);
     }
-    trueButton.disabled = true;
-    falseButton.disabled = true;
-    if (value === true) {
-        trueButton
-            .classList
-            .add("selected");
-    } else {
-        falseButton
-            .classList
-            .add("selected");
+
+    stageTitle.textContent = "DRUM ROLL… 🥁";
+    stageSubtitle.textContent = "Jangan kedip! DAR DER DOR!";
+    showWaiting("🥁 DUG… DUG… DUG…");
+
+    await sleep(1600);
+
+    for (let i = 0; i < selected.length; i++) {
+      if (token !== runToken) return;
+
+      const event = selected[i];
+
+      stageEyebrow.textContent =
+        `CABANG LOMBA ${i + 1} DARI ${selected.length}`;
+
+      stageTitle.textContent = "SIAPAKAH DIA…?";
+      stageSubtitle.textContent = event.title.toUpperCase();
+
+      showWaiting("🔒 NAMA MASIH DIRAHASIAKAN…");
+
+      await sleep(1100);
+
+      if (token !== runToken) return;
+
+      stageTitle.textContent = "DAN PERWAKILANNYA ADALAH…";
+      stageSubtitle.textContent = event.title;
+
+      // Urutan nama diacak, tetapi anggota setiap lomba tetap sama.
+      const randomizedEvent = {
+        ...event,
+        names: shuffle(event.names)
+      };
+
+      showNames(randomizedEvent, token);
+
+      await sleep(event.names.length * 180 + 450);
+
+      if (token !== runToken) return;
+
+      stageTitle.textContent = "INILAH PERWAKILAN KITA! 🎉";
+      stageSubtitle.textContent =
+        `${event.title} — EXVISTA EXCLUSIVE 7.1`;
+
+      launchConfetti();
+
+      await sleep(1300);
     }
-    status.textContent =
-        "✅ Sudah menjawab";
+
+    if (token !== runToken) return;
+
+    stageEyebrow.textContent = "EXVISTA EXCLUSIVE 7.1";
+    stageTitle.textContent = "SATU HATI, SATU TUJUAN!";
+    stageSubtitle.textContent =
+      "Pasti bisa! Berikan yang terbaik untuk 7.1! 🔥";
+    mottoBottom.textContent =
+      "EXVISTA EXCLUSIVE 7.1 • WE CAN DO THIS!";
+
+    launchConfetti();
+    listButton.style.display = "block";
+
+  } finally {
+    if (token === runToken) {
+      running = false;
+      startButton.disabled = false;
+      resetButton.disabled = false;
+      eventSelect.disabled = false;
+      startButton.textContent = "🔁 PUTAR PENGUMUMAN LAGI";
+    }
+  }
 }
-/* =========================================================
-   EVALUATE ROUND
-========================================================= */
-function evaluateRound() {
-    const question =
-        questions[currentQuestion];
-    const correctAnswer =
-        question.answer;
-    const correctA =
-        answerA === correctAnswer;
-    const correctB =
-        answerB === correctAnswer;
-    /*
-       A BENAR — B SALAH
-    */
-    if (
-        correctA &&
-        !correctB
-    ) {
-        scoreA +=
-            CONFIG.pullPerWin;
-        ropePosition +=
-            CONFIG.pullPerWin;
-        showRoundResult(
-            "🔵",
-            teamA +
-            " MENARIK!",
-            `
-            <b>🔵 ${teamA}</b>
-            menjawab BENAR ✅<br>
-            <b>🔴 ${teamB}</b>
-            menjawab SALAH ❌
-            <br><br>
-            🪢 Tali bergerak ke arah
-            <b>${teamA}</b>.
-            <br><br>
-            💡 ${question.explanation}
-            `
-        );
-        animateRope();
-    }
-    /*
-       B BENAR — A SALAH
-    */
-    else if (
-        !correctA &&
-        correctB
-    ) {
-        scoreB +=
-            CONFIG.pullPerWin;
-        ropePosition -=
-            CONFIG.pullPerWin;
-        showRoundResult(
-            "🔴",
-            teamB +
-            " MENARIK!",
-            `
-            <b>🔵 ${teamA}</b>
-            menjawab SALAH ❌<br>
-            <b>🔴 ${teamB}</b>
-            menjawab BENAR ✅
-            <br><br>
-            🪢 Tali bergerak ke arah
-            <b>${teamB}</b>.
-            <br><br>
-            💡 ${question.explanation}
-            `
-        );
-        animateRope();
-    }
-    /*
-       KEDUA BENAR
-    */
-    else if (
-        correctA &&
-        correctB
-    ) {
-        showRoundResult(
-            "🤝",
-            "DUA-DUANYA BENAR!",
-            `
-            🔵 ${teamA} — BENAR ✅<br>
-            🔴 ${teamB} — BENAR ✅
-            <br><br>
-            🪢 Tidak ada tim yang menarik.
-            <br><br>
-            💡 ${question.explanation}
-            `
-        );
-    }
-    /*
-       KEDUA SALAH
-    */
-    else {
-        showRoundResult(
-            "😵",
-            "DUA-DUANYA SALAH!",
-            `
-            🔵 ${teamA} — SALAH ❌<br>
-            🔴 ${teamB} — SALAH ❌
-            <br><br>
-            🪢 Tali tetap berada di posisi.
-            <br><br>
-            💡 ${question.explanation}
-            `
-        );
-    }
-    updateScores();
-    /*
-       Jika sudah mencapai
-       garis kemenangan,
-       pertandingan akan berakhir
-       setelah feedback.
-    */
+
+function resetAnnouncement() {
+  runToken++;
+  running = false;
+
+  startButton.disabled = false;
+  resetButton.disabled = false;
+  eventSelect.disabled = false;
+  startButton.textContent = "💥 MULAI PENGUMUMAN!";
+
+  stageEyebrow.textContent = "EXVISTA EXCLUSIVE 7.1";
+  stageTitle.textContent = "GET READY…";
+  stageSubtitle.textContent = "Nama-nama masih dirahasiakan. 🤫";
+  mottoBottom.textContent =
+    "SATU HATI • SATU TUJUAN • PASTI BISA!";
+
+  showWaiting(
+    "🔒 RAHASIA DULU! Tekan tombol mulai untuk membuka pengumuman."
+  );
+
+  confettiLayer.replaceChildren();
+  listButton.style.display = "none";
+  fullList.style.display = "none";
 }
-/* =========================================================
-   ROUND RESULT
-========================================================= */
-function showRoundResult(
-    icon,
-    title,
-    detail
-) {
-    $("resultIcon")
-        .textContent =
-        icon;
-    $("resultTitle")
-        .textContent =
-        title;
-    $("resultDetail")
-        .innerHTML =
-        detail;
-    $("resultOverlay")
-        .classList
-        .add("show");
+
+function buildFullList() {
+  listContent.replaceChildren();
+
+  events.forEach(event => {
+    const details = document.createElement("details");
+
+    const summary = document.createElement("summary");
+    summary.textContent = event.title;
+
+    const ul = document.createElement("ul");
+
+    event.names.forEach(key => {
+      const li = document.createElement("li");
+      li.textContent = students[key];
+      ul.appendChild(li);
+    });
+
+    details.append(summary, ul);
+    listContent.appendChild(details);
+  });
 }
-/* =========================================================
-   NEXT ROUND
-========================================================= */
-function nextRound() {
-    $("resultOverlay")
-        .classList
-        .remove("show");
-    /*
-       Cek apakah sudah menang.
-    */
-    if (
-        Math.abs(ropePosition)
-        >=
-        CONFIG.winningPosition
-    ) {
-        finishGame();
-        return;
-    }
-    currentQuestion++;
-    if (
-        currentQuestion >=
-        questions.length
-    ) {
-        finishGame();
-        return;
-    }
-    loadQuestion();
-}
-/* =========================================================
-   SCORE UPDATE
-========================================================= */
-function updateScores() {
-    $("scoreA")
-        .textContent =
-        scoreA;
-    $("scoreB")
-        .textContent =
-        scoreB;
-}
-/* =========================================================
-   ROPE
-========================================================= */
-function updateRope() {
-    /*
-       Batas posisi.
-    */
-    const position =
-        Math.max(
-            -CONFIG.winningPosition,
-            Math.min(
-                CONFIG.winningPosition,
-                ropePosition
-            )
-        );
-    /*
-       Setiap langkah
-       = 5.5% perpindahan.
-    */
-    const percentage =
-        position * 5.5;
-    $("rope")
-        .style
-        .transform =
-        `translateX(${percentage}%)`;
-    /*
-       Karakter kiri.
-    */
-    $("characterA")
-        .style
-        .transform =
-        `translateX(${percentage * 2.2}px)`;
-    /*
-       Karakter kanan.
-    */
-    $("characterB")
-        .style
-        .transform =
-        `translateX(${percentage * 2.2}px)`;
-}
-/* =========================================================
-   ROPE ANIMATION
-========================================================= */
-function animateRope() {
-    const rope =
-        $("rope");
-    rope.classList
-        .remove("kick");
-    /*
-       Force reflow agar
-       animasi dapat diputar ulang.
-    */
-    void rope.offsetWidth;
-    rope.classList
-        .add("kick");
-    updateRope();
-}
-/* =========================================================
-   RESET BUTTON
-========================================================= */
-function resetAnswerButtons() {
-    const buttons = [
-        $("aTrue"),
-        $("aFalse"),
-        $("bTrue"),
-        $("bFalse")
-    ];
-    buttons.forEach(
-        button => {
-            button.disabled = false;
-            button.classList
-                .remove("selected");
-        }
-    );
-}
-/* =========================================================
-   FINISH GAME
-========================================================= */
-function finishGame() {
-    $("resultOverlay")
-        .classList
-        .remove("show");
-    hideScreens();
-    $("winScreen")
-        .classList
-        .add("active");
-    let winner;
-    /*
-       Prioritas utama:
-       posisi tali.
-    */
-    if (
-        ropePosition >
-        0
-    ) {
-        winner = teamA;
-    }
-    else if (
-        ropePosition <
-        0
-    ) {
-        winner = teamB;
-    }
-    else if (
-        scoreA >
-        scoreB
-    ) {
-        winner = teamA;
-    }
-    else if (
-        scoreB >
-        scoreA
-    ) {
-        winner = teamB;
-    }
-    else {
-        winner = "SERI!";
-    }
-    $("winnerName")
-        .textContent =
-        winner;
-    $("finalScore")
-        .innerHTML =
-        `
-        🔵 ${teamA}:
-        <b>${scoreA}</b> tarikan
-        &nbsp;&nbsp; | &nbsp;&nbsp;
-        🔴 ${teamB}:
-        <b>${scoreB}</b> tarikan
-        `;
-    if (
-        winner !== "SERI!"
-    ) {
-        createConfetti();
-    }
-}
-/* =========================================================
-   RESTART
-========================================================= */
-function restartGame() {
-    $("confetti")
-        .innerHTML = "";
-    startGame();
-}
-/* =========================================================
-   CONFETTI
-========================================================= */
-function createConfetti() {
-    const container =
-        $("confetti");
-    const icons = [
-        "🎉",
-        "🎊",
-        "⭐",
-        "✨",
-        "🏆",
-        "🪢"
-    ];
-    for (
-        let i = 0;
-        i < 120;
-        i++
-    ) {
-        const item =
-            document.createElement(
-                "div"
-            );
-        item.className =
-            "confetti";
-        item.textContent =
-            icons[
-                Math.floor(
-                    Math.random() *
-                    icons.length
-                )
-            ];
-        item.style.left =
-            Math.random() * 100 +
-            "%";
-        item.style.fontSize =
-            (
-                15 +
-                Math.random() * 25
-            ) +
-            "px";
-        item.style.animationDuration =
-            (
-                2 +
-                Math.random() * 4
-            ) +
-            "s";
-        item.style.animationDelay =
-            (
-                Math.random() * 1.5
-            ) +
-            "s";
-        container.appendChild(item);
-    }
-}
-/* =========================================================
-   KEYBOARD SUPPORT
-========================================================= */
-document.addEventListener(
-    "keydown",
-    event => {
-        /*
-           Keyboard support hanya sebagai
-           tambahan untuk guru/laptop.
-           A = Tim A BENAR
-           S = Tim A SALAH
-           J = Tim B BENAR
-           K = Tim B SALAH
-        */
-        const key =
-            event.key.toLowerCase();
-        if (key === "a") {
-            submitAnswer(
-                "A",
-                true
-            );
-        }
-        if (key === "s") {
-            submitAnswer(
-                "A",
-                false
-            );
-        }
-        if (key === "j") {
-            submitAnswer(
-                "B",
-                true
-            );
-        }
-        if (key === "k") {
-            submitAnswer(
-                "B",
-                false
-            );
-        }
-        /*
-           Enter untuk lanjut
-           setelah hasil ronde.
-        */
-        if (
-            key === "enter" &&
-            $("resultOverlay")
-                .classList
-                .contains("show")
-        ) {
-            nextRound();
-        }
-    }
-);
+
+startButton.addEventListener("click", announce);
+resetButton.addEventListener("click", resetAnnouncement);
+
+listButton.addEventListener("click", () => {
+  fullList.style.display =
+    fullList.style.display === "block" ? "none" : "block";
+
+  if (fullList.style.display === "block") {
+    fullList.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+});
+
+buildFullList();
 </script>
+
 </body>
 </html>
